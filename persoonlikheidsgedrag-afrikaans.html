@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PulseMap Persoonlikheidsgedrag Analise</title>
+    <!-- Open Graph Meta Tags for WhatsApp Sharing -->
     <meta property="og:title" content="PulseMap Persoonlikheidsgedrag Analise">
     <meta property="og:description" content="Ontdek jou persoonlikheidstipe met ons PulseMap vraelys.">
     <meta property="og:image" content="https://i.imgur.com/Zx34Iky.png">
     <meta property="og:url" content="https://qgroenewald-disk.github.io/mbti-analise/">
     <meta property="og:type" content="website">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Define CSS variables for consistent theming */
@@ -24,523 +26,493 @@
         /* Import Poppins font */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-        /* General Body Styles */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
+            font-family: 'Poppins', sans-serif; /* Changed to Poppins for consistency */
+            background-color: var(--secondary-color); /* Added for consistency */
+            color: var(--text-color); /* Added for consistency */
+            line-height: 1.6; /* Added for consistency */
+            margin: 0; /* Added for consistency */
+            padding: 20px; /* Added for consistency */
         }
-
-        /* Container Styling */
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        /* Custom class for border color matching bg-blue-600 */
+        .border-custom-blue {
+            border-left-color: #2563EB; /* Tailwind's blue-600 hex code */
         }
-
-        /* Headings */
-        h1, h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 25px;
-            font-weight: 600;
+        /* Class for highlighting unanswered questions */
+        .border-error {
+            border-color: #EF4444; /* Tailwind's red-500 hex code */
         }
-
-        /* Intro Text */
-        .intro-text {
-            text-align: center;
-            margin-bottom: 30px;
-            line-height: 1.8;
-            color: #555;
-            font-size: 1.05em;
-        }
-
-        /* Form Group (for name/email) */
-        .mb-6 {
-            margin-bottom: 20px;
-        }
-
-        .mb-6 label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .mb-6 input[type="text"],
-        .mb-6 input[type="email"] {
-            width: calc(100% - 20px);
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        .mb-6 input[type="text"]:focus,
-        .mb-6 input[type="email"]:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        /* Questions Container */
-        #questionsContainer {
-            margin-top: 30px;
-        }
-
-        /* Question Card */
-        .question-card {
-            background-color: #f9f9f9;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .question-card p {
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            font-size: 1.15em;
-            line-height: 1.5;
-        }
-
-        /* Options Grid */
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        /* Option Button */
-        .option-button {
-            background-color: #e9ecef;
-            border: 1px solid #ced4da;
-            padding: 12px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1em;
-            text-align: left;
-            transition: all 0.3s ease;
-            color: #495057;
+        header {
             display: flex;
+            flex-direction: column;
+            align-items: center; /* Centered for the logo */
+            border-bottom: 2px solid var(--primary-color); /* Changed to match Funksioneringstyl */
+            margin-bottom: 20px;
+            padding-bottom: 20px; /* Changed to match Funksioneringstyl */
+            padding-left: 0; /* Changed to match Funksioneringstyl */
+        }
+        .logo-wrapper { /* Renamed from .logo-and-title-wrapper for consistency with this file's HTML */
+            display: flex;
+            flex-direction: column; /* Stack logo and title vertically */
+            justify-content: center; /* Center logo */
             align-items: center;
-            line-height: 1.4;
+            gap: 15px; /* Adjust gap between logo and title */
+            margin-bottom: 15px;
+            width: 100%;
         }
-
-        .option-button:hover {
-            background-color: #dee2e6;
-            border-color: #adb5bd;
-        }
-
-        .option-button.selected {
-            background-color: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Button Group */
-        .button-group {
-            text-align: center;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .button-group button {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 14px 30px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-weight: 600;
-            flex-grow: 1;
-            max-width: 300px;
-        }
-
-        .button-group button:hover:not(:disabled) {
-            background-color: #004a80;
-            transform: translateY(-2px);
-        }
-
-        .button-group button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        /* Results Section */
-        .results-section {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .results-section h2 {
-            margin-bottom: 20px;
-        }
-
-        #mbtiResultDisplay {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .style-description {
-            background-color: #f0f8ff;
-            border: 1px solid #cceeff;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: left;
-            margin-top: 20px;
-            line-height: 1.7;
-            font-size: 0.95em;
-            color: #444;
-        }
-
-        .submission-message {
-            margin-top: 20px;
-            padding: 10px;
+        .logo {
+            max-width: 250px; /* Adjusted for bigger logo */
+            height: auto;
             border-radius: 5px;
-            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 2.2em; /* Adjusted font size for consistency */
+            font-weight: 600; /* Poppins-semibold */
+            color: var(--primary-color); /* Changed to primary color for consistency */
+            margin-top: 10px; /* Space between logo and text title */
             text-align: center;
         }
-        .email-success {
-            background-color: #DFF2BF;
-            color: var(--success-color);
-            border: 1px solid var(--success-color);
+        /* Responsive logo size */
+        @media (max-width: 640px) {
+            .logo {
+                max-width: 180px;
+            }
         }
-        .email-error {
-            background-color: #FFBABA;
-            color: var(--error-color);
-            border: 1px solid var(--error-color);
+        .instructions { /* New class for the instructions paragraph, matching Funksioneringstyl */
+            background-color: #e7f3fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            text-align: left;
+            margin-top: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
-        .email-info {
-            background-color: #cce5ff;
-            color: #004085;
-            border: 1px solid #b8daff;
+        .button-group {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically on small screens */
+            gap: 15px; /* Space between buttons */
+            margin-top: 20px;
         }
-
+        @media (min-width: 640px) { /* For larger screens, display buttons side-by-side */
+            .button-group {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .button-group button,
+            .button-group a {
+                width: 48%; /* Adjust width to fit two buttons */
+            }
+        }
+        button, .back-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color); /* Use primary color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        button:hover {
+            background-color: #004170; /* Darker shade for hover */
+        }
+        .back-button {
+            background-color: #6c757d; /* A different color for the back button */
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        /* Style for the submission message */
+        #submission-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            background-color: #e6ffe6; /* Light green background */
+            color: var(--success-color); /* Use success color variable */
+            border: 1px solid #DFF2BF;
+        }
         .hidden {
             display: none;
         }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px auto;
-                padding: 20px;
-            }
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-            .button-group {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .button-group button {
-                max-width: 100%;
-            }
-        }
     </style>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        emailjs.init({
-            publicKey: "rES387Z_beB0IEiRm",
-        });
-    </script>
 </head>
-<body>
-    <div class="container">
-        <h1>PulseMap Persoonlikheidsgedrag Analise</h1>
-        <p class="intro-text">
-            Hierdie assessering help jou om jou persoonlikheidstipe te ontdek gebaseer op jou voorkeure in verskillende areas. Beantwoord asseblief elke vraag eerlik om die mees akkurate resultate te kry.
+<body class="bg-gray-100 min-h-screen flex items-center justify-center py-10 px-4">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-2xl">
+        <!-- Logo and Title Section -->
+        <header>
+            <div class="logo-wrapper">
+                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
+                <h1>Persoonlikheidsgedrag Analise</h1>
+            </div>
+        </header>
+        <!-- Instructions paragraph -->
+        <p class="instructions"> <!-- Applied new instructions class -->
+            Beantwoord die volgende vrae eerlik om jou persoonlikheidstipe te bepaal. Daar is geen regte of verkeerde antwoorde nie. Kies die opsie wat die beste by jou pas.
         </p>
-
-        <form id="personality-form">
-            <div class="mb-6">
-                <label for="userName" class="block text-gray-700 text-sm font-bold mb-2">Jou Naam:</label>
-                <input type="text" id="userName" name="userName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-            <div class="mb-6">
-                <label for="userEmail" class="block text-gray-700 text-sm font-bold mb-2">Jou E-pos:</label>
-                <input type="email" id="userEmail" name="userEmail" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-
-            <div id="questionsContainer">
-                </div>
-
-            <div class="button-group">
-                <button type="button" id="backButton" class="hidden">Terug</button>
-                <button type="submit" id="submitBtn">Bereken Resultate</button>
-            </div>
-            <p id="submissionMessage" class="submission-message hidden"></p>
-        </form>
-
-        <div id="resultsContainer" class="results-section hidden">
-            <h2>Jou Persoonlikheidstipe:</h2>
-            <p id="mbtiResultDisplay"></p>
-            <div id="personalityDescription" class="style-description">
-                </div>
+        <!-- Name Input -->
+        <div class="mb-6">
+            <label for="userName" class="block text-gray-700 text-sm font-semibold mb-2">Jou Naam:</label>
+            <input type="text" id="userName" placeholder="Voer jou naam hier in"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <!-- Questions Section -->
+        <div id="questionsContainer" class="space-y-6 mb-8">
+            <!-- Questions will be dynamically loaded here -->
+        </div>
+        <!-- Submit Button -->
+        <div class="button-group">
+            <button id="submitBtn">Bereken Resultate</button>
+            <a href="index.html" class="back-button hidden">Gaan terug na hoofblad</a>
+        </div>
+        <div id="submission-message" class="mt-4 p-4 rounded-md text-sm text-center hidden" role="alert"></div>
+        <!-- Results Section is now hidden by default and only used for email status, not displaying scores -->
+        <div id="resultsContainer" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-3">Jou Persoonlikheidsstipe:</h2>
+            <p id="mbtiResultDisplay" class="text-4xl font-extrabold text-blue-600 mb-4"></p>
+            <p class="text-blue-700">Jou resultate is ook per e-pos aan jou gestuur.</p>
         </div>
     </div>
-
-    <script>
-        const questionsData = [
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your Public Key
+        emailjs.init("rES387Z_beB0IEiRm");
+        const allQuestions = [
+            // Extroversion (E) vs. Introversion (I)
             {
-                "id": "e_i",
-                "question_af": "As jy op 'n partytjie is, is jy:",
-                "options_af": [
-                    {"text_af": "Meestal stil en teruggetrokke", "value": "I"},
-                    {"text_af": "Spraaksaam en uitgaande", "value": "E"}
+                id: 'q1',
+                text: 'Wanneer jy gestres is, wat help jou die meeste?',
+                options: [
+                    { text: 'Praat met vriende of familie daaroor', value: 'E', type: 'EI' },
+                    { text: 'Alleen-tyd neem om te dink en te prosesseer', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "s_n",
-                "question_af": "Stel jy meer belang in:",
-                "options_af": [
-                    {"text_af": "Die praktiese en realistiese aspekte van die lewe", "value": "S"},
-                    {"text_af": "Nuwe idees en moontlikhede", "value": "N"}
+                id: 'q2',
+                text: 'Op \'n party of sosiale byeenkoms:',
+                options: [
+                    { text: 'Gesels jy met baie mense en voel gelaai', value: 'E', type: 'EI' },
+                    { text: 'Hou jy by \'n paar mense en voel uitgeput na \'n ruk', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "t_f",
-                "question_af": "As jy besluite neem, is jy geneig om te wees:",
-                "options_af": [
-                    {"text_af": "Logies en objektief", "value": "T"},
-                    {"text_af": "Empaties en bedagsaam teenoor ander se gevoelens", "value": "F"}
+                id: 'q3',
+                text: 'Wanneer jy \'n probleem probeer oplos:',
+                options: [
+                    { text: 'Dink jy hardop en bespreek dit met ander', value: 'E', type: 'EI' },
+                    { text: 'Dink jy eers deeglik daaroor voor jy dit deel', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "j_p",
-                "question_af": "Verkies jy om:",
-                "options_af": [
-                    {"text_af": "Dinge gevestig en georganiseerd te hê", "value": "J"},
-                    {"text_af": "Jou opsies oop te hou en buigsaam te wees", "value": "P"}
+                id: 'q4',
+                text: 'Jou ideale naweek sou wees:',
+                options: [
+                    { text: 'Verskeie aktiwiteite met vriende en familie', value: 'E', type: 'EI' },
+                    { text: 'Rustige tyd tuis met \'n goeie boek of stokperdjie', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "e_i2",
-                "question_af": "Na 'n sosiale byeenkoms, voel jy gewoonlik:",
-                "options_af": [
-                    {"text_af": "Energiek en gereed vir meer", "value": "E"},
-                    {"text_af": "Uitgeput en het alleen tyd nodig", "value": "I"}
+                id: 'q5',
+                text: 'Wanneer jy nuwe mense ontmoet:',
+                options: [
+                    { text: 'Voel jy gemaklik om eerste kontak te maak', value: 'E', type: 'EI' },
+                    { text: 'Wag jy liewer dat hulle eerste nader kom', value: 'I', type: 'EI' }
+                ]
+            },
+            // Sensing (S) vs. Intuition (N)
+            {
+                id: 'q6',
+                text: 'Wanneer jy \'n nuwe projek begin:',
+                options: [
+                    { text: 'Begin jy met konkrete stappe en praktiese details', value: 'S', type: 'SN' },
+                    { text: 'Begin jy met die groot prentjie en moontlikhede', value: 'N', type: 'SN' }
                 ]
             },
             {
-                "id": "s_n2",
-                "question_af": "Watter een beskryf jou beter:",
-                "options_af": [
-                    {"text_af": "Fokus op die hede en wat werklik is", "value": "S"},
-                    {"text_af": "Dink aan toekomstige moontlikhede en abstrakte konsepte", "value": "N"}
+                id: 'q7',
+                text: 'Jy verkies instruksies wat:',
+                options: [
+                    { text: 'Stap-vir-stap en spesifiek is', value: 'S', type: 'SN' },
+                    { text: 'Die doel verduidelik sodat jy jou eie weg kan vind', value: 'N', type: 'SN' }
                 ]
             },
             {
-                "id": "t_f2",
-                "question_af": "Wanneer jy konstruktiewe kritiek moet gee, is jy:",
-                "options_af": [
-                    {"text_af": "Direk en feite-gebaseerd", "value": "T"},
-                    {"text_af": "Sagmoedig en fokus op die handhawing van harmonie", "value": "F"}
+                id: 'q8',
+                text: 'Wanneer jy \'n verhaal vertel:',
+                options: [
+                    { text: 'Gee jy akkurate details en feite', value: 'S', type: 'SN' },
+                    { text: 'Fokus jy op die betekenis en impak', value: 'N', type: 'SN' }
                 ]
             },
             {
-                "id": "j_p2",
-                "question_af": "Is jou natuurlike toestand om te wees:",
-                "options_af": [
-                    {"text_af": "Beplan en gestruktureerd", "value": "J"},
-                    {"text_af": "Spontaan en aanpasbaar", "value": "P"}
+                id: 'q9',
+                text: 'Jy vind dit meer interessant om te praat oor:',
+                options: [
+                    { text: 'Praktiese dinge en werklike ervarings', value: 'S', type: 'SN' },
+                    { text: 'Idees, teorieë en toekomsmoontlikhede', value: 'N', type: 'SN' }
+                ]
+            },
+            {
+                id: 'q10',
+                text: 'Wanneer jy \'n besluit moet maak:',
+                options: [
+                    { text: 'Kyk jy na wat in die verlede gewerk het', value: 'S', type: 'SN' },
+                    { text: 'Ondersoek jy nuwe en innoverende opsies', value: 'N', type: 'SN' }
+                ]
+            },
+            // Thinking (T) vs. Feeling (F)
+            {
+                id: 'q11',
+                text: 'Wanneer jy \'n dispuut moet oplos:',
+                options: [
+                    { text: 'Fokus jy op feite en logiese oplossings', value: 'T', type: 'TF' },
+                    { text: 'Oorweeg jy hoe almal daaroor sal voel', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q12',
+                text: 'Jy maak besluite hoofsaaklik gebaseer op:',
+                options: [
+                    { text: 'Wat logies en effektief is', value: 'T', type: 'TF' },
+                    { text: 'Wat in lyn is met jou waardes en ander se behoeftes', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q13',
+                text: 'Wanneer jy kritiek gee:',
+                options: [
+                    { text: 'Is jy reguit en fokus op wat verbeter kan word', value: 'T', type: 'TF' },
+                    { text: 'Probeer jy dit sagkens sê om nie gevoelens te seer nie', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q14',
+                text: 'Jy waardeer mense wat:',
+                options: [
+                    { text: 'Regverdig en konsekwent is', value: 'T', type: 'TF' },
+                    { text: 'Empaties en verstaan is', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q15',
+                text: 'In \'n spanomgewing:',
+                options: [
+                    { text: 'Fokus jy op doeltreffendheid en resultate', value: 'T', type: 'TF' },
+                    { text: 'Maak jy seker almal voel ingesluit en gewaardeer', value: 'F', type: 'TF' }
+                ]
+            },
+            // Judging (J) vs. Perceiving (P)
+            {
+                id: 'q16',
+                text: 'Jou werkruimte is gewoonlik:',
+                options: [
+                    { text: 'Netjies en georganiseer', value: 'J', type: 'JP' },
+                    { text: '\'n Bietjie rommelig maar jy weet waar alles is', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q17',
+                text: 'Wanneer jy vakansie beplan:',
+                options: [
+                    { text: 'Maak jy \'n gedetailleerde roete en besprekings vooraf', value: 'J', type: 'JP' },
+                    { text: 'Kyk jy wat gebeur en besluit spontaan', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q18',
+                text: 'Jy verkies om te werk:',
+                options: [
+                    { text: 'Met duidelike sperdatums en strukture', value: 'J', type: 'JP' },
+                    { text: 'Met buigsaamheid en oop keuses', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q19',
+                text: 'Wanneer jy \'n taak kry:',
+                options: [
+                    { text: 'Begin jy gou sodat jy betyds kan klaarmaak', value: 'J', type: 'JP' },
+                    { text: 'Werk jy die beste onder druk naby die sperdatum', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q20',
+                text: 'Jy voel meer gemaklik wanneer:',
+                options: [
+                    { text: 'Planne gemaak is en dinge bepaal is', value: 'J', type: 'JP' },
+                    { text: 'Opsies oop gehou word vir verandering', value: 'P', type: 'JP' }
                 ]
             }
         ];
-
-        const resultsDescriptions_af = {
-            "ISTJ": "Prakties, feitelik en logies. Hulle is verantwoordelik en georganiseerd, en verkies duidelike riglyne en tradisies.",
-            "ISFJ": "Warm, bedagsaam en pligsgetrou. Hulle is detail-georiënteerd en toegewyd aan hul verantwoordelikhede.",
-            "INFJ": "Insiggewend, empaties en georganiseerd. Hulle is visioenêre wat diep omgee vir ander en sterk waardes het.",
-            "INTJ": "Strategies, onafhanklik en logies. Hulle word gedryf deur 'n behoefte aan bevoegdheid en innovasie.",
-            "ISTP": "Prakties, oplettend en spontaan. Hulle is praktiese probleemoplossers wat dit geniet om te ondersoek hoe dinge werk.",
-            "ISFP": "Sagmoedig, artisties en aanpasbaar. Hulle leef in die hede en waardeer skoonheid en sensoriese ervarings.",
-            "INFP": "Idealisties, kreatief en deernisvol. Hulle word gedryf deur hul waardes en soek betekenis in die lewe.",
-            "INTP": "Analities, nuuskierig en innoverend. Hulle is logiese probleemoplossers wat lief is vir teoretiese konsepte en abstrakte idees.",
-            "ESTP": "Energiek, prakties en aksie-georiënteerd. Hulle is waaghalsig en floreer in dinamiese omgewings.",
-            "ESFP": "Uitgaande, spontaan en lief vir pret. Hulle geniet dit om die middelpunt van aandag te wees en in die oomblik te leef.",
-            "ENFP": "Entoesiasties, kreatief en gesellig. Hulle is inspirerend en geniet dit om nuwe idees en moontlikhede te ondersoek.",
-            "ENTP": "Innoverend, nuuskierig en spitsvondig. Hulle geniet debatte en om gevestigde norme uit te daag.",
-            "ESTJ": "Georganiseerd, beslissend en tradisioneel. Hulle is natuurlike leiers wat doeltreffendheid en struktuur waardeer.",
-            "ESFJ": "Warm, samewerkend en gewild. Hulle is prakties en fokus op die hulp van ander en die handhawing van sosiale harmonie.",
-            "ENFJ": "Charismaties, empaties en inspirerend. Hulle is natuurlike leiers wat passievol is oor die hulp van ander om te groei.",
-            "ENTJ": "Oorheersend, strategies en doeltreffend. Hulle is natuurlike leiers wat dit geniet om mense te organiseer en te rig."
-        };
-
-        let selectedAnswers = {};
-        let currentQuestionIndex = 0;
-
-        const form = document.getElementById('personality-form');
         const questionsContainer = document.getElementById('questionsContainer');
         const submitBtn = document.getElementById('submitBtn');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const mbtiResultDisplay = document.getElementById('mbtiResultDisplay');
-        const personalityDescription = document.getElementById('personalityDescription');
-        const backButton = document.getElementById('backButton');
-        const submissionMessage = document.getElementById('submissionMessage');
+        const backButton = document.querySelector('.back-button');
+        const submissionMessage = document.getElementById('submission-message');
+        const userNameInput = document.getElementById('userName');
+
+        let shuffledQuestions = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         function showSubmissionMessage(message, type) {
             submissionMessage.textContent = message;
-            submissionMessage.className = `submission-message ${type ? `email-${type}` : ''}`;
-            submissionMessage.classList.remove('hidden');
+            submissionMessage.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+            if (type === 'success') {
+                submissionMessage.classList.add('bg-green-100', 'text-green-800');
+            } else if (type === 'error') {
+                submissionMessage.classList.add('bg-red-100', 'text-red-800');
+            } else if (type === 'info') { // Added info type for in-progress messages
+                submissionMessage.classList.add('bg-blue-100', 'text-blue-800');
+            }
+        }
+
+        function validateQuestionsRealTime() {
+            let hasUnansweredQuestions = false;
+            let firstUnansweredQuestionElement = null;
+            shuffledQuestions.forEach((question, index) => {
+                const questionDiv = document.querySelector(`#questionsContainer > div:nth-child(${index + 1})`);
+                const radios = document.querySelectorAll(`input[name="question-${question.id}"]:checked`);
+                if (radios.length === 0) {
+                    if (questionDiv) {
+                        questionDiv.classList.add('border-l-4', 'border-error');
+                        questionDiv.classList.remove('border-custom-blue');
+                    }
+                    hasUnansweredQuestions = true;
+                    if (!firstUnansweredQuestionElement) {
+                        firstUnansweredQuestionElement = questionDiv;
+                    }
+                } else {
+                    if (questionDiv) {
+                        questionDiv.classList.remove('border-error');
+                        questionDiv.classList.add('border-l-4', 'border-custom-blue');
+                    }
+                }
+            });
+            if (hasUnansweredQuestions) {
+                showSubmissionMessage('Beantwoord asseblief alle vrae voordat jy indien.', 'error');
+                if (firstUnansweredQuestionElement) {
+                    firstUnansweredQuestionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return false;
+            } else {
+                submissionMessage.classList.add('hidden');
+                return true;
+            }
+        }
+
+        function calculatePersonality(answers) {
+            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            shuffledQuestions.forEach((question) => {
+                const selectedOptionValue = answers[`question-${question.id}`];
+                if (selectedOptionValue) {
+                    scores[selectedOptionValue]++;
+                }
+            });
+
+            let personalityType = '';
+            personalityType += (scores.E >= scores.I) ? 'E' : 'I';
+            personalityType += (scores.S >= scores.N) ? 'S' : 'N';
+            personalityType += (scores.T >= scores.F) ? 'T' : 'F';
+            personalityType += (scores.J >= scores.P) ? 'J' : 'P';
+            return { personalityType };
         }
 
         function renderQuestions() {
-            questionsContainer.innerHTML = ''; // Clear previous questions
-            if (currentQuestionIndex < questionsData.length) {
-                const q = questionsData[currentQuestionIndex];
-                const questionCard = document.createElement('div');
-                questionCard.classList.add('question-card');
-                questionCard.innerHTML = `
-                    <p>${currentQuestionIndex + 1}. ${q.question_af}</p>
-                    <div class="options-grid">
-                        ${q.options_af.map(option => `
-                            <button type="button" class="option-button" data-value="${option.value}">
-                                ${option.text_af}
-                            </button>
+            shuffledQuestions = shuffleArray([...allQuestions]);
+            questionsContainer.innerHTML = '';
+            shuffledQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-5 rounded-lg shadow-sm border-l-4 border-custom-blue';
+                questionDiv.setAttribute('data-question-id', question.id);
+                questionDiv.innerHTML = `
+                    <p class="text-gray-800 font-semibold mb-3">Vraag ${index + 1}: ${question.text}</p>
+                    <div class="space-y-2">
+                        ${question.options.map(option => `
+                            <label class="flex items-center p-3 border border-gray-300 rounded-md cursor-pointer hover:bg-blue-100 transition duration-200 ease-in-out">
+                                <input type="radio" name="question-${question.id}" value="${option.value}" data-question-text="${question.text}" data-option-text="${option.text}" class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-3 text-gray-700">${option.text}</span>
+                            </label>
                         `).join('')}
                     </div>
                 `;
-                questionsContainer.appendChild(questionCard);
-
-                // Highlight previously selected answer if exists
-                if (selectedAnswers[q.id]) {
-                    questionCard.querySelector(`button[data-value="${selectedAnswers[q.id]}"]`).classList.add('selected');
-                }
-
-                questionCard.querySelectorAll('.option-button').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        // Deselect any previously selected button in this question
-                        questionCard.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
-                        // Select the clicked button
-                        event.target.classList.add('selected');
-                        selectedAnswers[q.id] = event.target.dataset.value;
-
-                        // Automatically move to the next question
-                        setTimeout(() => {
-                            if (currentQuestionIndex < questionsData.length - 1) {
-                                currentQuestionIndex++;
-                                renderQuestions();
-                                backButton.classList.remove('hidden');
-                            } else {
-                                submitBtn.classList.remove('hidden');
-                            }
-                        }, 300); // Small delay for visual feedback
-                    });
+                questionsContainer.appendChild(questionDiv);
+                const radioInputs = questionDiv.querySelectorAll(`input[name="question-${question.id}"]`);
+                radioInputs.forEach(radio => {
+                    radio.addEventListener('change', validateQuestionsRealTime);
                 });
-            } else {
-                // All questions displayed, show submit button
-                submitBtn.classList.remove('hidden');
-            }
-            updateNavigationButtons();
+            });
         }
 
-        function updateNavigationButtons() {
-            if (currentQuestionIndex > 0) {
-                backButton.classList.remove('hidden');
-            } else {
-                backButton.classList.add('hidden');
-            }
-            if (currentQuestionIndex === questionsData.length) {
-                submitBtn.classList.remove('hidden');
-            } else {
-                submitBtn.classList.add('hidden');
-            }
-        }
-
-        backButton.addEventListener('click', () => {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                renderQuestions();
-            }
-        });
-
-        function calculatePersonality(answers) {
-            let counts = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-            for (const key in answers) {
-                const type = answers[key];
-                if (counts.hasOwnProperty(type)) {
-                    counts[type]++;
-                }
-            }
-
-            let personalityType = "";
-            personalityType += (counts.E >= counts.I) ? "E" : "I";
-            personalityType += (counts.S >= counts.N) ? "S" : "N";
-            personalityType += (counts.T >= counts.F) ? "T" : "F";
-            personalityType += (counts.J >= counts.P) ? "J" : "P";
-
-            return { personalityType: personalityType, counts: counts };
-        }
-
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const userName = document.getElementById('userName').value;
-            const userEmail = document.getElementById('userEmail').value;
-
-            if (!userName || !userEmail) {
-                showSubmissionMessage("Vul asseblief jou naam en e-pos in.", 'error');
+        submitBtn.addEventListener('click', async () => {
+            const userName = userNameInput.value.trim();
+            if (!userName) {
+                showSubmissionMessage('Vul asseblief jou naam in.', 'error');
                 return;
             }
 
-            if (Object.keys(selectedAnswers).length !== questionsData.length) {
-                showSubmissionMessage('Beantwoord asseblief alle vrae voordat resultate bereken word.', 'error');
+            if (!validateQuestionsRealTime()) {
+                return;
+            }
+
+            const selectedAnswers = {};
+            let multipleAnswersSelected = false;
+            shuffledQuestions.forEach(question => {
+                const radios = document.querySelectorAll(`input[name="question-${question.id}"]:checked`);
+                if (radios.length === 1) {
+                    selectedAnswers[`question-${question.id}`] = radios[0].value;
+                } else if (radios.length > 1) {
+                    multipleAnswersSelected = true;
+                }
+            });
+
+            if (multipleAnswersSelected) {
+                showSubmissionMessage('Fout: Meer as een antwoord is vir \'n vraag gekies. Kies asseblief slegs een antwoord per vraag.', 'error');
                 return;
             }
 
             const { personalityType } = calculatePersonality(selectedAnswers);
 
             submitBtn.disabled = true;
-            submitBtn.textContent = "Besig om in te dien...";
+            submitBtn.textContent = "Stuur tans...";
             showSubmissionMessage("Jou resultate word gestuur...", 'info');
 
             const templateParams = {
-                client_name: userName, // Changed 'user_name' to 'client_name'
+                recipient_name: userName, // Changed variable name
                 personality_result: personalityType
             };
 
             try {
                 const response = await emailjs.send('service_b087h4p', 'template_n84drg8', templateParams);
-                console.log('E-pos suksesvol gestuur!', response.status, response.text);
+                console.log('Email sent successfully!', response.status, response.text);
                 showSubmissionMessage('Jou resultate is suksesvol ingedien!', 'success');
                 
                 // Update results display
                 document.getElementById('mbtiResultDisplay').textContent = personalityType;
-                document.getElementById('personalityDescription').textContent = resultsDescriptions_af[personalityType] || "Geen beskrywing beskikbaar nie.";
                 document.getElementById('resultsContainer').classList.remove('hidden');
 
                 // Hide form elements
                 userNameInput.closest('.mb-6').classList.add('hidden'); // Hide the name input group
-                document.getElementById('userEmail').closest('.mb-6').classList.add('hidden'); // Hide the email input group
                 questionsContainer.classList.add('hidden');
                 submitBtn.classList.add('hidden');
                 backButton.classList.remove('hidden');
 
             } catch (error) {
-                console.error('Kon nie e-pos stuur nie:', error);
+                console.error('Failed to send email:', error);
                 showSubmissionMessage('Kon nie resultate indien nie. Probeer asseblief weer.', 'error');
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Bereken Resultate";
