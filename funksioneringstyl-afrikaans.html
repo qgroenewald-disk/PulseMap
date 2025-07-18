@@ -29,572 +29,475 @@
             padding: 20px;
         }
         .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        header {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centered for the logo */
-            border-bottom: 2px solid var(--primary-color);
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            padding-left: 0; /* Remove left padding for centering */
-        }
-        .logo-and-title-wrapper {
-            display: flex;
-            flex-direction: column; /* Stack logo and title vertically */
-            justify-content: center; /* Center logo */
-            align-items: center;
-            gap: 15px; /* Adjust gap between logo and title */
-            margin-bottom: 15px;
-            width: 100%;
-        }
-        .logo {
-            max-width: 250px; /* Adjusted for bigger logo */
-            height: auto;
-            border-radius: 5px;
-            flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added a subtle shadow */
-        }
-        /* Media query vir kleiner skerms (bv. mobiele fone) */
-        @media (max-width: 640px) {
-            .logo {
-                max-width: 180px; /* Maak logo kleiner op mobiele fone */
-            }
-            .logo-and-title-wrapper {
-                gap: 10px;
-            }
-        }
-        .logo-and-title-wrapper h1 {
-            font-size: 2.2em; /* Adjusted font size for consistency */
-            font-weight: 600; /* Poppins-semibold */
+        h1, h2 {
             color: var(--primary-color);
-            margin-top: 10px; /* Space between logo and text title */
             text-align: center;
+            margin-bottom: 20px;
         }
-        .instructions {
-            background-color: #e7f3fe;
-            border-left: 4px solid var(--primary-color);
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 0.95em;
-            text-align: left;
-            margin-top: 0;
-            width: 100%;
-            box-sizing: border-box;
+        .intro-text, .results-description {
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: #555;
         }
         .form-group {
             margin-bottom: 20px;
         }
         .form-group label {
             display: block;
+            margin-bottom: 8px;
             font-weight: 600;
-            margin-bottom: 5px;
+            color: var(--text-color);
         }
-        .form-group input[type="text"] {
-            width: 100%;
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid var(--border-color);
-            border-radius: 5px;
+            border-radius: 4px;
+            font-size: 16px;
             box-sizing: border-box;
         }
-        .question-block {
-            margin-bottom: 30px;
-            padding: 20px;
+        .question-card {
+            background-color: #f9f9f9;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
         }
-        .question-block h3 {
-            margin-top: 0;
+        .question-card p {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
             font-size: 1.1em;
         }
-        .answer-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
         }
-        .answer-option select {
-            width: 70px;
-            padding: 8px;
-            margin-right: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            text-align: center;
-            background-color: #fff;
+        .option-button {
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            padding: 12px 15px;
+            border-radius: 6px;
             cursor: pointer;
-        }
-        .answer-option label {
-            flex: 1;
-        }
-        .error-message {
-            color: var(--error-color);
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: none;
-        }
-        #form-error {
+            font-size: 0.95em;
             text-align: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #FFD2D2;
-            border-radius: 5px;
+            transition: all 0.3s ease;
+            color: #444;
         }
-        .button-group {
-            display: flex;
-            flex-direction: column; /* Stack buttons vertically on small screens */
-            gap: 15px; /* Space between buttons */
-            margin-top: 20px;
+        .option-button:hover {
+            background-color: #d0d0d0;
+            border-color: #bbb;
         }
-        @media (min-width: 640px) { /* For larger screens, display buttons side-by-side */
-            .button-group {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .button-group button,
-            .button-group a {
-                width: 48%; /* Adjust width to fit two buttons */
-            }
-        }
-        button, .back-button {
-            display: block;
-            width: 100%;
-            padding: 15px;
+        .option-button.selected {
             background-color: var(--primary-color);
             color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center; /* Ensure text is centered for anchor buttons */
-            text-decoration: none; /* Remove underline for anchor buttons */
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        button:hover, .back-button:hover {
-            background-color: #004170;
-        }
-        .back-button {
-            background-color: #6c757d; /* A different color for the back button */
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-        .hidden {
-            display: none;
-        }
-        #results-container {
+        .button-group {
+            text-align: center;
             margin-top: 30px;
+        }
+        .button-group button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            margin: 0 10px;
+        }
+        .button-group button:hover:not(:disabled) {
+            background-color: #004a80;
+            transform: translateY(-2px);
+        }
+        .button-group button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .results-section {
+            margin-top: 40px;
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
-        }
-        #results-text {
-            margin-top: 15px;
-            font-size: 1.1em;
-        }
-        #email-status {
             text-align: center;
+        }
+        .results-scores {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .score-item {
+            background-color: #e6f2ff;
+            border: 1px solid #cce0ff;
+            border-radius: 8px;
+            padding: 15px 25px;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .score-item h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+        .score-item p {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin: 5px 0 0;
+        }
+        .style-description {
+            background-color: #f0f8ff;
+            border: 1px solid #cceeff;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
             margin-top: 20px;
-            font-size: 1.1em;
-            padding: 15px;
+            line-height: 1.7;
+            font-size: 0.95em;
+            color: #444;
+        }
+        .submission-message {
+            margin-top: 20px;
+            padding: 10px;
             border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
         }
         .email-success {
             background-color: #DFF2BF;
             color: var(--success-color);
+            border: 1px solid var(--success-color);
         }
         .email-error {
             background-color: #FFBABA;
             color: var(--error-color);
+            border: 1px solid var(--error-color);
         }
-        /* Style for the submission message */
-        #submission-message {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            background-color: #e6ffe6; /* Light green background */
-            color: #4F8A10; /* Success color */
-            border: 1px solid #DFF2BF;
+        .email-info {
+            background-color: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px auto;
+                padding: 15px;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .button-group button {
+                width: 100%;
+                margin: 10px 0;
+            }
         }
     </style>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
-        // Initialiseer EmailJS met jou Public Key
-        (function(){
-            emailjs.init({
-                publicKey: "rES387Z_beB0IEiRm", // Vervang met jou werklike EmailJS Public Key
-            });
-        })();
+        emailjs.init({
+            publicKey: "rES387Z_beB0IEiRm",
+        });
     </script>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo-and-title-wrapper">
-                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
-                <h1>Funksioneringstyl Analise</h1>
-            </div>
-            <p class="instructions">
-                Vir elke vraag hieronder, rangskik die vier stellings van **1 tot 4**.
-                <br>**1** = Beskryf my die beste; **4** = Beskryf my die minste.
-                <br>Elke nommer (1, 2, 3, 4) mag slegs **een keer per vraag** gebruik word.
-            </p>
-        </header>
+        <h1>PulseMap Funksioneringstyl Analise</h1>
+        <p class="intro-text">
+            Hierdie assessering help jou om jou natuurlike funksioneringstyl te verstaan. Lees elke stelling sorgvuldig en kies die opsie wat jou die beste beskryf. Daar is geen regte of verkeerde antwoorde nie, net eerlike refleksies.
+        </p>
+
         <form id="disc-form">
             <div class="form-group">
-                <label for="userName">Volle Naam:</label>
+                <label for="userName">Jou Naam:</label>
                 <input type="text" id="userName" name="userName" required>
             </div>
-            <div id="questions-container">
-                </div>
-            <div id="form-error" class="error-message"></div>
-            <div class="button-group">
-                <button type="submit" id="submit-btn">Dien in en Sien Resultate</button>
-                <a href="index.html" class="back-button hidden">Gaan terug na hoofblad</a>
+            <div class="form-group">
+                <label for="userEmail">Jou E-pos:</label>
+                <input type="email" id="userEmail" name="userEmail" required>
             </div>
+
+            <div id="questionsContainer">
+                </div>
+
+            <div class="button-group">
+                <button type="button" id="backButton" class="hidden">Terug</button>
+                <button type="submit" id="submitBtn">Dien in en Sien Resultate</button>
+            </div>
+            <p id="submissionMessage" class="submission-message hidden"></p>
         </form>
-        <div id="submission-message" class="hidden"></div>
-        <!-- Results container is now hidden by default and only used for email status, not displaying scores -->
-        <div id="results-container" class="hidden">
-            <div id="results-text"></div>
-            <div id="email-status"></div>
+
+        <div id="resultsContainer" class="results-section hidden">
+            <h2>Jou Funksioneringstyl Resultate</h2>
+            <div class="results-scores">
+                <div class="score-item">
+                    <h3>Dominansie (D)</h3>
+                    <p id="dScore">0</p>
+                </div>
+                <div class="score-item">
+                    <h3>Invloed (I)</h3>
+                    <p id="iScore">0</p>
+                </div>
+                <div class="score-item">
+                    <h3>Stabiliteit (S)</h3>
+                    <p id="sScore">0</p>
+                </div>
+                <div class="score-item">
+                    <h3>Noukeurigheid (C)</h3>
+                    <p id="cScore">0</p>
+                </div>
+            </div>
+            <div id="discStyleDescription" class="style-description">
+                <p>Gebaseer op jou tellings, sal jou primêre funksioneringstyl en die eienskappe daarvan hier verskyn.</p>
+            </div>
         </div>
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Data geneem uit die voorsiende dokument
-            const questions = [
-                {
-                    questionText: "'n Mens sou die manier waarop ek in my verhoudings met ander mense optree, kon beskryf as:",
-                    options: [
-                        { text: "Saggeaard, goedhartig", value: "S" },
-                        { text: "Oordeelkundig, versigtig", value: "C" },
-                        { text: "Beslis, selfgeldend", value: "D" },
-                        { text: "Oorspronklik, vol planne", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "Wanneer die lewe dinge oor my pad bring, is ek gewoonlik:",
-                    options: [
-                        { text: "Ondernemend, benut geleenthede", value: "D" },
-                        { text: "Nugter, speel veilig", value: "C" },
-                        { text: "Sorgvry, opgewek", value: "I" },
-                        { text: "Gelykmatig, geduldig", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "In my samewerking met ander mense sal ek normaalweg as volg optree:",
-                    options: [
-                        { text: "Onderhandelend, diplomaties", value: "I" },
-                        { text: "Mededingend, kompeterend", value: "D" },
-                        { text: "Bedagsaam, sensitief vir ander", value: "S" },
-                        { text: "Stimulerend, aktiverend", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "Wanneer ek oor my lewe dink beleef ek myself as:",
-                    options: [
-                        { text: "Vergenoegd, tevrede", value: "S" },
-                        { text: "Op pad na duidelike doelwitte", value: "D" },
-                        { text: "Kreatief, vol nuwe idees", value: "I" },
-                        { text: "Deeglik, georganiseerd", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "Ek sal myself beskryf as:",
-                    options: [
-                        { text: "Doelgerig, vasberade", value: "D" },
-                        { text: "Akkuraat, presies", value: "C" },
-                        { text: "Kalm, vredeliewend", value: "S" },
-                        { text: "Vol lewenslus, prettig", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "In my sosiale omgang met ander mense sal ek:",
-                    options: [
-                        { text: "Ander betrek en laat meedoen", value: "I" },
-                        { text: "Konfronterend wees, argumenteer", value: "D" },
-                        { text: "Inskiklik, onderdanig wees", value: "S" },
-                        { text: "Gereserveerd, beheers wees", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "Die styl van menswees wat ek uitstraal, kan beskryf word as:",
-                    options: [
-                        { text: "Goedgeaard, aangenaam", value: "S" },
-                        { text: "Uitgelate, opgeruimd", value: "I" },
-                        { text: "Energiek, entoesiasties", value: "I" },
-                        { text: "Gedissiplineerd, gestruktureerd", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "In my kommunikasie met ander mense is ek:",
-                    options: [
-                        { text: "Uitgesproke/stel eie standpunt duidelik", value: "D" },
-                        { text: "Entoesiasties, positief", value: "I" },
-                        { text: "Oop vir oortuiging, tentatief", value: "S" },
-                        { text: "Logies, beredeneerd", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "Wanneer dit by besluitneming kom, sal ek myself beskryf as:",
-                    options: [
-                        { text: "Gekontroleerd, deurdag", value: "C" },
-                        { text: "Beslis, ferm", value: "D" },
-                        { text: "Impulsief, spontaan", value: "I" },
-                        { text: "Tegemoetkomend, aanpasbaar", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "Ek sien en beleef myself as 'n persoon wat:",
-                    options: [
-                        { text: "Ondernemend is, uitdagings soek", value: "D" },
-                        { text: "Oordeelkundig is (kan onderskei)", value: "C" },
-                        { text: "Uitgaande is, uitreik na ander", value: "I" },
-                        { text: "Gematigd is, uiterstes vermy", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "Ek dink aan myself as 'n persoon wat:",
-                    options: [
-                        { text: "Ekspressief, eerlik oor my gevoelens is", value: "I" },
-                        { text: "Opreg is, doen wat reg is", value: "C" },
-                        { text: "Toonaangewend, in beheer is", value: "D" },
-                        { text: "Deelnemend, samewerkend is", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "Ek is:",
-                    options: [
-                        { text: "Uitgaande, ingestel op ander", value: "I" },
-                        { text: "Pligsgetrou, hou by afsprake", value: "C" },
-                        { text: "Spanspeler, werk saam", value: "S" },
-                        { text: "Doelgerig, weet wat ek wil hê", value: "D" }
-                    ]
-                },
-                {
-                    questionText: "Ek doen dinge gewoonlik:",
-                    options: [
-                        { text: "Bepland, takties", value: "C" },
-                        { text: "Gelate, gee maklik toe", value: "S" },
-                        { text: "Opgeruimd, blymoedig", value: "I" },
-                        { text: "Ferm en met oortuiging", value: "D" }
-                    ]
-                },
-                {
-                    questionText: "Ek sal my geaardheid beskryf as:",
-                    options: [
-                        { text: "Innemend (trek ander aan)", value: "I" },
-                        { text: "Selfondersoekend, introspektief", value: "C" },
-                        { text: "Selfversekerd, invloedryk", "value": "D" },
-                        { text: "Standvastig, voorspelbaar", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "My lewensbenadering kan beskryf word met:",
-                    options: [
-                        { text: "Verantwoordelik, pligsgetrou", value: "C" },
-                        { text: "Ondernemend, skeppend", value: "D" },
-                        { text: "Optimisties, positief", value: "I" },
-                        { text: "Deeglik, georganiseerd", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "As ek oor myself dink in verhouding met andere, sien ek myself as:",
-                    options: [
-                        { text: "Selfstandig, onafhanklik", value: "D" },
-                        { text: "Erkentlik, eerbiedig", value: "S" },
-                        { text: "Hulpvaardig, ondersteunend", value: "S" },
-                        { text: "Inspirerend, motiverend", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "Een van my eienskappe waaroor ek goed voel is, is die feit dat ek:",
-                    options: [
-                        { text: "Aanhoudend is, nie maklik opgee nie", value: "D" },
-                        { text: "Lojaal/toegewyd teenoor ander is", value: "S" },
-                        { text: "Opgewek is, van lekker dinge hou", value: "I" },
-                        { text: "Konsensieus, pligsgetrou is", "value": "C" }
-                    ]
-                },
-                {
-                    questionText: "Een eienskap van my wat nie altyd so positief deur ander ontvang word nie, is die feit dat ek soms:",
-                    options: [
-                        { text: "Kieskeurig, puntenerig is", value: "C" },
-                        { text: "Op die man af/reguit is", "value": "D" },
-                        { text: "Té tegemoetkomend/inskiklik is", value: "S" },
-                        { text: "Mense beïnvloed met my entoesiasme", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "In my hantering van mense is ek:",
-                    options: [
-                        { text: "Onpartydig, onbevooroordeeld", value: "C" },
-                        { text: "Simpatiek, vol medelye", value: "S" },
-                        { text: "Gesagvol, sterk", value: "D" },
-                        { text: "Joviaal, hartlik", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "Een van my eienskappe waarop mense kan peiltrek, is die feit dat ek:",
-                    options: [
-                        { text: "Ander kan oortuig/opgewonde maak", value: "I" },
-                        { text: "Noukeurig, presies is", value: "C" },
-                        { text: "Gelykmatig en bedaard is", value: "S" },
-                        { text: "Aanhoudend is, vasbyt", value: "D" }
-                    ]
-                }
-            ];
-            const questionsContainer = document.getElementById('questions-container');
+        document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('disc-form');
-            const formError = document.getElementById('form-error');
-            const submissionMessage = document.getElementById('submission-message');
-            const submitBtn = document.getElementById('submit-btn');
-            const backButton = document.querySelector('.back-button');
-            const scoring = { 1: 4, 2: 3, 3: 2, 4: 1 };
+            const questionsContainer = document.getElementById('questionsContainer');
+            const submitBtn = document.getElementById('submitBtn');
+            const backButton = document.getElementById('backButton');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const submissionMessage = document.getElementById('submissionMessage');
+            let currentQuestionIndex = 0;
+            let answers = {}; // Stores selected options for each question
+            let questionsData = []; // To store questions fetched from JSON
 
-            function generateDropdownOptions() {
-                let optionsHtml = '<option value="">Kies</option>';
-                for (let i = 1; i <= 4; i++) {
-                    optionsHtml += `<option value="${i}">${i}</option>`;
-                }
-                return optionsHtml;
+            function showSubmissionMessage(message, type) {
+                submissionMessage.textContent = message;
+                submissionMessage.className = `submission-message ${type ? `email-${type}` : ''}`;
+                submissionMessage.classList.remove('hidden');
             }
 
-            function validateQuestion(questionIndex) {
-                const inputs = Array.from(document.getElementsByName(`q${questionIndex}`));
-                const values = inputs.map(input => input.value).filter(v => v !== '');
-                const valueSet = new Set(values);
-                const errorEl = document.getElementById(`q-error-${questionIndex}`);
-                errorEl.style.display = 'none';
-
-                if (values.length !== 4) {
-                    errorEl.textContent = "Alle opsies vir hierdie vraag moet ingevul word (1-4).";
-                    errorEl.style.display = 'block';
-                    return false;
-                } else if (valueSet.size !== 4) {
-                    errorEl.textContent = "Elke nommer (1, 2, 3, 4) mag slegs een keer per vraag gebruik word.";
-                    errorEl.style.display = 'block';
-                    return false;
-                }
-                return true;
-            }
+            // Fetch questions from JSON file
+            fetch('functioning_style_questions.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    questionsData = data;
+                    generateQuestions();
+                })
+                .catch(error => {
+                    console.error('Error loading questions:', error);
+                    questionsContainer.innerHTML = '<p style="color: red; text-align: center;">Fout met laai van vrae. Probeer asseblief later weer.</p>';
+                    submitBtn.disabled = true;
+                });
 
             function generateQuestions() {
-                questions.forEach((q, index) => {
-                    const questionBlock = document.createElement('div');
-                    questionBlock.className = 'question-block';
-                    questionBlock.id = `question-${index}`;
-                    let optionsHTML = q.options.map((opt, optIndex) => `
-                        <div class="answer-option">
-                            <select id="q${index}_opt${optIndex}" name="q${index}" data-disc="${opt.value}" required>
-                                ${generateDropdownOptions()}
-                            </select>
-                            <label for="q${index}_opt${optIndex}">${opt.text}</label>
+                questionsContainer.innerHTML = ''; // Clear previous questions
+                if (currentQuestionIndex < questionsData.length) {
+                    const q = questionsData[currentQuestionIndex];
+                    const questionCard = document.createElement('div');
+                    questionCard.classList.add('question-card');
+                    questionCard.innerHTML = `
+                        <p>${currentQuestionIndex + 1}. ${q.question_af}</p>
+                        <div class="options-grid">
+                            ${q.options.map((option, index) => `
+                                <button type="button" class="option-button" data-value="${option.value}" data-type="${option.type}">
+                                    ${option.text_af}
+                                </button>
+                            `).join('')}
                         </div>
-                    `).join('');
-                    questionBlock.innerHTML = `
-                        <h3>Vraag ${index + 1}: ${q.questionText}</h3>
-                        ${optionsHTML}
-                        <div id="q-error-${index}" class="error-message"></div>
                     `;
-                    questionsContainer.appendChild(questionBlock);
-                    const selectElements = questionBlock.querySelectorAll('select');
-                    selectElements.forEach(select => {
-                        select.addEventListener('change', () => {
-                            const currentQuestionInputs = Array.from(questionBlock.querySelectorAll('select'));
-                            const allSelected = currentQuestionInputs.every(input => input.value !== '');
-                            if (allSelected) {
-                                validateQuestion(index);
-                            } else {
-                                document.getElementById(`q-error-${index}`).style.display = 'none';
-                            }
+                    questionsContainer.appendChild(questionCard);
+
+                    // Add event listeners to option buttons
+                    questionCard.querySelectorAll('.option-button').forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            // Deselect any previously selected button in this question
+                            questionCard.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+                            // Select the clicked button
+                            event.target.classList.add('selected');
+                            answers[currentQuestionIndex] = {
+                                value: event.target.dataset.value,
+                                type: event.target.dataset.type
+                            };
+                            // Automatically move to the next question
+                            setTimeout(() => {
+                                if (currentQuestionIndex < questionsData.length - 1) {
+                                    currentQuestionIndex++;
+                                    generateQuestions();
+                                    backButton.classList.remove('hidden');
+                                } else {
+                                    // All questions answered
+                                    submitBtn.classList.remove('hidden');
+                                }
+                            }, 300); // Small delay for visual feedback
                         });
                     });
+                } else {
+                    // All questions displayed, show submit button
+                    submitBtn.classList.remove('hidden');
+                }
+                updateNavigationButtons();
+            }
+
+            function updateNavigationButtons() {
+                if (currentQuestionIndex > 0) {
+                    backButton.classList.remove('hidden');
+                } else {
+                    backButton.classList.add('hidden');
+                }
+                if (currentQuestionIndex === questionsData.length) {
+                    submitBtn.classList.remove('hidden');
+                } else {
+                    submitBtn.classList.add('hidden');
+                }
+            }
+
+            backButton.addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    generateQuestions();
+                }
+            });
+
+            function calculateScores() {
+                let scores = { D: 0, I: 0, S: 0, C: 0 };
+                Object.values(answers).forEach(answer => {
+                    if (answer.type && scores.hasOwnProperty(answer.type)) {
+                        scores[answer.type] += parseInt(answer.value);
+                    }
                 });
+                return scores;
+            }
+
+            function getDiscStyleDescription(scores) {
+                // Determine primary style
+                let primaryStyle = '';
+                let maxScore = -Infinity;
+
+                for (const style in scores) {
+                    if (scores[style] > maxScore) {
+                        maxScore = scores[style];
+                        primaryStyle = style;
+                    }
+                }
+
+                let description = '';
+                switch (primaryStyle) {
+                    case 'D':
+                        description = `
+                            <h3>Dominansie (D) Styl Eienskappe:</h3>
+                            <p>Individue met 'n hoë D-telling is dikwels direk, resultaat-georiënteerd en mededingend. Hulle geniet uitdagings en om die leiding te neem. Hulle is selfgeldend, beslissend en fokus daarop om doelwitte vinnig te bereik. Hulle waardeer bevoegdheid en aksie.</p>
+                            <p><strong>Sterkpunte:</strong> Gedrewe, probleemoplosser, selfvertroue, neem inisiatief.</p>
+                            <p><strong>Areas vir Ontwikkeling:</strong> Kan as ongeduldig, te direk, of veeleisend beskou word.</p>
+                        `;
+                        break;
+                    case 'I':
+                        description = `
+                            <h3>Invloed (I) Styl Eienskappe:</h3>
+                            <p>Individue met 'n hoë I-telling is uitgaande, entoesiasties en optimisties. Hulle geniet sosiale interaksie, om ander te oorreed, en word dikwels as charismaties beskou. Hulle floreer in positiewe omgewings en is uitstekend daarin om spanne te motiveer.</p>
+                            <p><strong>Sterkpunte:</strong> Oorredend, gesellig, optimisties, bou verhoudings.</p>
+                            <p><strong>Areas vir Ontwikkeling:</strong> Kan ongeorganiseerd, impulsief, of te veel op gewildheid fokus.</p>
+                        `;
+                        break;
+                    case 'S':
+                        description = `
+                            <h3>Stabiliteit (S) Styl Eienskappe:</h3>
+                            <p>Individue met 'n hoë S-telling is kalm, geduldig en goeie luisteraars. Hulle waardeer konsekwentheid, lojaliteit en 'n stabiele omgewing. Hulle is ondersteunende spanlede wat 'n voorspelbare pas en samewerkende werk verkies.</p>
+                            <p><strong>Sterkpunte:</strong> Geduldig, lojaal, ondersteunend, betroubaar, goeie luisteraar.</p>
+                            <p><strong>Areas vir Ontwikkeling:</strong> Kan weerstand bied teen verandering, besluiteloos wees, of te tegemoetkomend wees.</p>
+                        `;
+                        break;
+                    case 'C':
+                        description = `
+                            <h3>Noukeurigheid (C) Styl Eienskappe:</h3>
+                            <p>Individue met 'n hoë C-telling is analities, presies en sistematies. Hulle fokus op akkuraatheid, kwaliteit en besonderhede. Hulle hou by reëls en standaarde en word dikwels as logiese en objektiewe probleemoplossers gesien.</p>
+                            <p><strong>Sterkpunte:</strong> Akkuraat, logies, detail-georiënteerd, hoë standaarde.</p>
+                            <p><strong>Areas vir Ontwikkeling:</strong> Kan oorkrities wees, geneig wees tot analise-verlamming, of weerstand bied teen subjektiewe idees.</p>
+                        `;
+                        break;
+                    default:
+                        description = `<p>Voltooi die assessering om jou primêre funksioneringstyl te openbaar.</p>`;
+                }
+                return description;
             }
 
             async function handleSubmit(event) {
                 event.preventDefault();
-                formError.style.display = 'none';
-                submissionMessage.classList.add('hidden');
-                backButton.classList.add('hidden');
 
-                document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+                const userName = document.getElementById('userName').value;
+                const userEmail = document.getElementById('userEmail').value;
 
-                let overallFormIsValid = true;
-                const scores = { D: 0, I: 0, S: 0, C: 0 };
-
-                for (let i = 0; i < questions.length; i++) {
-                    const questionIsValid = validateQuestion(i);
-                    if (!questionIsValid) {
-                        overallFormIsValid = false;
-                    } else {
-                        const inputs = Array.from(document.getElementsByName(`q${i}`));
-                        inputs.forEach(input => {
-                            const rank = parseInt(input.value, 10);
-                            const discType = input.dataset.disc;
-                            if (scoring[rank] && scores.hasOwnProperty(discType)) {
-                                scores[discType] += scoring[rank];
-                            }
-                        });
-                    }
-                }
-
-                if (!document.getElementById('userName').value.trim()) {
-                    formError.textContent = "Vul asseblief jou volle naam in.";
-                    formError.style.display = 'block';
-                    overallFormIsValid = false;
-                }
-
-                if (!overallFormIsValid) {
-                    formError.textContent = "Daar is foute in jou antwoorde. Maak asseblief seker jou naam is ingevul en dat alle vrae korrek beantwoord is.";
-                    formError.style.display = 'block';
-                    window.scrollTo(0, 0);
+                if (!userName || !userEmail) {
+                    showSubmissionMessage("Vul asseblief jou naam en e-pos in.", 'error');
                     return;
                 }
 
+                if (Object.keys(answers).length !== questionsData.length) {
+                    showSubmissionMessage("Beantwoord asseblief alle vrae voordat jy indien.", 'error');
+                    return;
+                }
+
+                const scores = calculateScores();
+                document.getElementById('dScore').textContent = scores.D;
+                document.getElementById('iScore').textContent = scores.I;
+                document.getElementById('sScore').textContent = scores.S;
+                document.getElementById('cScore').textContent = scores.C;
+                document.getElementById('discStyleDescription').innerHTML = getDiscStyleDescription(scores);
+
+                resultsContainer.classList.remove('hidden');
+                form.classList.add('hidden'); // Hide the form after submission
+
                 submitBtn.disabled = true;
-                submitBtn.textContent = "Stuur tans...";
-                submissionMessage.textContent = "Jou resultate word gestuur...";
-                submissionMessage.classList.remove('hidden');
-                submissionMessage.classList.remove('email-error', 'email-success');
+                submitBtn.textContent = "Besig om in te dien...";
+                showSubmissionMessage("Jou resultate word gestuur...", 'info');
+
+                const templateParams = {
+                    client_name: userName, // Changed 'name' to 'client_name'
+                    d_score: scores.D,
+                    i_score: scores.I,
+                    s_score: scores.S,
+                    c_score: scores.C
+                };
 
                 try {
-                    const templateParams = {
-                        name: document.getElementById('userName').value,
-                        d_score: scores.D,
-                        i_score: scores.I,
-                        s_score: scores.S,
-                        c_score: scores.C
-                    };
                     const response = await emailjs.send('service_b087h4p', 'template_n84drg8', templateParams);
-                    console.log('Email sent successfully!', response.status, response.text);
-                    submissionMessage.textContent = 'Jou resultate is suksesvol ingedien!';
-                    submissionMessage.classList.add('email-success');
-                    form.reset();
-                    questionsContainer.innerHTML = '';
-                    generateQuestions();
-                    backButton.classList.remove('hidden');
+                    console.log('E-pos suksesvol gestuur!', response.status, response.text);
+                    showSubmissionMessage('Jou resultate is suksesvol ingedien!', 'success');
+                    // Reset form after successful submission
+                    // form.reset(); // Don't reset if we want to show results
+                    // questionsContainer.innerHTML = '';
+                    // generateQuestions();
+                    backButton.classList.remove('hidden'); // Keep back button visible
                     submitBtn.classList.add('hidden');
                 } catch (error) {
-                    console.error('Failed to send email:', error);
-                    submissionMessage.textContent = 'Fout: Kon nie resultate indien nie. Probeer asseblief weer.';
-                    submissionMessage.classList.add('email-error');
+                    console.error('Kon nie e-pos stuur nie:', error);
+                    showSubmissionMessage('Fout: Kon nie resultate indien nie. Probeer asseblief weer.', 'error');
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Dien in en Sien Resultate";
                 }
             }
 
-            generateQuestions();
+            // Initial call to generate questions
+            // generateQuestions(); // Called after fetching questionsData
             form.addEventListener('submit', handleSubmit);
         });
     </script>
