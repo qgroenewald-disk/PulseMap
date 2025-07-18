@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PulseMap Funksioneringstyl Analise</title>
+    <title>Funksioneringstyl Analise</title>
     <link rel="icon" href="https://i.imgur.com/Zx34Iky.png" type="image/png">
-    <meta property="og:title" content="PulseMap Funksioneringstyl Analise">
-    <meta property="og:description" content="Voltooi jou PulseMap Funksioneringstyl analise en sien jou resultate.">
+    <meta property="og:title" content="Funksioneringstyl Analise">
+    <meta property="og:description" content="Voltooi jou Funksioneringstyl analise en sien jou resultate.">
     <meta property="og:image" content="https://i.imgur.com/Zx34Iky.png">
     <meta property="og:url" content="https://qgroenewald-disk.github.io/Disk-Analise-Vorm/">
     <meta property="og:type" content="website">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        /* Define CSS variables for consistent theming */
         :root {
             --primary-color: #005A9C;
             --secondary-color: #f4f4f9;
@@ -20,6 +22,10 @@
             --error-color: #D8000C;
             --success-color: #4F8A10;
         }
+
+        /* Import Poppins font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--secondary-color);
@@ -28,6 +34,54 @@
             margin: 0;
             padding: 20px;
         }
+        /* Custom class for border color matching bg-blue-600 */
+        .border-custom-blue {
+            border-left-color: #2563EB; /* Tailwind's blue-600 hex code */
+        }
+        /* Class for highlighting unanswered questions */
+        .border-error {
+            border-color: #EF4444; /* Tailwind's red-500 hex code */
+        }
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centered for the logo */
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            padding-left: 0;
+        }
+        .logo-wrapper {
+            display: flex;
+            flex-direction: column; /* Stack logo and title vertically */
+            justify-content: center; /* Center logo */
+            align-items: center;
+            gap: 15px; /* Adjust gap between logo and title */
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .logo {
+            max-width: 250px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 5em; /* Increased font size significantly */
+            font-weight: 600; /* Poppins-semibold */
+            color: var(--primary-color);
+            margin-top: 10px; /* Space between logo and text title */
+            text-align: center;
+        }
+        /* Responsive logo size */
+        @media (max-width: 640px) {
+            .logo {
+                max-width: 180px;
+            }
+            h1 {
+                font-size: 3em; /* Adjusted for smaller screens */
+            }
+        }
         .container {
             max-width: 900px;
             margin: 20px auto;
@@ -35,11 +89,6 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 20px;
         }
         .intro-text, .results-description {
             text-align: center;
@@ -56,8 +105,7 @@
             font-weight: 600;
             color: var(--text-color);
         }
-        .form-group input[type="text"],
-        .form-group input[type="email"] {
+        .form-group input[type="text"] {
             width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid var(--border-color);
@@ -214,15 +262,16 @@
         }
     </style>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        emailjs.init({
-            publicKey: "rES387Z_beB0IEiRm",
-        });
-    </script>
 </head>
 <body>
     <div class="container">
-        <h1>PulseMap Funksioneringstyl Analise</h1>
+        <!-- Logo and Title Section -->
+        <header>
+            <div class="logo-wrapper">
+                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
+                <h1>Funksioneringstyl Analise</h1>
+            </div>
+        </header>
         <p class="intro-text">
             Hierdie assessering help jou om jou natuurlike funksioneringstyl te verstaan. Lees elke stelling sorgvuldig en kies die opsie wat jou die beste beskryf. Daar is geen regte of verkeerde antwoorde nie, net eerlike refleksies.
         </p>
@@ -232,16 +281,13 @@
                 <label for="userName">Jou Naam:</label>
                 <input type="text" id="userName" name="userName" required>
             </div>
-            <div class="form-group">
-                <label for="userEmail">Jou E-pos:</label>
-                <input type="email" id="userEmail" name="userEmail" required>
-            </div>
+            <!-- Removed Email Input Field -->
 
             <div id="questionsContainer">
-                </div>
+                <!-- All questions will be dynamically loaded here -->
+            </div>
 
             <div class="button-group">
-                <button type="button" id="backButton" class="hidden">Terug</button>
                 <button type="submit" id="submitBtn">Dien in en Sien Resultate</button>
             </div>
             <p id="submissionMessage" class="submission-message hidden"></p>
@@ -275,15 +321,198 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            emailjs.init("rES387Z_beB0IEiRm"); // Initialize EmailJS here
+
             const form = document.getElementById('disc-form');
             const questionsContainer = document.getElementById('questionsContainer');
             const submitBtn = document.getElementById('submitBtn');
-            const backButton = document.getElementById('backButton');
             const resultsContainer = document.getElementById('resultsContainer');
             const submissionMessage = document.getElementById('submissionMessage');
-            let currentQuestionIndex = 0;
+            const userNameInput = document.getElementById('userName');
             let answers = {}; // Stores selected options for each question
-            let questionsData = []; // To store questions fetched from JSON
+
+            const questionsData = [
+                {
+                    "question_af": "'n Mens sou die manier waarop ek in my verhoudings met ander mense optree, kon beskryf as:",
+                    "options": [
+                        {"text_af": "Saggeaard, goedhartig", "value": 1, "type": "S"},
+                        {"text_af": "Oordeelkundig, versigtig", "value": 1, "type": "C"},
+                        {"text_af": "Beslis, selfgeldend", "value": 1, "type": "D"},
+                        {"text_af": "Oorspronklik, vol planne", "value": 1, "type": "I"}
+                    ]
+                },
+                {
+                    "question_af": "Vir soverre dit die dinge betref wat die lewe oor my pad bring, is ek:",
+                    "options": [
+                        {"text_af": "Ondernemend, benut geleenthede", "value": 1, "type": "D"},
+                        {"text_af": "Nugter, speel veilig", "value": 1, "type": "C"},
+                        {"text_af": "Sorgvry, opgewek", "value": 1, "type": "I"},
+                        {"text_af": "Gelykmatig, geduldig", "value": 1, "type": "S"}
+                    ]
+                },
+                {
+                    "question_af": "In my samewerking met ander mense sal ek normaalweg as volg optree:",
+                    "options": [
+                        {"text_af": "Onderhandelend, diplomaties", "value": 1, "type": "S"},
+                        {"text_af": "Mededingend, kompeterend", "value": 1, "type": "D"},
+                        {"text_af": "Bedagsaam, sensitief vir ander", "value": 1, "type": "S"},
+                        {"text_af": "Stimulerend, aktiverend", "value": 1, "type": "I"}
+                    ]
+                },
+                {
+                    "question_af": "Wanneer ek oor my lewe dink beleef ek myself as:",
+                    "options": [
+                        {"text_af": "Vergenoegd, tevrede", "value": 1, "type": "S"},
+                        {"text_af": "Op pad na duidelike doelwitte", "value": 1, "type": "D"},
+                        {"text_af": "Kreatief, vol nuwe idees", "value": 1, "type": "I"},
+                        {"text_af": "Deeglik, georganiseerd", "value": 1, "type": "C"}
+                    ]
+                },
+                {
+                    "question_af": "Ek sal myself beskryf as:",
+                    "options": [
+                        {"text_af": "Doelgerig, vasberade", "value": 1, "type": "D"},
+                        {"text_af": "Akkuraat, presies", "value": 1, "type": "C"},
+                        {"text_af": "Kalm, vredeliewend", "value": 1, "type": "S"},
+                        {"text_af": "Vol lewenslus, prettig", "value": 1, "type": "I"}
+                    ]
+                },
+                {
+                    "question_af": "In my sosiale omgang met ander mense sal ek:",
+                    "options": [
+                        {"text_af": "Ander betrek en laat meedoen", "value": 1, "type": "I"},
+                        {"text_af": "Konfronterend wees, argumenteer", "value": 1, "type": "D"},
+                        {"text_af": "Inskiklik, onderdanig wees", "value": 1, "type": "S"},
+                        {"text_af": "Gereserveerd, beheers wees", "value": 1, "type": "C"}
+                    ]
+                },
+                {
+                    "question_af": "Die styl van menswees wat ek uitstraal, kan beskryf word as:",
+                    "options": [
+                        {"text_af": "Goedgeaard, aangenaam", "value": 1, "type": "S"},
+                        {"text_af": "Uitgelate, opgeruimd", "value": 1, "type": "I"},
+                        {"text_af": "Energiek, entoesiasties", "value": 1, "type": "I"},
+                        {"text_af": "Gedissiplineerd, gestruktureerd", "value": 1, "type": "C"}
+                    ]
+                },
+                {
+                    "question_af": "In my kommunikasie met ander mense is ek:",
+                    "options": [
+                        {"text_af": "Uitgesproke/stel eie standpunt duidelik", "value": 1, "type": "D"},
+                        {"text_af": "Entoesiasties, positief", "value": 1, "type": "I"},
+                        {"text_af": "Oop vir oortuiging, tentatief", "value": 1, "type": "S"},
+                        {"text_af": "Logies, beredeneerd", "value": 1, "type": "C"}
+                    ]
+                },
+                {
+                    "question_af": "Wanneer dit by besluitneming kom, sal ek myself beskryf as:",
+                    "options": [
+                        {"text_af": "Gekontroleerd, deurdag", "value": 1, "type": "C"},
+                        {"text_af": "Beslis, ferm", "value": 1, "type": "D"},
+                        {"text_af": "Impulsief, spontaan", "value": 1, "type": "I"},
+                        {"text_af": "Tegemoetkomend, aanpasbaar", "value": 1, "type": "S"}
+                    ]
+                },
+                {
+                    "question_af": "Ek sien en beleef myself as 'n persoon wat:",
+                    "options": [
+                        {"text_af": "Ondernemend is, uitdagings soek", "value": 1, "type": "D"},
+                        {"text_af": "Oordeelkundig is (kan onderskei)", "value": 1, "type": "C"},
+                        {"text_af": "Uitgaande is, uitreik na ander", "value": 1, "type": "I"},
+                        {"text_af": "Gematigd is, uiterstes vermy", "value": 1, "type": "S"}
+                    ]
+                },
+                {
+                    "question_af": "Ek dink aan myself as 'n persoon wat:",
+                    "options": [
+                        {"text_af": "Ekspressief, eerlik oor my gevoelens is", "value": 1, "type": "I"},
+                        {"text_af": "Opreg is, doen wat reg is", "value": 1, "type": "C"},
+                        {"text_af": "Toonaangewend, in beheer is", "value": 1, "type": "D"},
+                        {"text_af": "Deelnemend, samewerkend is", "value": 1, "type": "S"}
+                    ]
+                },
+                {
+                    "question_af": "Ek is:",
+                    "options": [
+                        {"text_af": "Uitgaande, ingestel op ander", "value": 1, "type": "I"},
+                        {"text_af": "Pligsgetrou, hou by afsprake", "value": 1, "type": "C"},
+                        {"text_af": "Spanspeler, werk saam", "value": 1, "type": "S"},
+                        {"text_af": "Doelgerig, weet wat ek wil hê", "value": 1, "type": "D"}
+                    ]
+                },
+                {
+                    "question_af": "Ek doen dinge gewoonlik:",
+                    "options": [
+                        {"text_af": "Bepland, takties", "value": 1, "type": "C"},
+                        {"text_af": "Gelate, gee maklik toe", "value": 1, "type": "S"},
+                        {"text_af": "Opgeruimd, blymoedig", "value": 1, "type": "I"},
+                        {"text_af": "Ferm en met oortuiging", "value": 1, "type": "D"}
+                    ]
+                },
+                {
+                    "question_af": "Ek sal my geaardheid beskryf as:",
+                    "options": [
+                        {"text_af": "Innemend (trek ander aan)", "value": 1, "type": "I"},
+                        {"text_af": "Selfondersoekend, introspektief", "value": 1, "type": "C"},
+                        {"text_af": "Selfversekerd, invloedryk", "value": 1, "type": "D"},
+                        {"text_af": "Standvastig, voorspelbaar", "value": 1, "type": "S"}
+                    ]
+                },
+                {
+                    "question_af": "My lewensbenadering kan beskryf word met:",
+                    "options": [
+                        {"text_af": "Verantwoordelik, pligsgetrou", "value": 1, "type": "C"},
+                        {"text_af": "Ondernemend, skeppend", "value": 1, "type": "D"},
+                        {"text_af": "Optimisties, positief", "value": 1, "type": "I"},
+                        {"text_af": "Deeglik, georganiseerd", "value": 1, "type": "C"}
+                    ]
+                },
+                {
+                    "question_af": "As ek oor myself dink in verhouding met andere, sien ek myself as:",
+                    "options": [
+                        {"text_af": "Selfstandig, onafhanklik", "value": 1, "type": "D"},
+                        {"text_af": "Erkentlik, eerbiedig", "value": 1, "type": "S"},
+                        {"text_af": "Hulpvaardig, ondersteunend", "value": 1, "type": "S"},
+                        {"text_af": "Inspirerend, motiverend", "value": 1, "type": "I"}
+                    ]
+                },
+                {
+                    "question_af": "Een van my eienskappe waaroor ek goed voel is, is die feit dat ek:",
+                    "options": [
+                        {"text_af": "Aanhoudend is, nie maklik opgee nie", "value": 1, "type": "D"},
+                        {"text_af": "Lojaal/toegewyd teenoor ander is", "value": 1, "type": "S"},
+                        {"text_af": "Opgewek is, van lekker dinge hou", "value": 1, "type": "I"},
+                        {"text_af": "Konsensieus, pligsgetrou is", "value": 1, "type": "C"}
+                    ]
+                },
+                {
+                    "question_af": "Een eienskap van my wat nie altyd so positief deur ander ontvang word nie, is die feit dat ek soms:",
+                    "options": [
+                        {"text_af": "Kieskeurig, puntenerig is", "value": 1, "type": "C"},
+                        {"text_af": "Op die man af/reguit is", "value": 1, "type": "D"},
+                        {"text_af": "Té tegemoetkomend/inskiklik is", "value": 1, "type": "S"},
+                        {"text_af": "Mense beïnvloed met my entoesiasme", "value": 1, "type": "I"}
+                    ]
+                },
+                {
+                    "question_af": "In my hantering van mense is ek:",
+                    "options": [
+                        {"text_af": "Onpartydig, onbevooroordeeld", "value": 1, "type": "C"},
+                        {"text_af": "Simpatiek, vol medelye", "value": 1, "type": "S"},
+                        {"text_af": "Gesagvol, sterk", "value": 1, "type": "D"},
+                        {"text_af": "Joviaal, hartlik", "value": 1, "type": "I"}
+                    ]
+                },
+                {
+                    "question_af": "Een van my eienskappe waarop mense kan peiltrek, is die feit dat ek:",
+                    "options": [
+                        {"text_af": "Ander kan oortuig/opgewonde maak", "value": 1, "type": "I"},
+                        {"text_af": "Noukeurig, presies is", "value": 1, "type": "C"},
+                        {"text_af": "Gelykmatig en bedaard is", "value": 1, "type": "S"},
+                        {"text_af": "Aanhoudend is, vasbyt", "value": 1, "type": "D"}
+                    ]
+                }
+            ];
 
             function showSubmissionMessage(message, type) {
                 submissionMessage.textContent = message;
@@ -291,35 +520,16 @@
                 submissionMessage.classList.remove('hidden');
             }
 
-            // Fetch questions from JSON file
-            fetch('functioning_style_questions.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    questionsData = data;
-                    generateQuestions();
-                })
-                .catch(error => {
-                    console.error('Error loading questions:', error);
-                    questionsContainer.innerHTML = '<p style="color: red; text-align: center;">Fout met laai van vrae. Probeer asseblief later weer.</p>';
-                    submitBtn.disabled = true;
-                });
-
             function generateQuestions() {
                 questionsContainer.innerHTML = ''; // Clear previous questions
-                if (currentQuestionIndex < questionsData.length) {
-                    const q = questionsData[currentQuestionIndex];
+                questionsData.forEach((q, index) => {
                     const questionCard = document.createElement('div');
                     questionCard.classList.add('question-card');
                     questionCard.innerHTML = `
-                        <p>${currentQuestionIndex + 1}. ${q.question_af}</p>
+                        <p>${index + 1}. ${q.question_af}</p>
                         <div class="options-grid">
-                            ${q.options.map((option, index) => `
-                                <button type="button" class="option-button" data-value="${option.value}" data-type="${option.type}">
+                            ${q.options.map((option) => `
+                                <button type="button" class="option-button" data-question-index="${index}" data-value="${option.value}" data-type="${option.type}">
                                     ${option.text_af}
                                 </button>
                             `).join('')}
@@ -327,69 +537,42 @@
                     `;
                     questionsContainer.appendChild(questionCard);
 
-                    // Add event listeners to option buttons
+                    // Highlight previously selected answer if exists
+                    if (answers[index]) {
+                        questionCard.querySelector(`button[data-question-index="${index}"][data-type="${answers[index].type}"][data-value="${answers[index].value}"]`).classList.add('selected');
+                    }
+
                     questionCard.querySelectorAll('.option-button').forEach(button => {
                         button.addEventListener('click', (event) => {
-                            // Deselect any previously selected button in this question
-                            questionCard.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+                            const clickedButton = event.target.closest('.option-button');
+                            const questionIndex = clickedButton.dataset.questionIndex;
+                            const questionCardElement = clickedButton.closest('.question-card');
+
+                            // Deselect any previously selected button in this question card
+                            questionCardElement.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
                             // Select the clicked button
-                            event.target.classList.add('selected');
-                            answers[currentQuestionIndex] = {
-                                value: event.target.dataset.value,
-                                type: event.target.dataset.type
+                            clickedButton.classList.add('selected');
+                            answers[questionIndex] = {
+                                value: parseInt(clickedButton.dataset.value),
+                                type: clickedButton.dataset.type
                             };
-                            // Automatically move to the next question
-                            setTimeout(() => {
-                                if (currentQuestionIndex < questionsData.length - 1) {
-                                    currentQuestionIndex++;
-                                    generateQuestions();
-                                    backButton.classList.remove('hidden');
-                                } else {
-                                    // All questions answered
-                                    submitBtn.classList.remove('hidden');
-                                }
-                            }, 300); // Small delay for visual feedback
+                            console.log(`Answered Q${parseInt(questionIndex) + 1}:`, answers[questionIndex]); // Log the selected answer
                         });
                     });
-                } else {
-                    // All questions displayed, show submit button
-                    submitBtn.classList.remove('hidden');
-                }
-                updateNavigationButtons();
+                });
             }
-
-            function updateNavigationButtons() {
-                if (currentQuestionIndex > 0) {
-                    backButton.classList.remove('hidden');
-                } else {
-                    backButton.classList.add('hidden');
-                }
-                if (currentQuestionIndex === questionsData.length) {
-                    submitBtn.classList.remove('hidden');
-                } else {
-                    submitBtn.classList.add('hidden');
-                }
-            }
-
-            backButton.addEventListener('click', () => {
-                if (currentQuestionIndex > 0) {
-                    currentQuestionIndex--;
-                    generateQuestions();
-                }
-            });
 
             function calculateScores() {
                 let scores = { D: 0, I: 0, S: 0, C: 0 };
                 Object.values(answers).forEach(answer => {
                     if (answer.type && scores.hasOwnProperty(answer.type)) {
-                        scores[answer.type] += parseInt(answer.value);
+                        scores[answer.type] += answer.value;
                     }
                 });
                 return scores;
             }
 
             function getDiscStyleDescription(scores) {
-                // Determine primary style
                 let primaryStyle = '';
                 let maxScore = -Infinity;
 
@@ -443,11 +626,10 @@
             async function handleSubmit(event) {
                 event.preventDefault();
 
-                const userName = document.getElementById('userName').value;
-                const userEmail = document.getElementById('userEmail').value;
+                const userName = userNameInput.value.trim();
 
-                if (!userName || !userEmail) {
-                    showSubmissionMessage("Vul asseblief jou naam en e-pos in.", 'error');
+                if (!userName) {
+                    showSubmissionMessage("Vul asseblief jou naam in.", 'error');
                     return;
                 }
 
@@ -471,7 +653,7 @@
                 showSubmissionMessage("Jou resultate word gestuur...", 'info');
 
                 const templateParams = {
-                    client_name: userName, // Changed 'name' to 'client_name'
+                    client_name: userName,
                     d_score: scores.D,
                     i_score: scores.I,
                     s_score: scores.S,
@@ -482,11 +664,7 @@
                     const response = await emailjs.send('service_b087h4p', 'template_n84drg8', templateParams);
                     console.log('E-pos suksesvol gestuur!', response.status, response.text);
                     showSubmissionMessage('Jou resultate is suksesvol ingedien!', 'success');
-                    // Reset form after successful submission
-                    // form.reset(); // Don't reset if we want to show results
-                    // questionsContainer.innerHTML = '';
-                    // generateQuestions();
-                    backButton.classList.remove('hidden'); // Keep back button visible
+                    // No back button needed with all questions displayed at once
                     submitBtn.classList.add('hidden');
                 } catch (error) {
                     console.error('Kon nie e-pos stuur nie:', error);
@@ -496,8 +674,7 @@
                 }
             }
 
-            // Initial call to generate questions
-            // generateQuestions(); // Called after fetching questionsData
+            generateQuestions(); // Initial call to generate all questions
             form.addEventListener('submit', handleSubmit);
         });
     </script>
