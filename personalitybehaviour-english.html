@@ -4,22 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PulseMap Personality Behaviour Analysis</title>
+    <!-- Open Graph Meta Tags for WhatsApp Sharing -->
     <meta property="og:title" content="PulseMap Personality Behaviour Analysis">
     <meta property="og:description" content="Discover your personality type with our PulseMap questionnaire.">
     <meta property="og:image" content="https://i.imgur.com/Zx34Iky.png">
     <meta property="og:url" content="https://qgroenewald-disk.github.io/mbti-analise/">
     <meta property="og:type" content="website">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles for Inter font */
-        body {
-            font-family: 'Poppins', sans-serif; /* Changed to Poppins for consistency with Funksioneringstyl */
-            background-color: var(--secondary-color); /* Added for consistency */
-            color: var(--text-color); /* Added for consistency */
-            line-height: 1.6; /* Added for consistency */
-            margin: 0; /* Added for consistency */
-            padding: 20px; /* Added for consistency */
-        }
         /* Define CSS variables for consistent theming */
         :root {
             --primary-color: #005A9C; /* Matching the primary color from Funksioneringstyl Assessment */
@@ -33,530 +26,561 @@
         /* Import Poppins font */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-        /* General Body Styles */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif; /* Changed to Poppins for consistency */
+            background-color: var(--secondary-color); /* Added for consistency */
+            color: var(--text-color); /* Added for consistency */
+            line-height: 1.6; /* Added for consistency */
+            margin: 0; /* Added for consistency */
+            padding: 20px; /* Added for consistency */
         }
-
-        /* Container Styling */
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        /* Custom class for border color matching bg-blue-600 */
+        .border-custom-blue {
+            border-left-color: #2563EB; /* Tailwind's blue-600 hex code */
         }
-
-        /* Headings */
-        h1, h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 25px;
-            font-weight: 600;
+        /* Class for highlighting unanswered questions */
+        .border-error {
+            border-color: #EF4444; /* Tailwind's red-500 hex code */
         }
-
-        /* Intro Text */
-        .intro-text {
-            text-align: center;
-            margin-bottom: 30px;
-            line-height: 1.8;
-            color: #555;
-            font-size: 1.05em;
-        }
-
-        /* Form Group (for name/email) */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="email"] {
-            width: calc(100% - 20px);
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input[type="text"]:focus,
-        .form-group input[type="email"]:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        /* Questions Container */
-        #questionsContainer {
-            margin-top: 30px;
-        }
-
-        /* Question Card */
-        .question-card {
-            background-color: #f9f9f9;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .question-card p {
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            font-size: 1.15em;
-            line-height: 1.5;
-        }
-
-        /* Options Grid */
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        /* Option Button */
-        .option-button {
-            background-color: #e9ecef;
-            border: 1px solid #ced4da;
-            padding: 12px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1em;
-            text-align: left;
-            transition: all 0.3s ease;
-            color: #495057;
+        header {
             display: flex;
+            flex-direction: column;
+            align-items: center; /* Centered for the logo */
+            border-bottom: 2px solid var(--primary-color); /* Changed to match Funksioneringstyl */
+            margin-bottom: 20px;
+            padding-bottom: 20px; /* Changed to match Funksioneringstyl */
+            padding-left: 0; /* Changed to match Funksioneringstyl */
+        }
+        .logo-wrapper { /* Renamed from .logo-and-title-wrapper for consistency with this file's HTML */
+            display: flex;
+            flex-direction: column; /* Stack logo and title vertically */
+            justify-content: center; /* Center logo */
             align-items: center;
-            line-height: 1.4;
+            gap: 15px; /* Adjust gap between logo and title */
+            margin-bottom: 15px;
+            width: 100%;
         }
-
-        .option-button:hover {
-            background-color: #dee2e6;
-            border-color: #adb5bd;
-        }
-
-        .option-button.selected {
-            background-color: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Button Group */
-        .button-group {
-            text-align: center;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .button-group button {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 14px 30px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-weight: 600;
-            flex-grow: 1;
-            max-width: 300px;
-        }
-
-        .button-group button:hover:not(:disabled) {
-            background-color: #004a80;
-            transform: translateY(-2px);
-        }
-
-        .button-group button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        /* Results Section */
-        .results-section {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .results-section h2 {
-            margin-bottom: 20px;
-        }
-
-        #mbtiResultDisplay {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .style-description {
-            background-color: #f0f8ff;
-            border: 1px solid #cceeff;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: left;
-            margin-top: 20px;
-            line-height: 1.7;
-            font-size: 0.95em;
-            color: #444;
-        }
-
-        .submission-message {
-            margin-top: 20px;
-            padding: 10px;
+        .logo {
+            max-width: 250px; /* Adjusted for bigger logo */
+            height: auto;
             border-radius: 5px;
-            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 5em; /* Increased font size significantly */
+            font-weight: 600; /* Poppins-semibold */
+            color: var(--primary-color); /* Changed to primary color for consistency */
+            margin-top: 10px; /* Space between logo and text title */
             text-align: center;
         }
-        .email-success {
-            background-color: #DFF2BF;
-            color: var(--success-color);
-            border: 1px solid var(--success-color);
+        /* Responsive logo size */
+        @media (max-width: 640px) {
+            .logo {
+                max-width: 180px;
+            }
+            h1 {
+                font-size: 3em; /* Adjusted for smaller screens */
+            }
         }
-        .email-error {
-            background-color: #FFBABA;
-            color: var(--error-color);
-            border: 1px solid var(--error-color);
+        .instructions { /* New class for the instructions paragraph, matching Funksioneringstyl */
+            background-color: #e7f3fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            text-align: left;
+            margin-top: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
-        .email-info {
-            background-color: #cce5ff;
-            color: #004085;
-            border: 1px solid #b8daff;
+        .button-group {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically on small screens */
+            gap: 15px; /* Space between buttons */
+            margin-top: 20px;
         }
-
+        @media (min-width: 640px) { /* For larger screens, display buttons side-by-side */
+            .button-group {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .button-group button,
+            .button-group a {
+                width: 48%; /* Adjust width to fit two buttons */
+            }
+        }
+        button, .back-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color); /* Use primary color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        button:hover {
+            background-color: #004170; /* Darker shade for hover */
+        }
+        .back-button {
+            background-color: #6c757d; /* A different color for the back button */
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        /* Style for the submission message */
+        #submission-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            background-color: #e6ffe6; /* Light green background */
+            color: var(--success-color); /* Use success color variable */
+            border: 1px solid #DFF2BF;
+        }
         .hidden {
             display: none;
         }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px auto;
-                padding: 20px;
-            }
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-            .button-group {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .button-group button {
-                max-width: 100%;
-            }
-        }
     </style>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        emailjs.init({
-            publicKey: "rES387Z_beB0IEiRm",
-        });
-    </script>
 </head>
-<body>
-    <div class="container">
-        <h1>PulseMap Personality Behaviour Analysis</h1>
-        <p class="intro-text">
-            This assessment helps you discover your personality type based on your preferences in different areas. Please answer each question honestly to get the most accurate results.
+<body class="bg-gray-100 min-h-screen flex items-center justify-center py-10 px-4">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-2xl">
+        <!-- Logo and Title Section -->
+        <header>
+            <div class="logo-wrapper">
+                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
+                <h1>Personality Behaviour Analysis</h1>
+            </div>
+        </header>
+        <!-- Instructions paragraph -->
+        <p class="instructions">
+            Answer the following questions honestly to determine your personality type. There are no right or wrong answers. Choose the option that best describes you.
         </p>
-
-        <form id="personality-form">
-            <div class="mb-6">
-                <label for="userName" class="block text-gray-700 text-sm font-bold mb-2">Your Name:</label>
-                <input type="text" id="userName" name="userName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-            <div class="mb-6">
-                <label for="userEmail" class="block text-gray-700 text-sm font-bold mb-2">Your Email:</label>
-                <input type="email" id="userEmail" name="userEmail" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-
-            <div id="questionsContainer">
-                </div>
-
-            <div class="button-group">
-                <button type="button" id="backButton" class="hidden">Back</button>
-                <button type="submit" id="submitBtn">Calculate Results</button>
-            </div>
-            <p id="submissionMessage" class="submission-message hidden"></p>
-        </form>
-
-        <div id="resultsContainer" class="results-section hidden">
-            <h2>Your Personality Type:</h2>
-            <p id="mbtiResultDisplay"></p>
-            <div id="personalityDescription" class="style-description">
-                </div>
+        <!-- Name Input -->
+        <div class="mb-6">
+            <label for="userName" class="block text-gray-700 text-sm font-semibold mb-2">Your Name:</label>
+            <input type="text" id="userName" placeholder="Enter your name here"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <!-- Removed Email Input Field -->
+        <!-- Questions Section -->
+        <div id="questionsContainer" class="space-y-6 mb-8">
+            <!-- Questions will be dynamically loaded here -->
+        </div>
+        <!-- Submit Button -->
+        <div class="button-group">
+            <button id="submitBtn">Calculate Results</button>
+            <a href="index.html" class="back-button hidden">Back to Main Page</a>
+        </div>
+        <div id="submission-message" class="mt-4 p-4 rounded-md text-sm text-center hidden" role="alert"></div>
+        <!-- Results Section is now hidden by default and only used for email status, not displaying scores -->
+        <div id="resultsContainer" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-3">Your Personality Type:</h2>
+            <p id="mbtiResultDisplay" class="text-4xl font-extrabold text-blue-600 mb-4"></p>
+            <p class="text-blue-700">Your results have also been sent to you via email.</p>
         </div>
     </div>
+    <script type="text/javascript">
+        // Initialize EmailJS with your Public Key
+        emailjs.init("rES387Z_beB0IEiRm");
 
-    <script>
-        const questionsData = [
+        const allQuestions = [
+            // Extroversion (E) vs. Introversion (I)
             {
-                "id": "e_i",
-                "question": "When at a party, are you:",
-                "options": [
-                    {"text": "Mostly quiet and reserved", "value": "I"},
-                    {"text": "Talkative and outgoing", "value": "E"}
+                id: 'q1',
+                text: 'When you are stressed, what helps you the most?',
+                options: [
+                    { text: 'Talking to friends or family about it', value: 'E', type: 'EI' },
+                    { text: 'Taking alone time to think and process', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "s_n",
-                "question": "Are you more interested in:",
-                "options": [
-                    {"text": "The practical and realistic aspects of life", "value": "S"},
-                    {"text": "New ideas and possibilities", "value": "N"}
+                id: 'q2',
+                text: 'At a party or social gathering:',
+                options: [
+                    { text: 'You chat with many people and feel energized', value: 'E', type: 'EI' },
+                    { text: 'You stick to a few people and feel drained after a while', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "t_f",
-                "question": "When making decisions, do you tend to be:",
-                "options": [
-                    {"text": "Logical and objective", "value": "T"},
-                    {"text": "Empathetic and considerate of others' feelings", "value": "F"}
+                id: 'q3',
+                text: 'When trying to solve a problem:',
+                options: [
+                    { text: 'You think out loud and discuss it with others', value: 'E', type: 'EI' },
+                    { text: 'You think thoroughly about it first before sharing', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "j_p",
-                "question": "Do you prefer to:",
-                "options": [
-                    {"text": "Have things settled and organized", "value": "J"},
-                    {"text": "Keep your options open and be flexible", "value": "P"}
+                id: 'q4',
+                text: 'Your ideal weekend would be:',
+                options: [
+                    { text: 'Various activities with friends and family', value: 'E', type: 'EI' },
+                    { text: 'Quiet time at home with a good book or hobby', value: 'I', type: 'EI' }
                 ]
             },
             {
-                "id": "e_i2",
-                "question": "After a social gathering, do you usually feel:",
-                "options": [
-                    {"text": "Energized and ready for more", "value": "E"},
-                    {"text": "Drained and in need of alone time", "value": "I"}
+                id: 'q5',
+                text: 'When you meet new people:',
+                options: [
+                    { text: 'You feel comfortable making first contact', value: 'E', type: 'EI' },
+                    { text: 'You prefer to wait for them to approach first', value: 'I', type: 'EI' }
+                ]
+            },
+            // Sensing (S) vs. Intuition (N)
+            {
+                id: 'q6',
+                text: 'When starting a new project:',
+                options: [
+                    { text: 'You start with concrete steps and practical details', value: 'S', type: 'SN' },
+                    { text: 'You start with the big picture and possibilities', value: 'N', type: 'SN' }
                 ]
             },
             {
-                "id": "s_n2",
-                "question": "Which describes you better:",
-                "options": [
-                    {"text": "Focus on the present and what is real", "value": "S"},
-                    {"text": "Think about future possibilities and abstract concepts", "value": "N"}
+                id: 'q7',
+                text: 'You prefer instructions that are:',
+                options: [
+                    { text: 'Step-by-step and specific', value: 'S', type: 'SN' },
+                    { text: 'Explain the goal so you can find your own way', value: 'N', type: 'SN' }
                 ]
             },
             {
-                "id": "t_f2",
-                "question": "When you have to give constructive criticism, are you:",
-                "options": [
-                    {"text": "Direct and fact-based", "value": "T"},
-                    {"text": "Gentle and focused on preserving harmony", "value": "F"}
+                id: 'q8',
+                text: 'When telling a story:',
+                options: [
+                    { text: 'You give accurate details and facts', value: 'S', type: 'SN' },
+                    { text: 'You focus on the meaning and impact', value: 'N', type: 'SN' }
                 ]
             },
             {
-                "id": "j_p2",
-                "question": "Is your natural state to be:",
-                "options": [
-                    {"text": "Planned and structured", "value": "J"},
-                    {"text": "Spontaneous and adaptable", "value": "P"}
+                id: 'q9',
+                text: 'You find it more interesting to talk about:',
+                options: [
+                    { text: 'Practical things and real experiences', value: 'S', type: 'SN' },
+                    { text: 'Ideas, theories, and future possibilities', value: 'N', type: 'SN' }
+                ]
+            },
+            {
+                id: 'q10',
+                text: 'When you need to make a decision:',
+                options: [
+                    { text: 'You look at what has worked in the past', value: 'S', type: 'SN' },
+                    { text: 'You explore new and innovative options', value: 'N', type: 'SN' }
+                ]
+            },
+            // Thinking (T) vs. Feeling (F)
+            {
+                id: 'q11',
+                text: 'When resolving a dispute:',
+                options: [
+                    { text: 'You focus on facts and logical solutions', value: 'T', type: 'TF' },
+                    { text: 'You consider how everyone will feel about it', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q12',
+                text: 'You make decisions primarily based on:',
+                options: [
+                    { text: 'What is logical and effective', value: 'T', type: 'TF' },
+                    { text: 'What aligns with your values and others\' needs', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q13',
+                text: 'When giving criticism:',
+                options: [
+                    { text: 'You are direct and focus on what can be improved', value: 'T', type: 'TF' },
+                    { text: 'You try to say it gently so as not to hurt feelings', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q14',
+                text: 'You value people who are:',
+                options: [
+                    { text: 'Fair and consistent', value: 'T', type: 'TF' },
+                    { text: 'Empathetic and understanding', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q15',
+                text: 'In a team environment:',
+                options: [
+                    { text: 'You focus on efficiency and results', value: 'T', type: 'TF' },
+                    { text: 'You make sure everyone feels included and valued', value: 'F', type: 'TF' }
+                ]
+            },
+            // Judging (J) vs. Perceiving (P)
+            {
+                id: 'q16',
+                text: 'Your workspace is usually:',
+                options: [
+                    { text: 'Neat and organized', value: 'J', type: 'JP' },
+                    { text: 'A bit messy but you know where everything is', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q17',
+                text: 'When planning a vacation:',
+                options: [
+                    { text: 'You make a detailed itinerary and bookings in advance', value: 'J', type: 'JP' },
+                    { text: 'You see what happens and decide spontaneously', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q18',
+                text: 'You prefer to work:',
+                options: [
+                    { text: 'With clear deadlines and structures', value: 'J', type: 'JP' },
+                    { text: 'With flexibility and open choices', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q19',
+                text: 'When you get a task:',
+                options: [
+                    { text: 'You start quickly so you can finish on time', value: 'J', type: 'JP' },
+                    { text: 'You work best under pressure near the deadline', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q20',
+                text: 'You feel more comfortable when:',
+                options: [
+                    { text: 'Plans are made and things are determined', value: 'J', type: 'JP' },
+                    { text: 'Options are kept open for change', value: 'P', type: 'JP' }
                 ]
             }
         ];
-
-        const resultsDescriptions = {
-            "ISTJ": "Practical, factual, and logical. They are responsible and organized, preferring clear guidelines and traditions.",
-            "ISFJ": "Warm, considerate, and conscientious. They are detail-oriented and committed to their responsibilities.",
-            "INFJ": "Insightful, empathetic, and organized. They are visionaries who care deeply about others and have strong values.",
-            "INTJ": "Strategic, independent, and logical. They are driven by a need for competence and innovation.",
-            "ISTP": "Practical, observant, and spontaneous. They are hands-on problem-solvers who enjoy exploring how things work.",
-            "ISFP": "Gentle, artistic, and adaptable. They live in the present and appreciate beauty and sensory experiences.",
-            "INFP": "Idealistic, creative, and compassionate. They are driven by their values and seek meaning in life.",
-            "INTP": "Analytical, curious, and innovative. They are logical problem-solvers who love theoretical concepts and abstract ideas.",
-            "ESTP": "Energetic, practical, and action-oriented. They are daring and thrive in dynamic environments.",
-            "ESFP": "Outgoing, spontaneous, and fun-loving. They enjoy being the center of attention and living in the moment.",
-            "ENFP": "Enthusiastic, creative, and sociable. They are inspiring and enjoy exploring new ideas and possibilities.",
-            "ENTP": "Innovative, curious, and quick-witted. They enjoy debating and challenging established norms.",
-            "ESTJ": "Organized, decisive, and traditional. They are natural leaders who value efficiency and structure.",
-            "ESFJ": "Warm, cooperative, and popular. They are practical and focused on helping others and maintaining social harmony.",
-            "ENFJ": "Charismatic, empathetic, and inspiring. They are natural leaders who are passionate about helping others grow.",
-            "ENTJ": "Commanding, strategic, and efficient. They are natural leaders who enjoy organizing and directing people."
-        };
-
-        let selectedAnswers = {};
-        let currentQuestionIndex = 0;
-
-        const form = document.getElementById('personality-form');
         const questionsContainer = document.getElementById('questionsContainer');
         const submitBtn = document.getElementById('submitBtn');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const mbtiResultDisplay = document.getElementById('mbtiResultDisplay');
-        const personalityDescription = document.getElementById('personalityDescription');
-        const backButton = document.getElementById('backButton');
-        const submissionMessage = document.getElementById('submissionMessage');
+        const backButton = document.querySelector('.back-button');
+        const submissionMessage = document.getElementById('submission-message');
+        const userNameInput = document.getElementById('userName');
 
 
-        function showSubmissionMessage(message, type) {
-            submissionMessage.textContent = message;
-            submissionMessage.className = `submission-message ${type ? `email-${type}` : ''}`;
-            submissionMessage.classList.remove('hidden');
+        let shuffledQuestions = [];
+
+        /**
+         * Shuffles an array randomly.
+         * @param {Array} array - The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         }
 
+        /**
+         * Displays a submission message to the user.
+         * @param {string} message - The message to display.
+         * @param {'success'|'error'|'info'} type - The type of message (determines styling).
+         */
+        function showSubmissionMessage(message, type) {
+            submissionMessage.textContent = message;
+            // Remove all previous styling classes
+            submissionMessage.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-blue-100', 'text-blue-800');
+            // Add appropriate styling based on message type
+            if (type === 'success') {
+                submissionMessage.classList.add('bg-green-100', 'text-green-800');
+            } else if (type === 'error') {
+                submissionMessage.classList.add('bg-red-100', 'text-red-800');
+            } else if (type === 'info') {
+                submissionMessage.classList.add('bg-blue-100', 'text-blue-800');
+            }
+            submissionMessage.classList.remove('hidden'); // Ensure message is visible
+        }
+
+        /**
+         * Validates if all questions have been answered in real-time.
+         * Highlights unanswered questions and scrolls to the first one.
+         * @returns {boolean} True if all questions are answered, false otherwise.
+         */
+        function validateQuestionsRealTime() {
+            let hasUnansweredQuestions = false;
+            let firstUnansweredQuestionElement = null;
+            shuffledQuestions.forEach((question, index) => {
+                // Select the div containing the question
+                const questionDiv = document.querySelector(`#questionsContainer > div:nth-child(${index + 1})`);
+                // Check if any radio button for this question is checked
+                const radios = document.querySelectorAll(`input[name="question-${question.id}"]:checked`);
+                if (radios.length === 0) {
+                    // If no radio is checked, add error styling
+                    if (questionDiv) {
+                        questionDiv.classList.add('border-l-4', 'border-error');
+                        questionDiv.classList.remove('border-custom-blue'); // Remove correct border if present
+                    }
+                    hasUnansweredQuestions = true;
+                    // Store the first unanswered question element to scroll to it later
+                    if (!firstUnansweredQuestionElement) {
+                        firstUnansweredQuestionElement = questionDiv;
+                    }
+                } else {
+                    // If answered, remove error styling and add correct styling
+                    if (questionDiv) {
+                        questionDiv.classList.remove('border-error');
+                        questionDiv.classList.add('border-l-4', 'border-custom-blue');
+                    }
+                }
+            });
+
+            if (hasUnansweredQuestions) {
+                showSubmissionMessage('Please answer all questions before submitting.', 'error');
+                // Scroll to the first unanswered question
+                if (firstUnansweredQuestionElement) {
+                    firstUnansweredQuestionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return false;
+            } else {
+                // If all questions are answered, hide the submission message
+                submissionMessage.classList.add('hidden');
+                return true;
+            }
+        }
+
+        /**
+         * Calculates the personality type based on the selected answers.
+         * @param {Object} answers - An object containing the selected answer values for each question.
+         * @returns {Object} An object containing the calculated personality type string.
+         */
+        function calculatePersonality(answers) {
+            // Initialize scores for each dimension
+            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+            // Iterate through the shuffled questions to tally scores
+            shuffledQuestions.forEach((question) => {
+                const selectedOptionValue = answers[`question-${question.id}`];
+                // If an option was selected for the question, increment its corresponding score
+                if (selectedOptionValue) {
+                    scores[selectedOptionValue]++;
+                }
+            });
+
+            let personalityType = '';
+            // Determine the dominant trait for each dimension and append to personalityType
+            personalityType += (scores.E >= scores.I) ? 'E' : 'I'; // Extroversion vs. Introversion
+            personalityType += (scores.S >= scores.N) ? 'S' : 'N'; // Sensing vs. Intuition
+            personalityType += (scores.T >= scores.F) ? 'T' : 'F'; // Thinking vs. Feeling
+            personalityType += (scores.J >= scores.P) ? 'J' : 'P'; // Judging vs. Perceiving
+
+            return { personalityType };
+        }
+
+        /**
+         * Renders the shuffled questions dynamically into the questions container.
+         * Attaches event listeners for real-time validation.
+         */
         function renderQuestions() {
-            questionsContainer.innerHTML = ''; // Clear previous questions
-            if (currentQuestionIndex < questionsData.length) {
-                const q = questionsData[currentQuestionIndex];
-                const questionCard = document.createElement('div');
-                questionCard.classList.add('question-card');
-                questionCard.innerHTML = `
-                    <p>${currentQuestionIndex + 1}. ${q.question}</p>
-                    <div class="options-grid">
-                        ${q.options.map(option => `
-                            <button type="button" class="option-button" data-value="${option.value}">
-                                ${option.text}
-                            </button>
+            // Shuffle a copy of allQuestions to ensure random order each time
+            shuffledQuestions = shuffleArray([...allQuestions]);
+            questionsContainer.innerHTML = ''; // Clear any existing questions
+
+            shuffledQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-5 rounded-lg shadow-sm border-l-4 border-custom-blue';
+                questionDiv.setAttribute('data-question-id', question.id); // Add data attribute for easy identification
+                questionDiv.innerHTML = `
+                    <p class="text-gray-800 font-semibold mb-3">Question ${index + 1}: ${question.text}</p>
+                    <div class="space-y-2">
+                        ${question.options.map(option => `
+                            <label class="flex items-center p-3 border border-gray-300 rounded-md cursor-pointer hover:bg-blue-100 transition duration-200 ease-in-out">
+                                <input type="radio" name="question-${question.id}" value="${option.value}" data-question-text="${question.text}" data-option-text="${option.text}" class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-3 text-gray-700">${option.text}</span>
+                            </label>
                         `).join('')}
                     </div>
                 `;
-                questionsContainer.appendChild(questionCard);
+                questionsContainer.appendChild(questionDiv);
 
-                // Highlight previously selected answer if exists
-                if (selectedAnswers[q.id]) {
-                    questionCard.querySelector(`button[data-value="${selectedAnswers[q.id]}"]`).classList.add('selected');
-                }
-
-                questionCard.querySelectorAll('.option-button').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        // Deselect any previously selected button in this question
-                        questionCard.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
-                        // Select the clicked button
-                        event.target.classList.add('selected');
-                        selectedAnswers[q.id] = event.target.dataset.value;
-
-                        // Automatically move to the next question
-                        setTimeout(() => {
-                            if (currentQuestionIndex < questionsData.length - 1) {
-                                currentQuestionIndex++;
-                                renderQuestions();
-                                backButton.classList.remove('hidden');
-                            } else {
-                                submitBtn.classList.remove('hidden');
-                            }
-                        }, 300); // Small delay for visual feedback
-                    });
+                // Add real-time validation listener to each radio button
+                const radioInputs = questionDiv.querySelectorAll(`input[name="question-${question.id}"]`);
+                radioInputs.forEach(radio => {
+                    radio.addEventListener('change', validateQuestionsRealTime);
                 });
-            } else {
-                // All questions displayed, show submit button
-                submitBtn.classList.remove('hidden');
-            }
-            updateNavigationButtons();
+            });
         }
 
-        function updateNavigationButtons() {
-            if (currentQuestionIndex > 0) {
-                backButton.classList.remove('hidden');
-            } else {
-                backButton.classList.add('hidden');
-            }
-            if (currentQuestionIndex === questionsData.length) {
-                submitBtn.classList.remove('hidden');
-            } else {
-                submitBtn.classList.add('hidden');
-            }
-        }
+        // Event listener for the submit button
+        submitBtn.addEventListener('click', async () => {
+            const userName = userNameInput.value.trim();
 
-        backButton.addEventListener('click', () => {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                renderQuestions();
+            if (!userName) {
+                showSubmissionMessage('Please fill in your name.', 'error');
+                return;
             }
-        });
 
+            // Perform final validation before submission
+            if (!validateQuestionsRealTime()) {
+                return; // Stop if not all questions are answered
+            }
 
-        function calculatePersonality(answers) {
-            let counts = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-            for (const key in answers) {
-                const type = answers[key];
-                if (counts.hasOwnProperty(type)) {
-                    counts[type]++;
+            const selectedAnswers = {};
+            let multipleAnswersSelected = false; // Flag to check for multiple answers per question
+
+            // Collect selected answers
+            shuffledQuestions.forEach(question => {
+                const radios = document.querySelectorAll(`input[name="question-${question.id}"]:checked`);
+                if (radios.length === 1) {
+                    selectedAnswers[`question-${question.id}`] = radios[0].value;
+                } else if (radios.length > 1) {
+                    multipleAnswersSelected = true; // Set flag if multiple answers found
                 }
-            }
+            });
 
-            let personalityType = "";
-            personalityType += (counts.E >= counts.I) ? "E" : "I";
-            personalityType += (counts.S >= counts.N) ? "S" : "N";
-            personalityType += (counts.T >= counts.F) ? "T" : "F";
-            personalityType += (counts.J >= counts.P) ? "J" : "P";
-
-            return { personalityType: personalityType, counts: counts };
-        }
-
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const userName = document.getElementById('userName').value;
-            const userEmail = document.getElementById('userEmail').value;
-
-            if (!userName || !userEmail) {
-                showSubmissionMessage("Please fill in your name and email.", 'error');
+            // If multiple answers were selected for any question, show error and stop
+            if (multipleAnswersSelected) {
+                showSubmissionMessage('Error: More than one answer was selected for a question. Please select only one answer per question.', 'error');
                 return;
             }
 
-            if (Object.keys(selectedAnswers).length !== questionsData.length) {
-                showSubmissionMessage('Please answer all questions before calculating results.', 'error');
-                return;
-            }
-
+            // Calculate personality type
             const { personalityType } = calculatePersonality(selectedAnswers);
 
+            // Disable button and show loading message
             submitBtn.disabled = true;
             submitBtn.textContent = "Submitting...";
             showSubmissionMessage("Your results are being submitted...", 'info');
 
+            // Prepare parameters for EmailJS
             const templateParams = {
-                client_name: userName, // Changed 'user_name' to 'client_name'
+                recipient_name: userName,
                 personality_result: personalityType
             };
 
             try {
+                // Send email using EmailJS
                 const response = await emailjs.send('service_b087h4p', 'template_n84drg8', templateParams);
                 console.log('Email sent successfully!', response.status, response.text);
                 showSubmissionMessage('Your results have been submitted successfully!', 'success');
                 
-                // Update results display
-                mbtiResultDisplay.textContent = personalityType;
-                personalityDescription.textContent = resultsDescriptions[personalityType] || "No description available.";
-                resultsContainer.classList.remove('hidden');
+                // Update results display with the calculated type
+                document.getElementById('mbtiResultDisplay').textContent = personalityType;
+                document.getElementById('resultsContainer').classList.remove('hidden'); // Show results container
 
-                // Hide form elements
-                document.getElementById('userName').closest('.mb-6').classList.add('hidden'); // Hide the name input group
-                document.getElementById('userEmail').closest('.mb-6').classList.add('hidden'); // Hide the email input group
+                // Hide form elements after successful submission
+                userNameInput.closest('.mb-6').classList.add('hidden'); // Hide the name input group
                 questionsContainer.classList.add('hidden');
                 submitBtn.classList.add('hidden');
-                backButton.classList.remove('hidden');
+                backButton.classList.remove('hidden'); // Show the back button
 
             } catch (error) {
                 console.error('Failed to send email:', error);
                 showSubmissionMessage('Error: Could not submit results. Please try again.', 'error');
+                // Re-enable button and reset text on error
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Calculate Results";
             }
         });
 
+        // Render questions when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', renderQuestions);
     </script>
 </body>
