@@ -35,6 +35,7 @@
         }
         .logo-wrapper {
             display: flex;
+            flex-direction: column; /* Stack logo and title vertically */
             justify-content: center; /* Center logo */
             align-items: center;
             margin-bottom: 15px;
@@ -47,13 +48,71 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         h1 {
-            display: none;
+            font-size: 1.8em; /* Adjust font size as needed */
+            font-weight: 600; /* Poppins-semibold */
+            color: #1a202c; /* Tailwind's gray-900 or similar dark text color */
+            margin-top: 10px; /* Space between logo and text title */
+            text-align: center;
         }
         /* Responsive logo size */
         @media (max-width: 640px) {
             .logo {
                 max-width: 180px;
             }
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically on small screens */
+            gap: 15px; /* Space between buttons */
+            margin-top: 20px;
+        }
+        @media (min-width: 640px) { /* For larger screens, display buttons side-by-side */
+            .button-group {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .button-group button,
+            .button-group a {
+                width: 48%; /* Adjust width to fit two buttons */
+            }
+        }
+        button, .back-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #2563EB; /* Tailwind blue-600 */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        button:hover {
+            background-color: #1D4ED8; /* Tailwind blue-700 */
+        }
+        .back-button {
+            background-color: #6c757d; /* A different color for the back button */
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        /* Style for the submission message */
+        #submission-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            background-color: #e6ffe6; /* Light green background */
+            color: #4F8A10; /* Success color */
+            border: 1px solid #DFF2BF;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -63,7 +122,7 @@
         <header>
             <div class="logo-wrapper">
                 <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
-                <h1>PulseMap Personality Analysis</h1>
+                <h1>Personality Behaviour Assessment</h1>
             </div>
         </header>
         <!-- Instructions paragraph -->
@@ -81,18 +140,17 @@
             <!-- Questions will be dynamically loaded here -->
         </div>
         <!-- Submit Button -->
-        <button id="submitBtn"
-                class="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition duration-300 ease-in-out shadow-lg">
-            Calculate Results
-        </button>
-        <!-- Results Section -->
+        <div class="button-group">
+            <button id="submitBtn">Calculate Results</button>
+            <a href="index.html" class="back-button hidden">Go back to main page</a>
+        </div>
+        <div id="submission-message" class="mt-4 p-4 rounded-md text-sm text-center hidden" role="alert"></div>
+        <!-- Results Section is now hidden by default and only used for email status, not displaying scores -->
         <div id="resultsContainer" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center hidden">
             <h2 class="text-2xl font-bold text-blue-800 mb-3">Your Personality Type:</h2>
             <p id="mbtiResultDisplay" class="text-4xl font-extrabold text-blue-600 mb-4"></p>
             <p class="text-blue-700">Your results have also been sent to you via email.</p>
         </div>
-        <!-- Message Box for Email Status -->
-        <div id="messageBox" class="mt-4 p-4 rounded-md text-sm text-center hidden" role="alert"></div>
     </div>
     <!-- EmailJS CDN -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -267,30 +325,32 @@
         ];
         const questionsContainer = document.getElementById('questionsContainer');
         const submitBtn = document.getElementById('submitBtn');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const mbtiResultDisplay = document.getElementById('mbtiResultDisplay');
+        const backButton = document.querySelector('.back-button');
+        const submissionMessage = document.getElementById('submission-message');
         const userNameInput = document.getElementById('userName');
-        const messageBox = document.getElementById('messageBox');
+
         let shuffledQuestions = [];
-        // Function to shuffle an array (Fisher-Yates algorithm)
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+                [array[i], array[j]] = [array[j], array[i]];
             }
             return array;
         }
-        // Function to display messages in the message box
-        function showMessage(message, type) {
-            messageBox.textContent = message;
-            messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+
+        function showSubmissionMessage(message, type) {
+            submissionMessage.textContent = message;
+            submissionMessage.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
             if (type === 'success') {
-                messageBox.classList.add('bg-green-100', 'text-green-800');
+                submissionMessage.classList.add('bg-green-100', 'text-green-800');
             } else if (type === 'error') {
-                messageBox.classList.add('bg-red-100', 'text-red-800');
+                submissionMessage.classList.add('bg-red-100', 'text-red-800');
+            } else if (type === 'info') { // Added info type for in-progress messages
+                submissionMessage.classList.add('bg-blue-100', 'text-blue-800');
             }
         }
-        // Function to validate questions in real-time and provide visual feedback
+
         function validateQuestionsRealTime() {
             let hasUnansweredQuestions = false;
             let firstUnansweredQuestionElement = null;
@@ -314,33 +374,34 @@
                 }
             });
             if (hasUnansweredQuestions) {
-                showMessage('Please answer all questions before submitting.', 'error');
+                showSubmissionMessage('Please answer all questions before submitting.', 'error');
                 if (firstUnansweredQuestionElement) {
                     firstUnansweredQuestionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
                 return false;
             } else {
-                messageBox.classList.add('hidden');
+                submissionMessage.classList.add('hidden');
                 return true;
             }
         }
-        // Function to calculate MBTI result
-        function calculateMBTI(answers) {
+
+        function calculatePersonality(answers) {
             const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-            shuffledQuestions.forEach((question, index) => {
+            shuffledQuestions.forEach((question) => {
                 const selectedOptionValue = answers[`question-${question.id}`];
                 if (selectedOptionValue) {
                     scores[selectedOptionValue]++;
                 }
             });
-            let mbtiType = '';
-            mbtiType += (scores.E >= scores.I) ? 'E' : 'I';
-            mbtiType += (scores.S >= scores.N) ? 'S' : 'N';
-            mbtiType += (scores.T >= scores.F) ? 'T' : 'F';
-            mbtiType += (scores.J >= scores.P) ? 'J' : 'P';
-            return { mbtiType };
+
+            let personalityType = '';
+            personalityType += (scores.E >= scores.I) ? 'E' : 'I';
+            personalityType += (scores.S >= scores.N) ? 'S' : 'N';
+            personalityType += (scores.T >= scores.F) ? 'T' : 'F';
+            personalityType += (scores.J >= scores.P) ? 'J' : 'P';
+            return { personalityType };
         }
-        // Function to render questions
+
         function renderQuestions() {
             shuffledQuestions = shuffleArray([...allQuestions]);
             questionsContainer.innerHTML = '';
@@ -366,16 +427,18 @@
                 });
             });
         }
-        // Event listener for form submission
+
         submitBtn.addEventListener('click', async () => {
             const userName = userNameInput.value.trim();
             if (!userName) {
-                showMessage('Please enter your name.', 'error');
+                showSubmissionMessage('Please enter your name.', 'error');
                 return;
             }
+
             if (!validateQuestionsRealTime()) {
                 return;
             }
+
             const selectedAnswers = {};
             let multipleAnswersSelected = false;
             shuffledQuestions.forEach(question => {
@@ -386,27 +449,39 @@
                     multipleAnswersSelected = true;
                 }
             });
+
             if (multipleAnswersSelected) {
-                showMessage('Error: More than one answer was selected for a question. Please select only one answer per question.', 'error');
+                showSubmissionMessage('Error: More than one answer was selected for a question. Please select only one answer per question.', 'error');
                 return;
             }
-            const { mbtiType } = calculateMBTI(selectedAnswers);
-            mbtiResultDisplay.textContent = mbtiType;
-            resultsContainer.classList.remove('hidden');
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            const { personalityType } = calculatePersonality(selectedAnswers);
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting...";
+            showSubmissionMessage("Your results are being submitted...", 'info');
+
             const templateParams = {
                 user_name: userName,
-                personality_result: mbtiType
+                personality_result: personalityType
             };
+
             try {
-                const response = await emailjs.send('service_cv71ym3', 'template_ebjarcl', templateParams);
+                const response = await emailjs.send('service_b087h4p', 'template_n84drg8', templateParams); // Updated service and template
                 console.log('Email sent successfully!', response.status, response.text);
-                showMessage('Your results have been successfully sent via email!', 'success');
+                showSubmissionMessage('Your results have been submitted successfully!', 'success');
+                document.getElementById('disc-form').classList.add('hidden');
+                document.getElementById('questionsContainer').classList.add('hidden');
+                backButton.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
             } catch (error) {
                 console.error('Failed to send email:', error);
-                showMessage('Could not send results via email. Please try again.', 'error');
+                showSubmissionMessage('Error: Could not submit results. Please try again.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Calculate Results";
             }
         });
+
         document.addEventListener('DOMContentLoaded', renderQuestions);
     </script>
 </body>
