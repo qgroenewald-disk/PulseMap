@@ -10,7 +10,6 @@
     <meta property="og:image" content="https://i.imgur.com/Zx34Iky.png">
     <meta property="og:url" content="https://qgroenewald-disk.github.io/Disk-Analise-Form/">
     <meta property="og:type" content="website">
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Define CSS variables for consistent theming */
@@ -24,627 +23,343 @@
         }
 
         /* Import Poppins font */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--secondary-color);
             color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
         }
-        /* Custom class for border color matching bg-blue-600 */
-        .border-custom-blue {
-            border-left-color: #2563EB; /* Tailwind's blue-600 hex code */
-        }
-        /* Class for highlighting unanswered questions */
-        .border-error {
-            border-color: #EF4444; /* Tailwind's red-500 hex code */
-        }
-        header {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centered for the logo */
-            border-bottom: 2px solid var(--primary-color);
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            padding-left: 0;
-        }
-        .logo-wrapper {
-            display: flex;
-            flex-direction: column; /* Stack logo and title vertically */
-            justify-content: center; /* Center logo */
-            align-items: center;
-            gap: 15px; /* Adjust gap between logo and title */
-            margin-bottom: 15px;
-            width: 100%;
-        }
-        .logo {
-            max-width: 250px;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        h1 {
-            font-size: 5em; /* Increased font size significantly */
-            font-weight: 600; /* Poppins-semibold */
-            color: var(--primary-color);
-            margin-top: 10px; /* Space between logo and text title */
-            text-align: center;
-        }
-        /* Responsive logo size */
-        @media (max-width: 640px) {
-            .logo {
-                max-width: 180px;
-            }
-            h1 {
-                font-size: 3em; /* Adjusted for smaller screens */
-            }
-        }
+
         .container {
-            max-width: 900px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
         }
-        .intro-text, .results-description {
-            text-align: center;
-            margin-bottom: 25px;
-            line-height: 1.8;
-            color: #555;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
             font-weight: 600;
-            color: var(--text-color);
+            transition: background-color 0.2s;
         }
-        .form-group input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
+
+        .btn-primary:hover {
+            background-color: #004a80; /* Darker shade for hover */
+        }
+
+        .form-input {
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            width: 100%;
             box-sizing: border-box;
         }
-        .question-card {
-            background-color: #f9f9f9;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
-        }
-        .question-card p {
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            font-size: 1.1em;
-        }
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
-        }
-        .option-button {
-            background-color: #e0e0e0;
-            border: 1px solid #ccc;
-            padding: 12px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.95em;
-            text-align: center;
-            transition: all 0.3s ease;
-            color: #444;
-        }
-        .option-button:hover {
-            background-color: #d0d0d0;
-            border-color: #bbb;
-        }
-        .option-button.selected {
-            background-color: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .button-group {
-            text-align: center;
-            margin-top: 30px;
-        }
-        .button-group button {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-weight: 600;
-            margin: 0 10px;
-        }
-        .button-group button:hover:not(:disabled) {
-            background-color: #004a80;
-            transform: translateY(-2px);
-        }
-        .button-group button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        .results-section {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
+
+        .message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
             text-align: center;
         }
-        .results-scores {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
+
+        .message.info {
+            background-color: #e0f7fa;
+            color: #00796b;
+            border: 1px solid #00acc1;
         }
-        .score-item {
-            background-color: #e6f2ff;
-            border: 1px solid #cce0ff;
-            border-radius: 8px;
-            padding: 15px 25px;
-            text-align: center;
-            min-width: 120px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .score-item h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1.2em;
-        }
-        .score-item p {
-            font-size: 2em;
-            font-weight: bold;
-            color: #333;
-            margin: 5px 0 0;
-        }
-        .style-description {
-            background-color: #f0f8ff;
-            border: 1px solid #cceeff;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: left;
-            margin-top: 20px;
-            line-height: 1.7;
-            font-size: 0.95em;
-            color: #444;
-        }
-        .submission-message {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            text-align: center;
-        }
-        .email-success {
-            background-color: #DFF2BF;
+
+        .message.success {
+            background-color: #e8f5e9;
             color: var(--success-color);
-            border: 1px solid var(--success-color);
+            border: 1px solid #81c784;
         }
-        .email-error {
-            background-color: #FFBABA;
+
+        .message.error {
+            background-color: #ffebee;
             color: var(--error-color);
-            border: 1px solid var(--error-color);
+            border: 1px solid #e57373;
         }
-        .email-info {
-            background-color: #cce5ff;
-            color: #004085;
-            border: 1px solid #b8daff;
-        }
+
         .hidden {
             display: none;
         }
-
-        @media (max-width: 600px) {
-            .container {
-                margin: 10px auto;
-                padding: 15px;
-            }
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-            .button-group button {
-                width: 100%;
-                margin: 10px 0;
-            }
-        }
     </style>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
-<body>
-    <div class="container">
-        <!-- Logo and Title Section -->
-        <header>
-            <div class="logo-wrapper">
-                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
-                <h1>Functioning Style Analysis</h1>
-            </div>
-        </header>
-        <p class="intro-text">
-            This assessment helps you understand your natural functioning style. Please read each statement carefully and choose the option that best describes you. There are no right or wrong answers, just honest reflections.
-        </p>
+<body class="min-h-screen flex flex-col items-center py-8">
+    <main class="flex-grow container mx-auto px-4">
+        <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+            <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="mx-auto h-24 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Functioning Style Analysis</h1>
+            <p class="text-gray-600 mb-8">
+                For each question, rank the four options from **1 (Most like you)** to **4 (Least like you)**.
+                Ensure each rank (1, 2, 3, 4) is used exactly once per question.
+            </p>
 
-        <form id="disc-form">
-            <div class="form-group">
-                <label for="userName">Your Name:</label>
-                <input type="text" id="userName" name="userName" required>
-            </div>
-            <!-- Removed Email Input Field -->
+            <form id="assessmentForm" class="space-y-6">
+                <div class="mb-6">
+                    <label for="userName" class="block text-gray-700 text-sm font-bold mb-2">Your Name:</label>
+                    <input type="text" id="userName" name="userName" required class="form-input">
+                </div>
 
-            <div id="questionsContainer">
-                <!-- All questions will be dynamically loaded here -->
-            </div>
+                <div id="questionsContainer" class="space-y-8">
+                    </div>
 
-            <div class="button-group">
-                <button type="submit" id="submitBtn">Submit and See Results</button>
-            </div>
-            <p id="submissionMessage" class="submission-message hidden"></p>
-        </form>
+                <div id="submissionMessage" class="message hidden"></div>
 
-        <div id="resultsContainer" class="results-section hidden">
-            <h2>Your Functioning Style Results</h2>
-            <div class="results-scores">
-                <div class="score-item">
-                    <h3>Dominance (D)</h3>
-                    <p id="dScore">0</p>
+                <button type="submit" id="submitBtn" class="btn-primary w-full">Submit and See Results</button>
+            </form>
+
+            <div id="resultsContainer" class="hidden mt-8 text-left p-6 border rounded-lg bg-gray-50">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Your Functioning Style Results:</h2>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Dominance (D): <strong id="dScoreDisplay"></strong></li>
+                    <li>Influence (I): <strong id="iScoreDisplay"></strong></li>
+                    <li>Stability (S): <strong id="sScoreDisplay"></strong></li>
+                    <li>Conscientiousness (C): <strong id="cScoreDisplay"></strong></li>
+                </ul>
+                <div class="text-center mt-6">
+                    <a href="index.html" class="btn-primary inline-block">Back to Home</a>
                 </div>
-                <div class="score-item">
-                    <h3>Influence (I)</h3>
-                    <p id="iScore">0</p>
-                </div>
-                <div class="score-item">
-                    <h3>Stability (S)</h3>
-                    <p id="sScore">0</p>
-                </div>
-                <div class="score-item">
-                    <h3>Conscientiousness (C)</h3>
-                    <p id="cScore">0</p>
-                </div>
-            </div>
-            <div id="discStyleDescription" class="style-description">
-                <p>Based on your scores, your primary functioning style and its characteristics will appear here.</p>
             </div>
         </div>
-    </div>
+    </main>
 
+    <footer class="w-full bg-gray-800 text-white py-4 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 PulseMap. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.emailjs.com/sdk/2.6.4/email.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            emailjs.init("rES387Z_beB0IEiRm"); // Initialize EmailJS here
+        (function() {
+            emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your actual Public Key from EmailJS
+        })();
 
-            const form = document.getElementById('disc-form');
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('assessmentForm');
+            const userNameInput = document.getElementById('userName');
             const questionsContainer = document.getElementById('questionsContainer');
             const submitBtn = document.getElementById('submitBtn');
-            const resultsContainer = document.getElementById('resultsContainer');
             const submissionMessage = document.getElementById('submissionMessage');
-            const userNameInput = document.getElementById('userName');
-            let answers = {}; // Stores selected options for each question
+            const resultsContainer = document.getElementById('resultsContainer');
+            const dScoreDisplay = document.getElementById('dScoreDisplay');
+            const iScoreDisplay = document.getElementById('iScoreDisplay');
+            const sScoreDisplay = document.getElementById('sScoreDisplay');
+            const cScoreDisplay = document.getElementById('cScoreDisplay');
 
-            const questionsData = [
+            const questions = [
                 {
-                    "question": "The way I act in my relationships with other people could be described as:",
-                    "options": [
-                        {"text": "Gentle, kind", "value": 1, "type": "S"},
-                        {"text": "Discerning, cautious", "value": 1, "type": "C"},
-                        {"text": "Decisive, assertive", "value": 1, "type": "D"},
-                        {"text": "Original, full of plans", "value": 1, "type": "I"}
-                    ]
+                    statement: "I am generally",
+                    options: { D: "Demanding", I: "Inspiring", S: "Supportive", C: "Careful" }
                 },
                 {
-                    "question": "As far as the things life brings my way, I am:",
-                    "options": [
-                        {"text": "Enterprising, seizes opportunities", "value": 1, "type": "D"},
-                        {"text": "Sober, plays it safe", "value": 1, "type": "C"},
-                        {"text": "Carefree, cheerful", "value": 1, "type": "I"},
-                        {"text": "Even-tempered, patient", "value": 1, "type": "S"}
-                    ]
+                    statement: "I respond to problems by being",
+                    options: { D: "Direct", I: "Enthusiastic", S: "Patient", C: "Precise" }
                 },
                 {
-                    "question": "In my cooperation with other people, I would normally act as follows:",
-                    "options": [
-                        {"text": "Negotiating, diplomatic", "value": 1, "type": "S"},
-                        {"text": "Competitive", "value": 1, "type": "D"},
-                        {"text": "Considerate, sensitive to others", "value": 1, "type": "S"},
-                        {"text": "Stimulating, activating", "value": 1, "type": "I"}
-                    ]
+                    statement: "When interacting with others, I am",
+                    options: { D: "Assertive", I: "Sociable", S: "Team-oriented", C: "Thorough" }
                 },
                 {
-                    "question": "When I think about my life, I perceive myself as:",
-                    "options": [
-                        {"text": "Content, satisfied", "value": 1, "type": "S"},
-                        {"text": "On my way to clear goals", "value": 1, "type": "D"},
-                        {"text": "Creative, full of new ideas", "value": 1, "type": "I"},
-                        {"text": "Thorough, organized", "value": 1, "type": "C"}
-                    ]
+                    statement: "I am motivated by",
+                    options: { D: "Challenges", I: "Recognition", S: "Security", C: "Accuracy" }
                 },
                 {
-                    "question": "I would describe myself as:",
-                    "options": [
-                        {"text": "Purposeful, determined", "value": 1, "type": "D"},
-                        {"text": "Accurate, precise", "value": 1, "type": "C"},
-                        {"text": "Calm, peaceful", "value": 1, "type": "S"},
-                        {"text": "Full of zest for life, fun", "value": 1, "type": "I"}
-                    ]
+                    statement: "In decision-making, I am usually",
+                    options: { D: "Decisive", I: "Impulsive", S: "Cautious", C: "Analytical" }
                 },
                 {
-                    "question": "In my social interactions with other people, I will:",
-                    "options": [
-                        {"text": "Involve others and let them participate", "value": 1, "type": "I"},
-                        {"text": "Be confrontational, argue", "value": 1, "type": "D"},
-                        {"text": "Be accommodating, submissive", "value": 1, "type": "S"},
-                        {"text": "Be reserved, controlled", "value": 1, "type": "C"}
-                    ]
+                    statement: "My work style is",
+                    options: { D: "Fast-paced", I: "Creative", S: "Consistent", C: "Systematic" }
                 },
                 {
-                    "question": "The style of being that I radiate can be described as:",
-                    "options": [
-                        {"text": "Good-natured, pleasant", "value": 1, "type": "S"},
-                        {"text": "Exuberant, cheerful", "value": 1, "type": "I"},
-                        {"text": "Energetic, enthusiastic", "value": 1, "type": "I"},
-                        {"text": "Disciplined, structured", "value": 1, "type": "C"}
-                    ]
+                    statement: "When under pressure, I become",
+                    options: { D: "Controlling", I: "Disorganized", S: "Yielding", C: "Perfectionistic" }
                 },
                 {
-                    "question": "In my communication with other people, I am:",
-                    "options": [
-                        {"text": "Outspoken/states my own point of view clearly", "value": 1, "type": "D"},
-                        {"text": "Enthusiastic, positive", "value": 1, "type": "I"},
-                        {"text": "Open to persuasion, tentative", "value": 1, "type": "S"},
-                        {"text": "Logical, reasoned", "value": 1, "type": "C"}
-                    ]
+                    statement: "I communicate by being",
+                    options: { D: "To the point", I: "Persuasive", S: "Harmonious", C: "Logical" }
                 },
                 {
-                    "question": "When it comes to decision-making, I would describe myself as:",
-                    "options": [
-                        {"text": "Controlled, thoughtful", "value": 1, "type": "C"},
-                        {"text": "Decisive, firm", "value": 1, "type": "D"},
-                        {"text": "Impulsive, spontaneous", "value": 1, "type": "I"},
-                        {"text": "Accommodating, adaptable", "value": 1, "type": "S"}
-                    ]
+                    statement: "I prefer tasks that are",
+                    options: { D: "Challenging", I: "Varied", S: "Predictable", C: "Detailed" }
                 },
                 {
-                    "question": "I see and experience myself as a person who:",
-                    "options": [
-                        {"text": "Is enterprising, seeks challenges", "value": 1, "type": "D"},
-                        {"text": "Is discerning (can distinguish)", "value": 1, "type": "C"},
-                        {"text": "Is outgoing, reaches out to others", "value": 1, "type": "I"},
-                        {"text": "Is moderate, avoids extremes", "value": 1, "type": "S"}
-                    ]
-                },
-                {
-                    "question": "I think of myself as a person who is:",
-                    "options": [
-                        {"text": "Expressive, honest about my feelings", "value": 1, "type": "I"},
-                        {"text": "Sincere, does what is right", "value": 1, "type": "C"},
-                        {"text": "Leading, in control", "value": 1, "type": "D"},
-                        {"text": "Participatory, cooperative", "value": 1, "type": "S"}
-                    ]
-                },
-                {
-                    "question": "I am:",
-                    "options": [
-                        {"text": "Outgoing, focused on others", "value": 1, "type": "I"},
-                        {"text": "Conscientious, keeps appointments", "value": 1, "type": "C"},
-                        {"text": "Team player, cooperates", "value": 1, "type": "S"},
-                        {"text": "Goal-oriented, knows what I want", "value": 1, "type": "D"}
-                    ]
-                },
-                {
-                    "question": "I usually do things:",
-                    "options": [
-                        {"text": "Planned, tactical", "value": 1, "type": "C"},
-                        {"text": "Resigned, gives in easily", "value": 1, "type": "S"},
-                        {"text": "Cheerful, joyful", "value": 1, "type": "I"},
-                        {"text": "Firm and with conviction", "value": 1, "type": "D"}
-                    ]
-                },
-                {
-                    "question": "I would describe my nature as:",
-                    "options": [
-                        {"text": "Engaging (attracts others)", "value": 1, "type": "I"},
-                        {"text": "Self-examining, introspective", "value": 1, "type": "C"},
-                        {"text": "Confident, influential", "value": 1, "type": "D"},
-                        {"text": "Steadfast, predictable", "value": 1, "type": "S"}
-                    ]
-                },
-                {
-                    "question": "My approach to life can be described with:",
-                    "options": [
-                        {"text": "Responsible, dutiful", "value": 1, "type": "C"},
-                        {"text": "Enterprising, creative", "value": 1, "type": "D"},
-                        {"text": "Optimistic, positive", "value": 1, "type": "I"},
-                        {"text": "Thorough, organized", "value": 1, "type": "C"}
-                    ]
-                },
-                {
-                    "question": "When I think about myself in relation to others, I see myself as:",
-                    "options": [
-                        {"text": "Independent, self-reliant", "value": 1, "type": "D"},
-                        {"text": "Appreciative, respectful", "value": 1, "type": "S"},
-                        {"text": "Helpful, supportive", "value": 1, "type": "S"},
-                        {"text": "Inspiring, motivating", "value": 1, "type": "I"}
-                    ]
-                },
-                {
-                    "question": "One of my qualities that I feel good about is the fact that I am:",
-                    "options": [
-                        {"text": "Persistent, doesn't give up easily", "value": 1, "type": "D"},
-                        {"text": "Loyal/committed to others", "value": 1, "type": "S"},
-                        {"text": "Cheerful, likes nice things", "value": 1, "type": "I"},
-                        {"text": "Conscientious, dutiful", "value": 1, "type": "C"}
-                    ]
-                },
-                {
-                    "question": "One quality of mine that is not always received so positively by others is the fact that I sometimes am:",
-                    "options": [
-                        {"text": "Picky, fastidious", "value": 1, "type": "C"},
-                        {"text": "Direct/blunt", "value": 1, "type": "D"},
-                        {"text": "Too accommodating/yielding", "value": 1, "type": "S"},
-                        {"text": "Influencing people with my enthusiasm", "value": 1, "type": "I"}
-                    ]
-                },
-                {
-                    "question": "In my handling of people, I am:",
-                    "options": [
-                        {"text": "Impartial, unbiased", "value": 1, "type": "C"},
-                        {"text": "Sympathetic, full of compassion", "value": 1, "type": "S"},
-                        {"text": "Authoritative, strong", "value": 1, "type": "D"},
-                        {"text": "Jovial, hearty", "value": 1, "type": "I"}
-                    ]
-                },
-                {
-                    "question": "One of my qualities that people can rely on is the fact that I am:",
-                    "options": [
-                        {"text": "Can persuade/excite others", "value": 1, "type": "I"},
-                        {"text": "Accurate, precise", "value": 1, "type": "C"},
-                        {"text": "Even-tempered and calm", "value": 1, "type": "S"},
-                        {"text": "Persistent, perseveres", "value": 1, "type": "D"}
-                    ]
+                    statement: "In conflict, I am typically",
+                    options: { D: "Confrontational", I: "Optimistic", S: "Accommodating", C: "Questioning" }
                 }
+                // Add more questions as needed following this structure
             ];
 
             function showSubmissionMessage(message, type) {
                 submissionMessage.textContent = message;
-                submissionMessage.className = `submission-message ${type ? `email-${type}` : ''}`;
+                submissionMessage.className = `message ${type}`; // Reset classes and add new ones
                 submissionMessage.classList.remove('hidden');
             }
 
             function generateQuestions() {
-                questionsContainer.innerHTML = ''; // Clear previous questions
-                questionsData.forEach((q, index) => {
-                    const questionCard = document.createElement('div');
-                    questionCard.classList.add('question-card');
-                    questionCard.innerHTML = `
-                        <p>${index + 1}. ${q.question}</p>
-                        <div class="options-grid">
-                            ${q.options.map((option) => `
-                                <button type="button" class="option-button" data-question-index="${index}" data-value="${option.value}" data-type="${option.type}">
-                                    ${option.text}
-                                </button>
-                            `).join('')}
-                        </div>
-                    `;
-                    questionsContainer.appendChild(questionCard);
+                questionsContainer.innerHTML = ''; // Clear existing questions
+                questions.forEach((q, qIndex) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question-block bg-gray-100 p-6 rounded-lg shadow-md';
+                    questionDiv.dataset.questionIndex = qIndex;
 
-                    // Highlight previously selected answer if exists
-                    if (answers[index]) {
-                        questionCard.querySelector(`button[data-question-index="${index}"][data-type="${answers[index].type}"][data-value="${answers[index].value}"]`).classList.add('selected');
-                    }
+                    const statement = document.createElement('p');
+                    statement.className = 'text-lg font-semibold mb-4 text-gray-800';
+                    statement.textContent = `${qIndex + 1}. ${q.statement}`;
+                    questionDiv.appendChild(statement);
 
-                    questionCard.querySelectorAll('.option-button').forEach(button => {
-                        button.addEventListener('click', (event) => {
-                            const clickedButton = event.target.closest('.option-button');
-                            const questionIndex = clickedButton.dataset.questionIndex;
-                            const questionCardElement = clickedButton.closest('.question-card');
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
 
-                            // Deselect any previously selected button in this question card
-                            questionCardElement.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
-                            // Select the clicked button
-                            clickedButton.classList.add('selected');
-                            answers[questionIndex] = {
-                                value: parseInt(clickedButton.dataset.value),
-                                type: clickedButton.dataset.type
-                            };
-                            console.log(`Answered Q${parseInt(questionIndex) + 1}:`, answers[questionIndex]); // Log the selected answer
-                        });
+                    const traits = ['D', 'I', 'S', 'C'];
+                    traits.forEach(trait => {
+                        const optionGroup = document.createElement('div');
+                        optionGroup.className = 'flex items-center space-x-2';
+
+                        const label = document.createElement('label');
+                        label.className = 'flex-grow text-gray-700';
+                        label.textContent = q.options[trait];
+
+                        const select = document.createElement('select');
+                        select.name = `q${qIndex}_${trait}`;
+                        select.id = `q${qIndex}_${trait}`;
+                        select.className = 'form-input w-24 ml-auto'; // Adjusted width for select
+                        select.dataset.questionIndex = qIndex;
+                        select.dataset.trait = trait;
+
+                        // Add a default disabled option
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = "";
+                        defaultOption.textContent = "Rank";
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        select.appendChild(defaultOption);
+
+                        for (let rank = 1; rank <= 4; rank++) {
+                            const option = document.createElement('option');
+                            option.value = rank;
+                            option.textContent = rank;
+                            select.appendChild(option);
+                        }
+
+                        // Add event listener for real-time validation
+                        select.addEventListener('change', handleRankSelection);
+
+                        optionGroup.appendChild(label);
+                        optionGroup.appendChild(select);
+                        optionsDiv.appendChild(optionGroup);
                     });
+
+                    questionDiv.appendChild(optionsDiv);
+                    questionsContainer.appendChild(questionDiv);
                 });
             }
 
-            function calculateScores() {
-                let scores = { D: 0, I: 0, S: 0, C: 0 };
-                Object.values(answers).forEach(answer => {
-                    if (answer.type && scores.hasOwnProperty(answer.type)) {
-                        scores[answer.type] += answer.value;
+            // --- New: Real-time validation for unique ranks per question ---
+            function handleRankSelection(event) {
+                const changedSelect = event.target;
+                const questionIndex = changedSelect.dataset.questionIndex;
+                const currentQuestionDiv = document.querySelector(`.question-block[data-question-index="${questionIndex}"]`);
+                const selectsInQuestion = currentQuestionDiv.querySelectorAll('select');
+
+                const selectedRanks = {};
+                let isValid = true;
+
+                selectsInQuestion.forEach(select => {
+                    if (select.value !== "") {
+                        if (selectedRanks[select.value]) {
+                            isValid = false; // Duplicate rank found
+                        }
+                        selectedRanks[select.value] = true;
                     }
                 });
-                return scores;
-            }
 
-            function getDiscStyleDescription(scores) {
-                let primaryStyle = '';
-                let maxScore = -Infinity;
+                if (!isValid) {
+                    showSubmissionMessage(`Question ${parseInt(questionIndex) + 1}: Each rank (1-4) must be unique.`, 'error');
+                    // Optionally, disable submit button or highlight problematic dropdowns
+                    submitBtn.disabled = true;
+                } else {
+                    // Check if all questions are valid before re-enabling submit
+                    const allQuestionsValid = Array.from(questionsContainer.children).every(qDiv => {
+                        const qSelects = qDiv.querySelectorAll('select');
+                        const qRanks = [];
+                        qSelects.forEach(s => { if (s.value !== "") qRanks.push(s.value); });
+                        return new Set(qRanks).size === qRanks.length || qRanks.length === 0; // Check uniqueness or if not started
+                    });
 
-                for (const style in scores) {
-                    if (scores[style] > maxScore) {
-                        maxScore = scores[style];
-                        primaryStyle = style;
+                    const allQuestionsAnswered = Array.from(questionsContainer.children).every(qDiv => {
+                        const qSelects = qDiv.querySelectorAll('select');
+                        return Array.from(qSelects).every(s => s.value !== "");
+                    });
+                    
+                    if (allQuestionsValid && allQuestionsAnswered && userNameInput.value.trim() !== '') {
+                        submissionMessage.classList.add('hidden'); // Hide general error if all good
+                        submitBtn.disabled = false;
+                    } else if (submissionMessage.classList.contains('error')) {
+                        // Keep error message if not all conditions are met
+                    } else {
+                         submissionMessage.classList.add('hidden'); // Clear messages if input is valid but not complete
                     }
                 }
-
-                let description = '';
-                switch (primaryStyle) {
-                    case 'D':
-                        description = `
-                            <h3>Dominance (D) Style Characteristics:</h3>
-                            <p>Individuals with a high D-score are often direct, results-oriented, and competitive. They enjoy challenges and taking charge. They are assertive, decisive, and focus on achieving goals quickly. They value competence and action.</p>
-                            <p><strong>Strengths:</strong> Driven, problem-solver, confident, takes initiative.</p>
-                            <p><strong>Areas for Development:</strong> Can be seen as impatient, overly direct, or demanding.</p>
-                        `;
-                        break;
-                    case 'I':
-                        description = `
-                            <h3>Influence (I) Style Characteristics:</h3>
-                            <p>Individuals with a high I-score are outgoing, enthusiastic, and optimistic. They enjoy social interaction, persuading others, and are often perceived as charismatic. They thrive in positive environments and are great at motivating teams.</p>
-                            <p><strong>Strengths:</strong> Persuasive, sociable, optimistic, builds relationships.</p>
-                            <p><strong>Areas for Development:</strong> Can be disorganized, impulsive, or overly focused on popularity.</p>
-                        `;
-                        break;
-                    case 'S':
-                        description = `
-                            <h3>Stability (S) Style Characteristics:</h3>
-                            <p>Individuals with a high S-score are calm, patient, and good listeners. They value consistency, loyalty, and a stable environment. They are supportive team players who prefer a predictable pace and collaborative work.</p>
-                            <p><strong>Strengths:</strong> Patient, loyal, supportive, reliable, good listener.</p>
-                            <p><strong>Areas for Development:</strong> Can be resistant to change, indecisive, or too accommodating.</p>
-                        `;
-                        break;
-                    case 'C':
-                        description = `
-                            <h3>Conscientiousness (C) Style Characteristics:</h3>
-                            <p>Individuals with a high C-score are analytical, precise, and systematic. They focus on accuracy, quality, and details. They adhere to rules and standards and are often seen as logical and objective problem-solvers.</p>
-                            <p><strong>Strengths:</strong> Accurate, logical, detail-oriented, high standards.</p>
-                            <p><strong>Areas for Development:</strong> Can be overly critical, prone to analysis paralysis, or resistant to subjective ideas.</p>
-                        `;
-                        break;
-                    default:
-                        description = `<p>Complete the assessment to reveal your primary functioning style.</p>`;
-                }
-                return description;
             }
+
 
             async function handleSubmit(event) {
                 event.preventDefault();
 
                 const userName = userNameInput.value.trim();
-
                 if (!userName) {
-                    showSubmissionMessage("Please fill in your name.", 'error');
+                    showSubmissionMessage("Please enter your name.", 'error');
                     return;
                 }
 
-                if (Object.keys(answers).length !== questionsData.length) {
-                    showSubmissionMessage("Please answer all questions before submitting.", 'error');
+                const scores = { D: 0, I: 0, S: 0, C: 0 };
+                let allQuestionsAnswered = true;
+
+                // --- Validation for all questions and unique ranks on submit ---
+                questions.forEach((q, qIndex) => {
+                    const currentQuestionDiv = document.querySelector(`.question-block[data-question-index="${qIndex}"]`);
+                    const selectsInQuestion = currentQuestionDiv.querySelectorAll('select');
+                    const questionRanks = [];
+                    
+                    selectsInQuestion.forEach(select => {
+                        if (select.value === "") {
+                            allQuestionsAnswered = false;
+                        }
+                        questionRanks.push(select.value);
+                    });
+
+                    // Check for uniqueness within the current question's ranks
+                    const uniqueRanks = new Set(questionRanks.filter(r => r !== "")); // Filter out empty strings
+                    if (uniqueRanks.size !== questionRanks.filter(r => r !== "").length || uniqueRanks.size !== 4) { // Ensure 4 unique values if all answered
+                        showSubmissionMessage(`Question ${qIndex + 1}: All ranks (1-4) must be unique and selected.`, 'error');
+                        allQuestionsAnswered = false; // Mark as not fully answered due to validation
+                    }
+
+                    // Calculate scores (convert rank to score: 1 -> 4, 2 -> 3, 3 -> 2, 4 -> 1)
+                    selectsInQuestion.forEach(select => {
+                        const rank = parseInt(select.value);
+                        const trait = select.dataset.trait;
+                        if (!isNaN(rank) && trait) {
+                            scores[trait] += (5 - rank); // Accumulate score based on rank
+                        }
+                    });
+                });
+
+                if (!allQuestionsAnswered) {
+                    showSubmissionMessage("Please answer all questions and ensure each rank (1-4) is unique per question.", 'error');
                     return;
                 }
-
-                const scores = calculateScores();
-                document.getElementById('dScore').textContent = scores.D;
-                document.getElementById('iScore').textContent = scores.I;
-                document.getElementById('sScore').textContent = scores.S;
-                document.getElementById('cScore').textContent = scores.C;
-                document.getElementById('discStyleDescription').innerHTML = getDiscStyleDescription(scores);
-
+                
+                // All validations passed, proceed with submission
+                document.getElementById('dScoreDisplay').textContent = scores.D;
+                document.getElementById('iScoreDisplay').textContent = scores.I;
+                document.getElementById('sScoreDisplay').textContent = scores.S;
+                document.getElementById('cScoreDisplay').textContent = scores.C;
+                
                 resultsContainer.classList.remove('hidden');
                 form.classList.add('hidden'); // Hide the form after submission
 
@@ -675,6 +390,21 @@
 
             generateQuestions(); // Initial call to generate all questions
             form.addEventListener('submit', handleSubmit);
+
+            // Initial state: disable submit button until name is entered and form is filled.
+            // This is handled by handleRankSelection now.
+            userNameInput.addEventListener('input', () => {
+                // Re-trigger validation logic when name changes
+                const anySelectFilled = Array.from(questionsContainer.querySelectorAll('select')).some(s => s.value !== "");
+                if (userNameInput.value.trim() !== '' && anySelectFilled) {
+                    handleRankSelection({target: questionsContainer.querySelector('select') || null}); // Trigger a check
+                } else {
+                    submitBtn.disabled = true;
+                }
+            });
+
+            // Ensure submit button is initially disabled
+            submitBtn.disabled = true;
         });
     </script>
 </body>
