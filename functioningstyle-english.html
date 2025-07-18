@@ -29,567 +29,475 @@
             padding: 20px;
         }
         .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        header {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centered for the logo */
-            border-bottom: 2px solid var(--primary-color);
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            padding-left: 0;
-        }
-        .logo-and-title-wrapper {
-            display: flex;
-            flex-direction: column; /* Stack logo and title vertically */
-            justify-content: center; /* Center logo */
-            align-items: center;
-            gap: 15px; /* Adjust gap between logo and title */
-            margin-bottom: 15px;
-            width: 100%;
-        }
-        .logo {
-            max-width: 250px; /* Adjusted for bigger logo */
-            height: auto;
-            border-radius: 5px;
-            flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        @media (max-width: 640px) {
-            .logo {
-                max-width: 180px;
-            }
-        }
-        .logo-and-title-wrapper h1 {
-            font-size: 1.8em; /* Adjust font size as needed */
-            font-weight: 600; /* Poppins-semibold */
+        h1, h2 {
             color: var(--primary-color);
-            margin-top: 10px; /* Space between logo and text title */
             text-align: center;
+            margin-bottom: 20px;
         }
-        .instructions {
-            background-color: #e7f3fe;
-            border-left: 4px solid var(--primary-color);
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 0.95em;
-            text-align: left;
-            margin-top: 0;
-            width: 100%;
-            box-sizing: border-box;
+        .intro-text, .results-description {
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: #555;
         }
         .form-group {
             margin-bottom: 20px;
         }
         .form-group label {
             display: block;
+            margin-bottom: 8px;
             font-weight: 600;
-            margin-bottom: 5px;
+            color: var(--text-color);
         }
-        .form-group input[type="text"] {
-            width: 100%;
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid var(--border-color);
-            border-radius: 5px;
+            border-radius: 4px;
+            font-size: 16px;
             box-sizing: border-box;
         }
-        .question-block {
-            margin-bottom: 30px;
-            padding: 20px;
+        .question-card {
+            background-color: #f9f9f9;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
         }
-        .question-block h3 {
-            margin-top: 0;
+        .question-card p {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
             font-size: 1.1em;
         }
-        .answer-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
         }
-        .answer-option select {
-            width: 70px;
-            padding: 8px;
-            margin-right: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            text-align: center;
-            background-color: #fff;
+        .option-button {
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            padding: 12px 15px;
+            border-radius: 6px;
             cursor: pointer;
-        }
-        .answer-option label {
-            flex: 1;
-        }
-        .error-message {
-            color: var(--error-color);
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: none;
-        }
-        #form-error {
+            font-size: 0.95em;
             text-align: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #FFD2D2;
-            border-radius: 5px;
+            transition: all 0.3s ease;
+            color: #444;
         }
-        .button-group {
-            display: flex;
-            flex-direction: column; /* Stack buttons vertically on small screens */
-            gap: 15px; /* Space between buttons */
-            margin-top: 20px;
+        .option-button:hover {
+            background-color: #d0d0d0;
+            border-color: #bbb;
         }
-        @media (min-width: 640px) { /* For larger screens, display buttons side-by-side */
-            .button-group {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .button-group button,
-            .button-group a {
-                width: 48%; /* Adjust width to fit two buttons */
-            }
-        }
-        button, .back-button {
-            display: block;
-            width: 100%;
-            padding: 15px;
+        .option-button.selected {
             background-color: var(--primary-color);
             color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center; /* Ensure text is centered for anchor buttons */
-            text-decoration: none; /* Remove underline for anchor buttons */
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        button:hover, .back-button:hover {
-            background-color: #004170;
-        }
-        .back-button {
-            background-color: #6c757d; /* A different color for the back button */
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-        .hidden {
-            display: none;
-        }
-        #results-container {
+        .button-group {
+            text-align: center;
             margin-top: 30px;
+        }
+        .button-group button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            margin: 0 10px;
+        }
+        .button-group button:hover:not(:disabled) {
+            background-color: #004a80;
+            transform: translateY(-2px);
+        }
+        .button-group button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .results-section {
+            margin-top: 40px;
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
-        }
-        #results-text {
-            margin-top: 15px;
-            font-size: 1.1em;
-        }
-        #email-status {
             text-align: center;
+        }
+        .results-scores {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .score-item {
+            background-color: #e6f2ff;
+            border: 1px solid #cce0ff;
+            border-radius: 8px;
+            padding: 15px 25px;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .score-item h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+        .score-item p {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin: 5px 0 0;
+        }
+        .style-description {
+            background-color: #f0f8ff;
+            border: 1px solid #cceeff;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
             margin-top: 20px;
-            font-size: 1.1em;
-            padding: 15px;
+            line-height: 1.7;
+            font-size: 0.95em;
+            color: #444;
+        }
+        .submission-message {
+            margin-top: 20px;
+            padding: 10px;
             border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
         }
         .email-success {
             background-color: #DFF2BF;
             color: var(--success-color);
+            border: 1px solid var(--success-color);
         }
         .email-error {
             background-color: #FFBABA;
             color: var(--error-color);
+            border: 1px solid var(--error-color);
         }
-        /* Style for the submission message */
-        #submission-message {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            background-color: #e6ffe6; /* Light green background */
-            color: #4F8A10; /* Success color */
-            border: 1px solid #DFF2BF;
+        .email-info {
+            background-color: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px auto;
+                padding: 15px;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .button-group button {
+                width: 100%;
+                margin: 10px 0;
+            }
         }
     </style>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
-        // Initialize EmailJS with your Public Key
-        (function(){
-            emailjs.init({
-                publicKey: "rES387Z_beB0IEiRm", // Replace with your actual EmailJS Public Key
-            });
-        })();
+        emailjs.init({
+            publicKey: "rES387Z_beB0IEiRm",
+        });
     </script>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo-and-title-wrapper">
-                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
-                <h1>Functioning Style Analysis</h1>
-            </div>
-            <p class="instructions">
-                For each question below, rank the four statements from **1 to 4**.
-                <br>**1** = Describes me best; **4** = Describes me least.
-                <br>Each number (1, 2, 3, 4) may only be used **once per question**.
-            </p>
-        </header>
+        <h1>PulseMap Functioning Style Analysis</h1>
+        <p class="intro-text">
+            This assessment helps you understand your natural functioning style. Please read each statement carefully and choose the option that best describes you. There are no right or wrong answers, just honest reflections.
+        </p>
+
         <form id="disc-form">
             <div class="form-group">
-                <label for="userName">Full Name:</label>
+                <label for="userName">Your Name:</label>
                 <input type="text" id="userName" name="userName" required>
             </div>
-            <div id="questions-container">
-                </div>
-            <div id="form-error" class="error-message"></div>
-            <div class="button-group">
-                <button type="submit" id="submit-btn">Submit and See Results</button>
-                <a href="index.html" class="back-button hidden">Go back to main page</a>
+            <div class="form-group">
+                <label for="userEmail">Your Email:</label>
+                <input type="email" id="userEmail" name="userEmail" required>
             </div>
+
+            <div id="questionsContainer">
+                </div>
+
+            <div class="button-group">
+                <button type="button" id="backButton" class="hidden">Back</button>
+                <button type="submit" id="submitBtn">Submit and See Results</button>
+            </div>
+            <p id="submissionMessage" class="submission-message hidden"></p>
         </form>
-        <div id="submission-message" class="hidden"></div>
-        <!-- Results container is now hidden by default and only used for email status, not displaying scores -->
-        <div id="results-container" class="hidden">
-            <div id="results-text"></div>
-            <div id="email-status"></div>
+
+        <div id="resultsContainer" class="results-section hidden">
+            <h2>Your Functioning Style Results</h2>
+            <div class="results-scores">
+                <div class="score-item">
+                    <h3>Dominance (D)</h3>
+                    <p id="dScore">0</p>
+                </div>
+                <div class="score-item">
+                    <h3>Influence (I)</h3>
+                    <p id="iScore">0</p>
+                </div>
+                <div class="score-item">
+                    <h3>Stability (S)</h3>
+                    <p id="sScore">0</p>
+                </div>
+                <div class="score-item">
+                    <h3>Conscientiousness (C)</h3>
+                    <p id="cScore">0</p>
+                </div>
+            </div>
+            <div id="discStyleDescription" class="style-description">
+                <p>Based on your scores, your primary functioning style and its characteristics will appear here.</p>
+            </div>
         </div>
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const questions = [
-                {
-                    questionText: "One could describe the way I behave in my relationships with other people as:",
-                    options: [
-                        { text: "Gentle, kind-hearted", value: "S" },
-                        { text: "Discerning, cautious", value: "C" },
-                        { text: "Decisive, assertive", value: "D" },
-                        { text: "Original, full of plans", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "When life brings things my way, I am usually:",
-                    options: [
-                        { text: "Enterprising, seizing opportunities", value: "D" },
-                        { text: "Sober, playing it safe", value: "C" },
-                        { text: "Carefree, cheerful", value: "I" },
-                        { text: "Even-tempered, patient", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "In my cooperation with other people, I will normally act as follows:",
-                    options: [
-                        { text: "Negotiating, diplomatic", value: "I" },
-                        { text: "Competitive, rivalrous", value: "D" },
-                        { text: "Considerate, sensitive to others", value: "S" },
-                        { text: "Stimulating, activating", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "When I think about my life, I experience myself as:",
-                    options: [
-                        { text: "Content, satisfied", value: "S" },
-                        { text: "On the way to clear goals", value: "D" },
-                        { text: "Creative, full of new ideas", value: "I" },
-                        { text: "Thorough, organized", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "I would describe myself as:",
-                    options: [
-                        { text: "Purposeful, determined", value: "D" },
-                        { text: "Accurate, precise", value: "C" },
-                        { text: "Calm, peace-loving", value: "S" },
-                        { text: "Full of zest for life, fun", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "In my social interactions with other people, I will:",
-                    options: [
-                        { text: "Involve others and let them participate", value: "I" },
-                        { text: "Be confrontational, argue", value: "D" },
-                        { text: "Be accommodating, submissive", value: "S" },
-                        { text: "Be reserved, controlled", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "The style of being human that I radiate can be described as:",
-                    options: [
-                        { text: "Good-natured, pleasant", value: "S" },
-                        { text: "Exuberant, cheerful", value: "I" },
-                        { text: "Energetic, enthusiastic", value: "I" },
-                        { text: "Disciplined, structured", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "In my communication with other people, I am:",
-                    options: [
-                        { text: "Outspoken/state my own point of view clearly", value: "D" },
-                        { text: "Enthusiastic, positive", value: "I" },
-                        { text: "Open to persuasion, tentative", value: "S" },
-                        { text: "Logical, reasoned", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "When it comes to decision-making, I would describe myself as:",
-                    options: [
-                        { text: "Controlled, thoughtful", value: "C" },
-                        { text: "Decisive, firm", value: "D" },
-                        { text: "Impulsive, spontaneous", value: "I" },
-                        { text: "Accommodating, adaptable", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "I see and experience myself as a person who is:",
-                    options: [
-                        { text: "Enterprising, seeking challenges", value: "D" },
-                        { text: "Discerning (can distinguish)", value: "C" },
-                        { text: "Outgoing, reaching out to others", value: "I" },
-                        { text: "Moderate, avoiding extremes", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "I think of myself as a person who is:",
-                    options: [
-                        { text: "Expressive, honest about my feelings", value: "I" },
-                        { text: "Sincere, doing what is right", value: "C" },
-                        { text: "Leading, in control", value: "D" },
-                        { text: "Participatory, cooperative", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "I am:",
-                    options: [
-                        { text: "Outgoing, focused on others", value: "I" },
-                        { text: "Conscientious, keeping appointments", value: "C" },
-                        { text: "Team player, cooperative", value: "S" },
-                        { text: "Goal-oriented, knowing what I want", value: "D" }
-                    ]
-                },
-                {
-                    questionText: "I usually do things:",
-                    options: [
-                        { text: "Planned, tactical", value: "C" },
-                        { text: "Resigned, easily giving in", value: "S" },
-                        { text: "Cheerful, joyful", value: "I" },
-                        { text: "Ferm and with conviction", value: "D" }
-                    ]
-                },
-                {
-                    questionText: "I would describe my nature as:",
-                    options: [
-                        { text: "Engaging (attracting others)", value: "I" },
-                        { text: "Self-examining, introspective", value: "C" },
-                        { text: "Self-confident, influential", "value": "D" },
-                        { text: "Steadfast, predictable", value: "S" }
-                    ]
-                },
-                {
-                    questionText: "My approach to life can be described with:",
-                    options: [
-                        { text: "Responsible, dutiful", value: "C" },
-                        { text: "Enterprising, creative", value: "D" },
-                        { text: "Optimistic, positive", value: "I" },
-                        { text: "Thorough, organized", value: "C" }
-                    ]
-                },
-                {
-                    questionText: "When I think about myself in relation to others, I see myself as:",
-                    options: [
-                        { text: "Independent, self-reliant", value: "D" },
-                        { text: "Appreciative, respectful", value: "S" },
-                        { text: "Helpful, supportive", value: "S" },
-                        { text: "Inspiring, motivating", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "One of my qualities that I feel good about is the fact that I am:",
-                    options: [
-                        { text: "Persistent, not easily giving up", value: "D" },
-                        { text: "Loyal/dedicated to others", value: "S" },
-                        { text: "Cheerful, enjoying good things", value: "I" },
-                        { text: "Conscientious, dutiful", "value": "C" }
-                    ]
-                },
-                {
-                    questionText: "One trait of mine that is not always received so positively by others is the fact that I am sometimes:",
-                    options: [
-                        { text: "Picky, fastidious", value: "C" },
-                        { text: "Direct/straightforward", "value": "D" },
-                        { text: "Too accommodating/yielding", value: "S" },
-                        { text: "Influencing people with my enthusiasm", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "In my handling of people, I am:",
-                    options: [
-                        { text: "Impartial, unbiased", value: "C" },
-                        { text: "Sympathetic, compassionate", value: "S" },
-                        { text: "Authoritative, strong", value: "D" },
-                        { text: "Jovial, hearty", value: "I" }
-                    ]
-                },
-                {
-                    questionText: "One of my qualities that people can rely on is the fact that I am:",
-                    options: [
-                        { text: "Can convince/excite others", value: "I" },
-                        { text: "Careful, precise", value: "C" },
-                        { text: "Even-tempered and calm", value: "S" },
-                        { text: "Persistent, tenacious", value: "D" }
-                    ]
-                }
-            ];
-            const questionsContainer = document.getElementById('questions-container');
+        document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('disc-form');
-            const formError = document.getElementById('form-error');
-            const submissionMessage = document.getElementById('submission-message');
-            const submitBtn = document.getElementById('submit-btn');
-            const backButton = document.querySelector('.back-button');
-            const scoring = { 1: 4, 2: 3, 3: 2, 4: 1 };
+            const questionsContainer = document.getElementById('questionsContainer');
+            const submitBtn = document.getElementById('submitBtn');
+            const backButton = document.getElementById('backButton');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const submissionMessage = document.getElementById('submissionMessage');
+            let currentQuestionIndex = 0;
+            let answers = {}; // Stores selected options for each question
+            let questionsData = []; // To store questions fetched from JSON
 
-            function generateDropdownOptions() {
-                let optionsHtml = '<option value="">Select</option>';
-                for (let i = 1; i <= 4; i++) {
-                    optionsHtml += `<option value="${i}">${i}</option>`;
-                }
-                return optionsHtml;
+            function showSubmissionMessage(message, type) {
+                submissionMessage.textContent = message;
+                submissionMessage.className = `submission-message ${type ? `email-${type}` : ''}`;
+                submissionMessage.classList.remove('hidden');
             }
 
-            function validateQuestion(questionIndex) {
-                const inputs = Array.from(document.getElementsByName(`q${questionIndex}`));
-                const values = inputs.map(input => input.value).filter(v => v !== '');
-                const valueSet = new Set(values);
-                const errorEl = document.getElementById(`q-error-${questionIndex}`);
-                errorEl.style.display = 'none';
-
-                if (values.length !== 4) {
-                    errorEl.textContent = "All options for this question must be filled (1-4).";
-                    errorEl.style.display = 'block';
-                    return false;
-                } else if (valueSet.size !== 4) {
-                    errorEl.textContent = "Each number (1, 2, 3, 4) may only be used once per question.";
-                    errorEl.style.display = 'block';
-                    return false;
-                }
-                return true;
-            }
+            // Fetch questions from JSON file
+            fetch('functioning_style_questions.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    questionsData = data;
+                    generateQuestions();
+                })
+                .catch(error => {
+                    console.error('Error loading questions:', error);
+                    questionsContainer.innerHTML = '<p style="color: red; text-align: center;">Error loading questions. Please try again later.</p>';
+                    submitBtn.disabled = true;
+                });
 
             function generateQuestions() {
-                questions.forEach((q, index) => {
-                    const questionBlock = document.createElement('div');
-                    questionBlock.className = 'question-block';
-                    questionBlock.id = `question-${index}`;
-                    let optionsHTML = q.options.map((opt, optIndex) => `
-                        <div class="answer-option">
-                            <select id="q${index}_opt${optIndex}" name="q${index}" data-disc="${opt.value}" required>
-                                ${generateDropdownOptions()}
-                            </select>
-                            <label for="q${index}_opt${optIndex}">${opt.text}</label>
+                questionsContainer.innerHTML = ''; // Clear previous questions
+                if (currentQuestionIndex < questionsData.length) {
+                    const q = questionsData[currentQuestionIndex];
+                    const questionCard = document.createElement('div');
+                    questionCard.classList.add('question-card');
+                    questionCard.innerHTML = `
+                        <p>${currentQuestionIndex + 1}. ${q.question}</p>
+                        <div class="options-grid">
+                            ${q.options.map((option, index) => `
+                                <button type="button" class="option-button" data-value="${option.value}" data-type="${option.type}">
+                                    ${option.text}
+                                </button>
+                            `).join('')}
                         </div>
-                    `).join('');
-                    questionBlock.innerHTML = `
-                        <h3>Question ${index + 1}: ${q.questionText}</h3>
-                        ${optionsHTML}
-                        <div id="q-error-${index}" class="error-message"></div>
                     `;
-                    questionsContainer.appendChild(questionBlock);
-                    const selectElements = questionBlock.querySelectorAll('select');
-                    selectElements.forEach(select => {
-                        select.addEventListener('change', () => {
-                            const currentQuestionInputs = Array.from(questionBlock.querySelectorAll('select'));
-                            const allSelected = currentQuestionInputs.every(input => input.value !== '');
-                            if (allSelected) {
-                                validateQuestion(index);
-                            } else {
-                                document.getElementById(`q-error-${index}`).style.display = 'none';
-                            }
+                    questionsContainer.appendChild(questionCard);
+
+                    // Add event listeners to option buttons
+                    questionCard.querySelectorAll('.option-button').forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            // Deselect any previously selected button in this question
+                            questionCard.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+                            // Select the clicked button
+                            event.target.classList.add('selected');
+                            answers[currentQuestionIndex] = {
+                                value: event.target.dataset.value,
+                                type: event.target.dataset.type
+                            };
+                            // Automatically move to the next question
+                            setTimeout(() => {
+                                if (currentQuestionIndex < questionsData.length - 1) {
+                                    currentQuestionIndex++;
+                                    generateQuestions();
+                                    backButton.classList.remove('hidden');
+                                } else {
+                                    // All questions answered
+                                    submitBtn.classList.remove('hidden');
+                                }
+                            }, 300); // Small delay for visual feedback
                         });
                     });
+                } else {
+                    // All questions displayed, show submit button
+                    submitBtn.classList.remove('hidden');
+                }
+                updateNavigationButtons();
+            }
+
+            function updateNavigationButtons() {
+                if (currentQuestionIndex > 0) {
+                    backButton.classList.remove('hidden');
+                } else {
+                    backButton.classList.add('hidden');
+                }
+                if (currentQuestionIndex === questionsData.length) {
+                    submitBtn.classList.remove('hidden');
+                } else {
+                    submitBtn.classList.add('hidden');
+                }
+            }
+
+            backButton.addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    generateQuestions();
+                }
+            });
+
+            function calculateScores() {
+                let scores = { D: 0, I: 0, S: 0, C: 0 };
+                Object.values(answers).forEach(answer => {
+                    if (answer.type && scores.hasOwnProperty(answer.type)) {
+                        scores[answer.type] += parseInt(answer.value);
+                    }
                 });
+                return scores;
+            }
+
+            function getDiscStyleDescription(scores) {
+                // Determine primary style
+                let primaryStyle = '';
+                let maxScore = -Infinity;
+
+                for (const style in scores) {
+                    if (scores[style] > maxScore) {
+                        maxScore = scores[style];
+                        primaryStyle = style;
+                    }
+                }
+
+                let description = '';
+                switch (primaryStyle) {
+                    case 'D':
+                        description = `
+                            <h3>Dominance (D) Style Characteristics:</h3>
+                            <p>Individuals with a high D-score are often direct, results-oriented, and competitive. They enjoy challenges and taking charge. They are assertive, decisive, and focus on achieving goals quickly. They value competence and action.</p>
+                            <p><strong>Strengths:</strong> Driven, problem-solver, confident, takes initiative.</p>
+                            <p><strong>Areas for Development:</strong> Can be seen as impatient, overly direct, or demanding.</p>
+                        `;
+                        break;
+                    case 'I':
+                        description = `
+                            <h3>Influence (I) Style Characteristics:</h3>
+                            <p>Individuals with a high I-score are outgoing, enthusiastic, and optimistic. They enjoy social interaction, persuading others, and are often perceived as charismatic. They thrive in positive environments and are great at motivating teams.</p>
+                            <p><strong>Strengths:</strong> Persuasive, sociable, optimistic, builds relationships.</p>
+                            <p><strong>Areas for Development:</strong> Can be disorganized, impulsive, or overly focused on popularity.</p>
+                        `;
+                        break;
+                    case 'S':
+                        description = `
+                            <h3>Stability (S) Style Characteristics:</h3>
+                            <p>Individuals with a high S-score are calm, patient, and good listeners. They value consistency, loyalty, and a stable environment. They are supportive team players who prefer a predictable pace and collaborative work.</p>
+                            <p><strong>Strengths:</strong> Patient, loyal, supportive, reliable, good listener.</p>
+                            <p><strong>Areas for Development:</strong> Can be resistant to change, indecisive, or too accommodating.</p>
+                        `;
+                        break;
+                    case 'C':
+                        description = `
+                            <h3>Conscientiousness (C) Style Characteristics:</h3>
+                            <p>Individuals with a high C-score are analytical, precise, and systematic. They focus on accuracy, quality, and details. They adhere to rules and standards and are often seen as logical and objective problem-solvers.</p>
+                            <p><strong>Strengths:</strong> Accurate, logical, detail-oriented, high standards.</p>
+                            <p><strong>Areas for Development:</strong> Can be overly critical, prone to analysis paralysis, or resistant to subjective ideas.</p>
+                        `;
+                        break;
+                    default:
+                        description = `<p>Complete the assessment to reveal your primary functioning style.</p>`;
+                }
+                return description;
             }
 
             async function handleSubmit(event) {
                 event.preventDefault();
-                formError.style.display = 'none';
-                submissionMessage.classList.add('hidden');
-                backButton.classList.add('hidden');
 
-                document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+                const userName = document.getElementById('userName').value;
+                const userEmail = document.getElementById('userEmail').value;
 
-                let overallFormIsValid = true;
-                const scores = { D: 0, I: 0, S: 0, C: 0 };
-
-                for (let i = 0; i < questions.length; i++) {
-                    const questionIsValid = validateQuestion(i);
-                    if (!questionIsValid) {
-                        overallFormIsValid = false;
-                    } else {
-                        const inputs = Array.from(document.getElementsByName(`q${i}`));
-                        inputs.forEach(input => {
-                            const rank = parseInt(input.value, 10);
-                            const discType = input.dataset.disc;
-                            if (scoring[rank] && scores.hasOwnProperty(discType)) {
-                                scores[discType] += scoring[rank];
-                            }
-                        });
-                    }
-                }
-
-                if (!document.getElementById('userName').value.trim()) {
-                    formError.textContent = "Please enter your full name.";
-                    formError.style.display = 'block';
-                    overallFormIsValid = false;
-                }
-
-                if (!overallFormIsValid) {
-                    formError.textContent = "There are errors in your answers. Please ensure your name is entered and all questions are answered correctly.";
-                    formError.style.display = 'block';
-                    window.scrollTo(0, 0);
+                if (!userName || !userEmail) {
+                    showSubmissionMessage("Please fill in your name and email.", 'error');
                     return;
                 }
 
+                if (Object.keys(answers).length !== questionsData.length) {
+                    showSubmissionMessage("Please answer all questions before submitting.", 'error');
+                    return;
+                }
+
+                const scores = calculateScores();
+                document.getElementById('dScore').textContent = scores.D;
+                document.getElementById('iScore').textContent = scores.I;
+                document.getElementById('sScore').textContent = scores.S;
+                document.getElementById('cScore').textContent = scores.C;
+                document.getElementById('discStyleDescription').innerHTML = getDiscStyleDescription(scores);
+
+                resultsContainer.classList.remove('hidden');
+                form.classList.add('hidden'); // Hide the form after submission
+
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Submitting...";
-                submissionMessage.textContent = "Your results are being submitted...";
-                submissionMessage.classList.remove('hidden');
-                submissionMessage.classList.remove('email-error', 'email-success');
+                showSubmissionMessage("Your results are being submitted...", 'info');
+
+                const templateParams = {
+                    client_name: userName, // Changed 'name' to 'client_name'
+                    d_score: scores.D,
+                    i_score: scores.I,
+                    s_score: scores.S,
+                    c_score: scores.C
+                };
 
                 try {
-                    const templateParams = {
-                        name: document.getElementById('userName').value,
-                        d_score: scores.D,
-                        i_score: scores.I,
-                        s_score: scores.S,
-                        c_score: scores.C
-                    };
-                    const response = await emailjs.send('service_b087h4p', 'template_n84drg8', templateParams); // Updated service and template
+                    const response = await emailjs.send('service_b087h4p', 'template_n84drg8', templateParams);
                     console.log('Email sent successfully!', response.status, response.text);
-                    submissionMessage.textContent = 'Your results have been submitted successfully!';
-                    submissionMessage.classList.add('email-success');
-                    form.reset();
-                    questionsContainer.innerHTML = '';
-                    generateQuestions();
-                    backButton.classList.remove('hidden');
+                    showSubmissionMessage('Your results have been submitted successfully!', 'success');
+                    // Reset form after successful submission
+                    // form.reset(); // Don't reset if we want to show results
+                    // questionsContainer.innerHTML = '';
+                    // generateQuestions();
+                    backButton.classList.remove('hidden'); // Keep back button visible
                     submitBtn.classList.add('hidden');
                 } catch (error) {
                     console.error('Failed to send email:', error);
-                    submissionMessage.textContent = 'Error: Could not submit results. Please try again.';
-                    submissionMessage.classList.add('email-error');
+                    showSubmissionMessage('Error: Could not submit results. Please try again.', 'error');
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Submit and See Results";
                 }
             }
 
-            generateQuestions();
+            // Initial call to generate questions
+            // generateQuestions(); // Called after fetching questionsData
             form.addEventListener('submit', handleSubmit);
         });
     </script>
