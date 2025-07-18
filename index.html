@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Business Landing Page</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for the Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-center items-center">
+            <!-- Business Logo as Title -->
+            <img src="https://i.imgur.com/Zx34Iky.png" alt="Your Business Logo" class="h-16 md:h-20 rounded-lg shadow-sm">
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="flex-grow container mx-auto px-4 py-8 flex flex-col items-center justify-center">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 leading-tight">
+                Welcome to PulseMap
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-semibold text-indigo-600 mb-6">
+                Where Insight Meets Effectiveness
+            </h2>
+            <p class="text-lg text-gray-700 mb-4 text-left">
+                At PulseMap, we believe that a team is more than a collection of individuals — it’s a living, dynamic system. Our mission is to help organisations unlock their full potential by understanding how people function best — together.
+            </p>
+            <p class="text-lg text-gray-700 mb-4 text-left">
+                With 15 years of experience in analysing personality behaviours and functioning preferences, we offer AI-assisted analysis of functioning styles, supported by tools like personalised questionnaires and organisational mapping. By integrating your company’s organogram, we deliver insights that go beyond personality types to identify real-world patterns of communication, collaboration, and contribution.
+            </p>
+            <p class="text-lg text-gray-700 mb-6 text-left">
+                Whether you're managing a team of five or fifty, PulseMap equips you to:
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 mb-6 text-left space-y-2">
+                <li>Gain clarity on your team's unique functioning dynamics</li>
+                <li>Align roles with natural working preferences</li>
+                <li>Identify communication bottlenecks and leadership gaps</li>
+                <li>Build healthier, more effective teams</li>
+            </ul>
+            <p class="text-lg text-gray-700 mb-6 text-left">
+                We combine behavioural science with smart design to bring you insights that are practical, visual, and tailored to your goals.
+            </p>
+            <p class="text-base text-gray-500 italic border-l-4 border-yellow-500 pl-4 py-2 bg-yellow-50 rounded-md text-left">
+                🚧 Currently in beta: PulseMap’s visual team mapping tools are being refined to ensure clarity and accuracy. We’re continuously evolving — and you’re part of that journey.
+            </p>
+        </div>
+
+        <!-- New Section for Questionnaires -->
+        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl text-center mt-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Choose Your Assessment</h2>
+            <p class="text-lg text-gray-700 mb-8">
+                Select a questionnaire and your preferred language to begin.
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                <!-- Questionnaire 1: Personality Behaviour Assessment -->
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md w-full md:w-1/2">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Personality Behaviour Assessment</h3>
+                    <div class="flex flex-col gap-3 w-full">
+                        <a href="personalitybehaviour-english.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Start in English
+                        </a>
+                        <a href="persoonlikheidsgedrag-afrikaans.html" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Begin in Afrikaans
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Questionnaire 2: Functioning Style Assessment -->
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md w-full md:w-1/2">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Functioning Style Assessment</h3>
+                    <div class="flex flex-col gap-3 w-full">
+                        <a href="functioningstyle-english.html" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Start in English
+                        </a>
+                        <a href="funksioneringstyl-afrikaans.html" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Begin in Afrikaans
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2025 Your Business. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="af">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseMap Funksioneringstyl Analise</title>
+    <link rel="icon" href="https://i.imgur.com/Zx34Iky.png" type="image/png">
+    <meta property="og:title" content="PulseMap Funksioneringstyl Analise">
+    <meta property="og:description" content="Voltooi jou PulseMap Funksioneringstyl analise en sien jou resultate.">
+    <meta property="og:image" content="https://i.imgur.com/Zx34Iky.png">
+    <meta property="og:url" content="https://qgroenewald-disk.github.io/Disk-Analise-Vorm/">
+    <meta property="og:type" content="website">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        :root {
+            --primary-color: #005A9C;
+            --secondary-color: #f4f4f9;
+            --text-color: #333;
+            --border-color: #ddd;
+            --error-color: #D8000C;
+            --success-color: #4F8A10;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centered for the logo */
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            padding-left: 0; /* Remove left padding for centering */
+        }
+        .logo-and-title-wrapper {
+            display: flex;
+            justify-content: center; /* Center logo */
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .logo {
+            max-width: 250px; /* Adjusted for bigger logo */
+            height: auto;
+            border-radius: 5px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added a subtle shadow */
+        }
+        /* Media query vir kleiner skerms (bv. mobiele fone) */
+        @media (max-width: 640px) {
+            .logo {
+                max-width: 180px; /* Maak logo kleiner op mobiele fone */
+            }
+            .logo-and-title-wrapper {
+                gap: 10px;
+            }
+            .logo-and-title-wrapper h1 {
+                font-size: 1.5em;
+            }
+        }
+        .logo-and-title-wrapper h1 {
+            display: none; /* Hide the h1 text when using logo as title */
+        }
+        .instructions {
+            background-color: #e7f3fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            text-align: left;
+            margin-top: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .question-block h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        .answer-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .answer-option select {
+            width: 70px;
+            padding: 8px;
+            margin-right: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            text-align: center;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        .answer-option label {
+            flex: 1;
+        }
+        .error-message {
+            color: var(--error-color);
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+        #form-error {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #FFD2D2;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #004170;
+        }
+        .hidden {
+            display: none;
+        }
+        #results-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        #results-text {
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+        #email-status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .email-success {
+            background-color: #DFF2BF;
+            color: var(--success-color);
+        }
+        .email-error {
+            background-color: #FFBABA;
+            color: var(--error-color);
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialiseer EmailJS met jou Public Key
+        (function(){
+            emailjs.init({
+                publicKey: "rES387Z_beB0IEiRm", // Vervang met jou werklike EmailJS Public Key
+            });
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-and-title-wrapper">
+                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
+                <h1>Funksioneringstyl Analise</h1>
+            </div>
+            <p class="instructions">
+                Vir elke vraag hieronder, rangskik die vier stellings van **1 tot 4**.
+                <br>**1** = Beskryf my die beste; **4** = Beskryf my die minste.
+                <br>Elke nommer (1, 2, 3, 4) mag slegs **een keer per vraag** gebruik word.
+            </p>
+        </header>
+        <form id="disc-form">
+            <div class="form-group">
+                <label for="userName">Volle Naam:</label>
+                <input type="text" id="userName" name="userName" required>
+            </div>
+            <div id="questions-container">
+                </div>
+            <div id="form-error" class="error-message"></div>
+            <button type="submit" id="submit-btn">Dien in en Sien Resultate</button>
+        </form>
+        <div id="results-container" class="hidden">
+            <h2>Jou Resultate</h2>
+            <div id="results-text"></div>
+            <div id="email-status"></div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Data geneem uit die voorsiende dokument
+            const questions = [
+                {
+                    questionText: "'n Mens sou die manier waarop ek in my verhoudings met ander mense optree, kon beskryf as:",
+                    options: [
+                        { text: "Saggeaard, goedhartig", value: "S" },
+                        { text: "Oordeelkundig, versigtig", value: "C" },
+                        { text: "Beslis, selfgeldend", value: "D" },
+                        { text: "Oorspronklik, vol planne", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "Wanneer die lewe dinge oor my pad bring, is ek gewoonlik:",
+                    options: [
+                        { text: "Ondernemend, benut geleenthede", value: "D" },
+                        { text: "Nugter, speel veilig", value: "C" },
+                        { text: "Sorgvry, opgewek", value: "I" },
+                        { text: "Gelykmatig, geduldig", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "In my samewerking met ander mense sal ek normaalweg as volg optree:",
+                    options: [
+                        { text: "Onderhandelend, diplomaties", value: "I" },
+                        { text: "Mededingend, kompeterend", value: "D" },
+                        { text: "Bedagsaam, sensitief vir ander", value: "S" },
+                        { text: "Stimulerend, aktiverend", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "Wanneer ek oor my lewe dink beleef ek myself as:",
+                    options: [
+                        { text: "Vergenoegd, tevrede", value: "S" },
+                        { text: "Op pad na duidelike doelwitte", value: "D" },
+                        { text: "Kreatief, vol nuwe idees", value: "I" },
+                        { text: "Deeglik, georganiseerd", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "Ek sal myself beskryf as:",
+                    options: [
+                        { text: "Doelgerig, vasberade", value: "D" },
+                        { text: "Akkuraat, presies", value: "C" },
+                        { text: "Kalm, vredeliewend", value: "S" },
+                        { text: "Vol lewenslus, prettig", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "In my sosiale omgang met ander mense sal ek:",
+                    options: [
+                        { text: "Ander betrek en laat meedoen", value: "I" },
+                        { text: "Konfronterend wees, argumenteer", value: "D" },
+                        { text: "Inskiklik, onderdanig wees", value: "S" },
+                        { text: "Gereserveerd, beheers wees", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "Die styl van menswees wat ek uitstraal, kan beskryf word as:",
+                    options: [
+                        { text: "Goedgeaard, aangenaam", value: "S" },
+                        { text: "Uitgelate, opgeruimd", value: "I" },
+                        { text: "Energiek, entoesiasties", value: "I" },
+                        { text: "Gedissiplineerd, gestruktureerd", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "In my kommunikasie met ander mense is ek:",
+                    options: [
+                        { text: "Uitgesproke/stel eie standpunt duidelik", value: "D" },
+                        { text: "Entoesiasties, positief", value: "I" },
+                        { text: "Oop vir oortuiging, tentatief", value: "S" },
+                        { text: "Logies, beredeneerd", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "Wanneer dit by besluitneming kom, sal ek myself beskryf as:",
+                    options: [
+                        { text: "Gekontroleerd, deurdag", value: "C" },
+                        { text: "Beslis, ferm", value: "D" },
+                        { text: "Impulsief, spontaan", value: "I" },
+                        { text: "Tegemoetkomend, aanpasbaar", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "Ek sien en beleef myself as 'n persoon wat:",
+                    options: [
+                        { text: "Ondernemend is, uitdagings soek", value: "D" },
+                        { text: "Oordeelkundig is (kan onderskei)", value: "C" },
+                        { text: "Uitgaande is, uitreik na ander", value: "I" },
+                        { text: "Gematigd is, uiterstes vermy", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "Ek dink aan myself as 'n persoon wat:",
+                    options: [
+                        { text: "Ekspressief, eerlik oor my gevoelens is", value: "I" },
+                        { text: "Opreg is, doen wat reg is", value: "C" },
+                        { text: "Toonaangewend, in beheer is", value: "D" },
+                        { text: "Deelnemend, samewerkend is", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "Ek is:",
+                    options: [
+                        { text: "Uitgaande, ingestel op ander", value: "I" },
+                        { text: "Pligsgetrou, hou by afsprake", value: "C" },
+                        { text: "Spanspeler, werk saam", value: "S" },
+                        { text: "Doelgerig, weet wat ek wil hê", value: "D" }
+                    ]
+                },
+                {
+                    questionText: "Ek doen dinge gewoonlik:",
+                    options: [
+                        { text: "Bepland, takties", value: "C" },
+                        { text: "Gelate, gee maklik toe", value: "S" },
+                        { text: "Opgeruimd, blymoedig", value: "I" },
+                        { text: "Ferm en met oortuiging", value: "D" }
+                    ]
+                },
+                {
+                    questionText: "Ek sal my geaardheid beskryf as:",
+                    options: [
+                        { text: "Innemend (trek ander aan)", value: "I" },
+                        { text: "Selfondersoekend, introspektief", value: "C" },
+                        { text: "Selfversekerd, invloedryk", "value": "D" },
+                        { text: "Standvastig, voorspelbaar", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "My lewensbenadering kan beskryf word met:",
+                    options: [
+                        { text: "Verantwoordelik, pligsgetrou", value: "C" },
+                        { text: "Ondernemend, skeppend", value: "D" },
+                        { text: "Optimisties, positief", value: "I" },
+                        { text: "Deeglik, georganiseerd", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "As ek oor myself dink in verhouding met andere, sien ek myself as:",
+                    options: [
+                        { text: "Selfstandig, onafhanklik", value: "D" },
+                        { text: "Erkentlik, eerbiedig", value: "S" },
+                        { text: "Hulpvaardig, ondersteunend", value: "S" },
+                        { text: "Inspirerend, motiverend", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "Een van my eienskappe waaroor ek goed voel is, is die feit dat ek:",
+                    options: [
+                        { text: "Aanhoudend is, nie maklik opgee nie", value: "D" },
+                        { text: "Lojaal/toegewyd teenoor ander is", value: "S" },
+                        { text: "Opgewek is, van lekker dinge hou", value: "I" },
+                        { text: "Konsensieus, pligsgetrou is", "value": "C" }
+                    ]
+                },
+                {
+                    questionText: "Een eienskap van my wat nie altyd so positief deur ander ontvang word nie, is die feit dat ek soms:",
+                    options: [
+                        { text: "Kieskeurig, puntenerig is", value: "C" },
+                        { text: "Op die man af/reguit is", "value": "D" },
+                        { text: "Té tegemoetkomend/inskiklik is", value: "S" },
+                        { text: "Mense beïnvloed met my entoesiasme", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "In my hantering van mense is ek:",
+                    options: [
+                        { text: "Onpartydig, onbevooroordeeld", value: "C" },
+                        { text: "Simpatiek, vol medelye", value: "S" },
+                        { text: "Gesagvol, sterk", value: "D" },
+                        { text: "Joviaal, hartlik", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "Een van my eienskappe waarop mense kan peiltrek, is die feit dat ek:",
+                    options: [
+                        { text: "Ander kan oortuig/opgewonde maak", value: "I" },
+                        { text: "Noukeurig, presies is", value: "C" },
+                        { text: "Gelykmatig en bedaard is", value: "S" },
+                        { text: "Aanhoudend is, vasbyt", value: "D" }
+                    ]
+                }
+            ];
+            const questionsContainer = document.getElementById('questions-container');
+            const form = document.getElementById('disc-form');
+            const formError = document.getElementById('form-error');
+            const resultsText = document.getElementById('results-text');
+            const scoring = { 1: 4, 2: 3, 3: 2, 4: 1 }; // Telling: 1ste keuse kry 4 punte, 4de keuse kry 1 punt
+            // Funksie om die aftreklys opsies vir 1-4 te genereer
+            function generateDropdownOptions() {
+                let optionsHtml = '<option value="">Kies</option>'; // Verstek leë opsie
+                for (let i = 1; i <= 4; i++) {
+                    optionsHtml += `<option value="${i}">${i}</option>`;
+                }
+                return optionsHtml;
+            }
+            // Funksie om 'n enkele vraagblok te valideer
+            function validateQuestion(questionIndex) {
+                const inputs = Array.from(document.getElementsByName(`q${questionIndex}`));
+                const values = inputs.map(input => input.value).filter(v => v !== ''); // Filtreer leë stringe uit
+                const valueSet = new Set(values);
+                const errorEl = document.getElementById(`q-error-${questionIndex}`);
+                errorEl.style.display = 'none'; // Versteek vorige fout vir hierdie vraag
+                if (values.length !== 4) {
+                    errorEl.textContent = "Alle opsies vir hierdie vraag moet ingevul word (1-4).";
+                    errorEl.style.display = 'block';
+                    return false;
+                } else if (valueSet.size !== 4) {
+                    errorEl.textContent = "Elke nommer (1, 2, 3, 4) mag slegs een keer per vraag gebruik word.";
+                    errorEl.style.display = 'block';
+                    return false;
+                }
+                return true; // Vraag is geldig
+            }
+            function generateQuestions() {
+                questions.forEach((q, index) => {
+                    const questionBlock = document.createElement('div');
+                    questionBlock.className = 'question-block';
+                    questionBlock.id = `question-${index}`;
+                    let optionsHTML = q.options.map((opt, optIndex) => `
+                        <div class="answer-option">
+                            <select id="q${index}_opt${optIndex}" name="q${index}" data-disc="${opt.value}" required>
+                                ${generateDropdownOptions()}
+                            </select>
+                            <label for="q${index}_opt${optIndex}">${opt.text}</label>
+                        </div>
+                    `).join('');
+                    questionBlock.innerHTML = `
+                        <h3>Vraag ${index + 1}: ${q.questionText}</h3>
+                        ${optionsHTML}
+                        <div id="q-error-${index}" class="error-message"></div>
+                    `;
+                    questionsContainer.appendChild(questionBlock);
+                    // Voeg veranderingsgebeurtenisluisteraars by elke aftreklys in hierdie vraagblok
+                    const selectElements = questionBlock.querySelectorAll('select');
+                    selectElements.forEach(select => {
+                        select.addEventListener('change', () => {
+                            // Kry alle keuses vir die huidige vraagblok
+                            const currentQuestionInputs = Array.from(questionBlock.querySelectorAll('select'));
+                            const allSelected = currentQuestionInputs.every(input => input.value !== '');
+                            if (allSelected) {
+                                // As al 4 opsies gekies is, valideer dan hierdie spesifieke vraag
+                                validateQuestion(index);
+                            } else {
+                                // As nie almal gekies is nie, verseker dat die foutboodskap vir hierdie vraag versteek is
+                                document.getElementById(`q-error-${index}`).style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            }
+            function calculateAndShowResults(event) {
+                event.preventDefault();
+                formError.style.display = 'none';
+                // Vee alle individuele vraagfoute uit voordat dit weer vir indiening gevalideer word
+                document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+                let overallFormIsValid = true;
+                const scores = { D: 0, I: 0, S: 0, C: 0 };
+                // Valideer elke vraag en versamel tellings
+                for (let i = 0; i < questions.length; i++) {
+                    const questionIsValid = validateQuestion(i); // Voer finale validering vir elke vraag uit
+                    if (!questionIsValid) {
+                        overallFormIsValid = false;
+                    } else {
+                        // As geldig, bereken tellings vir hierdie vraag
+                        const inputs = Array.from(document.getElementsByName(`q${i}`));
+                        inputs.forEach(input => {
+                            const rank = parseInt(input.value, 10);
+                            const discType = input.dataset.disc;
+                            if (scoring[rank] && scores.hasOwnProperty(discType)) {
+                                scores[discType] += scoring[rank];
+                            }
+                        });
+                    }
+                }
+                // Valideer gebruikersnaam
+                if (!document.getElementById('userName').value.trim()) {
+                    formError.textContent = "Vul asseblief jou volle naam in.";
+                    formError.style.display = 'block';
+                    overallFormIsValid = false;
+                }
+                if (!overallFormIsValid) {
+                    // Wys 'n algemene vormfout as enige spesifieke vraagfoute of naamfout bestaan
+                    formError.textContent = "Daar is foute in jou antwoorde. Maak asseblief seker jou naam is ingevul en dat alle vrae korrek beantwoord is.";
+                    formError.style.display = 'block';
+                    window.scrollTo(0, 0); // Rol na bo om algemene fout te wys indien enige
+                    return;
+                }
+                // As alle validerings slaag, vertoon resultate en stuur e-pos
+                displayResults(scores);
+                sendEmailWithResults(scores);
+            }
+            function displayResults(scores) {
+                const resultsContainer = document.getElementById('results-container');
+                resultsContainer.classList.remove('hidden');
+                resultsText.innerHTML = `
+                    <p>**Dominance (D):** ${scores.D}</p>
+                    <p>**Influence (I):** ${scores.I}</p>
+                    <p>**Steadiness (S):** ${scores.S}</p>
+                    <p>**Conscientiousness (C):** ${scores.C}</p>
+                `;
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+            function sendEmailWithResults(scores) {
+                const emailStatus = document.getElementById('email-status');
+                emailStatus.textContent = "Stuur tans resultate per e-pos...";
+                emailStatus.className = ''; // Vee vorige statusklasse uit
+                const templateParams = {
+                    name: document.getElementById('userName').value,
+                    d_score: scores.D,
+                    i_score: scores.I,
+                    s_score: scores.S,
+                    c_score: scores.C
+                    // chart_image is doelbewus verwyder soos per vorige versoek
+                };
+                emailjs.send('service_cv71ym3', 'template_j1u5nyo', templateParams)
+                    .then(function(response) {
+                       console.log('SUCCESS!', response.status, response.text);
+                       emailStatus.textContent = 'Sukses! Die resultate is suksesvol per e-pos gestuur.';
+                       emailStatus.classList.add('email-success');
+                    }, function(error) {
+                       console.log('FAILED...', error);
+                       emailStatus.textContent = 'Fout: Kon nie die e-pos stuur nie. Gaan asseblief die EmailJS konfigurasie na en probeer weer.';
+                       emailStatus.classList.add('email-error');
+                    });
+            }
+            // Inisialiseer vrae en vormluisteraar
+            generateQuestions();
+            form.addEventListener('submit', calculateAndShowResults);
+        });
+    </script>
+</body>
+</html>

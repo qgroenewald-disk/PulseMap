@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseMap Personality Behaviour Analysis</title>
+    <!-- Open Graph Meta Tags for WhatsApp Sharing -->
+    <meta property="og:title" content="PulseMap Personality Behaviour Analysis">
+    <meta property="og:description" content="Discover your personality type with our PulseMap questionnaire.">
+    <meta property="og:image" content="https://i.imgur.com/Zx34Iky.png">
+    <meta property="og:url" content="https://qgroenewald-disk.github.io/mbti-analise/">
+    <meta property="og:type" content="website">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom class for border color matching bg-blue-600 */
+        .border-custom-blue {
+            border-left-color: #2563EB; /* Tailwind's blue-600 hex code */
+        }
+        /* Class for highlighting unanswered questions */
+        .border-error {
+            border-color: #EF4444; /* Tailwind's red-500 hex code */
+        }
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centered for the logo */
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .logo-wrapper {
+            display: flex;
+            justify-content: center; /* Center logo */
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .logo {
+            max-width: 250px; /* Adjusted for bigger logo */
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            display: none;
+        }
+        /* Responsive logo size */
+        @media (max-width: 640px) {
+            .logo {
+                max-width: 180px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center py-10 px-4">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-2xl">
+        <!-- Logo and Title Section -->
+        <header>
+            <div class="logo-wrapper">
+                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
+                <h1>PulseMap Personality Analysis</h1>
+            </div>
+        </header>
+        <!-- Instructions paragraph -->
+        <p class="text-gray-600 text-sm mb-6 px-4">
+            Answer the following questions honestly to determine your personality type. There are no right or wrong answers. Choose the option that best describes you.
+        </p>
+        <!-- Name Input -->
+        <div class="mb-6">
+            <label for="userName" class="block text-gray-700 text-sm font-semibold mb-2">Your Name:</label>
+            <input type="text" id="userName" placeholder="Enter your name here"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <!-- Questions Section -->
+        <div id="questionsContainer" class="space-y-6 mb-8">
+            <!-- Questions will be dynamically loaded here -->
+        </div>
+        <!-- Submit Button -->
+        <button id="submitBtn"
+                class="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition duration-300 ease-in-out shadow-lg">
+            Calculate Results
+        </button>
+        <!-- Results Section -->
+        <div id="resultsContainer" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-3">Your Personality Type:</h2>
+            <p id="mbtiResultDisplay" class="text-4xl font-extrabold text-blue-600 mb-4"></p>
+            <p class="text-blue-700">Your results have also been sent to you via email.</p>
+        </div>
+        <!-- Message Box for Email Status -->
+        <div id="messageBox" class="mt-4 p-4 rounded-md text-sm text-center hidden" role="alert"></div>
+    </div>
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your Public Key
+        emailjs.init("rES387Z_beB0IEiRm");
+        const allQuestions = [
+            // Extroversion (E) vs. Introversion (I)
+            {
+                id: 'q1',
+                text: 'When you are stressed, what helps you the most?',
+                options: [
+                    { text: 'Talk about it with friends or family', value: 'E', type: 'EI' },
+                    { text: 'Take alone time to think and process', value: 'I', type: 'EI' }
+                ]
+            },
+            {
+                id: 'q2',
+                text: 'At a party or social gathering:',
+                options: [
+                    { text: 'You chat with many people and feel energized', value: 'E', type: 'EI' },
+                    { text: 'You stick with a few people and feel drained after a while', value: 'I', type: 'EI' }
+                ]
+            },
+            {
+                id: 'q3',
+                text: 'When trying to solve a problem:',
+                options: [
+                    { text: 'You think out loud and discuss it with others', value: 'E', type: 'EI' },
+                    { text: 'You think thoroughly about it first before sharing', value: 'I', type: 'EI' }
+                ]
+            },
+            {
+                id: 'q4',
+                text: 'Your ideal weekend would be:',
+                options: [
+                    { text: 'Various activities with friends and family', value: 'E', type: 'EI' },
+                    { text: 'Quiet time at home with a good book or hobby', value: 'I', type: 'EI' }
+                ]
+            },
+            {
+                id: 'q5',
+                text: 'When you meet new people:',
+                options: [
+                    { text: 'You feel comfortable making first contact', value: 'E', type: 'EI' },
+                    { text: 'You prefer to wait for them to approach first', value: 'I', type: 'EI' }
+                ]
+            },
+            // Sensing (S) vs. Intuition (N)
+            {
+                id: 'q6',
+                text: 'When starting a new project:',
+                options: [
+                    { text: 'You start with concrete steps and practical details', value: 'S', type: 'SN' },
+                    { text: 'You start with the big picture and possibilities', value: 'N', type: 'SN' }
+                ]
+            },
+            {
+                id: 'q7',
+                text: 'You prefer instructions that are:',
+                options: [
+                    { text: 'Step-by-step and specific', value: 'S', type: 'SN' },
+                    { text: 'Explain the goal so you can find your own way', value: 'N', type: 'SN' }
+                ]
+            },
+            {
+                id: 'q8',
+                text: 'When telling a story:',
+                options: [
+                    { text: 'You provide accurate details and facts', value: 'S', type: 'SN' },
+                    { text: 'You focus on the meaning and impact', value: 'N', type: 'SN' }
+                ]
+            },
+            {
+                id: 'q9',
+                text: 'You find it more interesting to talk about:',
+                options: [
+                    { text: 'Practical things and real experiences', value: 'S', type: 'SN' },
+                    { text: 'Ideas, theories, and future possibilities', value: 'N', type: 'SN' }
+                ]
+            },
+            {
+                id: 'q10',
+                text: 'When you have to make a decision:',
+                options: [
+                    { text: 'You look at what has worked in the past', value: 'S', type: 'SN' },
+                    { text: 'You explore new and innovative options', value: 'N', type: 'SN' }
+                ]
+            },
+            // Thinking (T) vs. Feeling (F)
+            {
+                id: 'q11',
+                text: 'When you need to resolve a dispute:',
+                options: [
+                    { text: 'You focus on facts and logical solutions', value: 'T', type: 'TF' },
+                    { text: 'You consider how everyone will feel about it', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q12',
+                text: 'You make decisions primarily based on:',
+                options: [
+                    { text: 'What is logical and effective', value: 'T', type: 'TF' },
+                    { text: 'What aligns with your values and others\' needs', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q13',
+                text: 'When giving criticism:',
+                options: [
+                    { text: 'You are direct and focus on what can be improved', value: 'T', type: 'TF' },
+                    { text: 'You try to say it gently so as not to hurt feelings', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q14',
+                text: 'You value people who are:',
+                options: [
+                    { text: 'Fair and consistent', value: 'T', type: 'TF' },
+                    { text: 'Empathetic and understanding', value: 'F', type: 'TF' }
+                ]
+            },
+            {
+                id: 'q15',
+                text: 'In a team environment:',
+                options: [
+                    { text: 'You focus on efficiency and results', value: 'T', type: 'TF' },
+                    { text: 'You make sure everyone feels included and valued', value: 'F', type: 'TF' }
+                ]
+            },
+            // Judging (J) vs. Perceiving (P)
+            {
+                id: 'q16',
+                text: 'Your workspace is usually:',
+                options: [
+                    { text: 'Neat and organized', value: 'J', type: 'JP' },
+                    { text: 'A bit messy but you know where everything is', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q17',
+                text: 'When planning a vacation:',
+                options: [
+                    { text: 'You make a detailed itinerary and reservations in advance', value: 'J', type: 'JP' },
+                    { text: 'You see what happens and decide spontaneously', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q18',
+                text: 'You prefer to work:',
+                options: [
+                    { text: 'With clear deadlines and structures', value: 'J', type: 'JP' },
+                    { text: 'With flexibility and open options', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q19',
+                text: 'When you get a task:',
+                options: [
+                    { text: 'You start quickly so you can finish on time', value: 'J', type: 'JP' },
+                    { text: 'You work best under pressure near the deadline', value: 'P', type: 'JP' }
+                ]
+            },
+            {
+                id: 'q20',
+                text: 'You feel more comfortable when:',
+                options: [
+                    { text: 'Plans are made and things are decided', value: 'J', type: 'JP' },
+                    { text: 'Options are kept open for change', value: 'P', type: 'JP' }
+                ]
+            }
+        ];
+        const questionsContainer = document.getElementById('questionsContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const mbtiResultDisplay = document.getElementById('mbtiResultDisplay');
+        const userNameInput = document.getElementById('userName');
+        const messageBox = document.getElementById('messageBox');
+        let shuffledQuestions = [];
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+        // Function to display messages in the message box
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-800');
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-800');
+            }
+        }
+        // Function to validate questions in real-time and provide visual feedback
+        function validateQuestionsRealTime() {
+            let hasUnansweredQuestions = false;
+            let firstUnansweredQuestionElement = null;
+            shuffledQuestions.forEach((question, index) => {
+                const questionDiv = document.querySelector(`#questionsContainer > div:nth-child(${index + 1})`);
+                const radios = document.querySelectorAll(`input[name="question-${question.id}"]:checked`);
+                if (radios.length === 0) {
+                    if (questionDiv) {
+                        questionDiv.classList.add('border-l-4', 'border-error');
+                        questionDiv.classList.remove('border-custom-blue');
+                    }
+                    hasUnansweredQuestions = true;
+                    if (!firstUnansweredQuestionElement) {
+                        firstUnansweredQuestionElement = questionDiv;
+                    }
+                } else {
+                    if (questionDiv) {
+                        questionDiv.classList.remove('border-error');
+                        questionDiv.classList.add('border-l-4', 'border-custom-blue');
+                    }
+                }
+            });
+            if (hasUnansweredQuestions) {
+                showMessage('Please answer all questions before submitting.', 'error');
+                if (firstUnansweredQuestionElement) {
+                    firstUnansweredQuestionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return false;
+            } else {
+                messageBox.classList.add('hidden');
+                return true;
+            }
+        }
+        // Function to calculate MBTI result
+        function calculateMBTI(answers) {
+            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            shuffledQuestions.forEach((question, index) => {
+                const selectedOptionValue = answers[`question-${question.id}`];
+                if (selectedOptionValue) {
+                    scores[selectedOptionValue]++;
+                }
+            });
+            let mbtiType = '';
+            mbtiType += (scores.E >= scores.I) ? 'E' : 'I';
+            mbtiType += (scores.S >= scores.N) ? 'S' : 'N';
+            mbtiType += (scores.T >= scores.F) ? 'T' : 'F';
+            mbtiType += (scores.J >= scores.P) ? 'J' : 'P';
+            return { mbtiType };
+        }
+        // Function to render questions
+        function renderQuestions() {
+            shuffledQuestions = shuffleArray([...allQuestions]);
+            questionsContainer.innerHTML = '';
+            shuffledQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-5 rounded-lg shadow-sm border-l-4 border-custom-blue';
+                questionDiv.setAttribute('data-question-id', question.id);
+                questionDiv.innerHTML = `
+                    <p class="text-gray-800 font-semibold mb-3">Question ${index + 1}: ${question.text}</p>
+                    <div class="space-y-2">
+                        ${question.options.map(option => `
+                            <label class="flex items-center p-3 border border-gray-300 rounded-md cursor-pointer hover:bg-blue-100 transition duration-200 ease-in-out">
+                                <input type="radio" name="question-${question.id}" value="${option.value}" data-question-text="${question.text}" data-option-text="${option.text}" class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-3 text-gray-700">${option.text}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                questionsContainer.appendChild(questionDiv);
+                const radioInputs = questionDiv.querySelectorAll(`input[name="question-${question.id}"]`);
+                radioInputs.forEach(radio => {
+                    radio.addEventListener('change', validateQuestionsRealTime);
+                });
+            });
+        }
+        // Event listener for form submission
+        submitBtn.addEventListener('click', async () => {
+            const userName = userNameInput.value.trim();
+            if (!userName) {
+                showMessage('Please enter your name.', 'error');
+                return;
+            }
+            if (!validateQuestionsRealTime()) {
+                return;
+            }
+            const selectedAnswers = {};
+            let multipleAnswersSelected = false;
+            shuffledQuestions.forEach(question => {
+                const radios = document.querySelectorAll(`input[name="question-${question.id}"]:checked`);
+                if (radios.length === 1) {
+                    selectedAnswers[`question-${question.id}`] = radios[0].value;
+                } else if (radios.length > 1) {
+                    multipleAnswersSelected = true;
+                }
+            });
+            if (multipleAnswersSelected) {
+                showMessage('Error: More than one answer was selected for a question. Please select only one answer per question.', 'error');
+                return;
+            }
+            const { mbtiType } = calculateMBTI(selectedAnswers);
+            mbtiResultDisplay.textContent = mbtiType;
+            resultsContainer.classList.remove('hidden');
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const templateParams = {
+                user_name: userName,
+                personality_result: mbtiType
+            };
+            try {
+                const response = await emailjs.send('service_cv71ym3', 'template_ebjarcl', templateParams);
+                console.log('Email sent successfully!', response.status, response.text);
+                showMessage('Your results have been successfully sent via email!', 'success');
+            } catch (error) {
+                console.error('Failed to send email:', error);
+                showMessage('Could not send results via email. Please try again.', 'error');
+            }
+        });
+        document.addEventListener('DOMContentLoaded', renderQuestions);
+    </script>
+</body>
+</html>

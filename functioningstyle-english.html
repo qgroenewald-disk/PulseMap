@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseMap Functioning Style Analysis</title>
+    <link rel="icon" href="https://i.imgur.com/Zx34Iky.png" type="image/png">
+    <meta property="og:title" content="PulseMap Functioning Style Analysis">
+    <meta property="og:description" content="Complete your PulseMap Functioning Style analysis and see your results.">
+    <meta property="og:image" content="https://i.imgur.com/Zx34Iky.png">
+    <meta property="og:url" content="https://qgroenewald-disk.github.io/Disk-Analise-Form/">
+    <meta property="og:type" content="website">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        :root {
+            --primary-color: #005A9C;
+            --secondary-color: #f4f4f9;
+            --text-color: #333;
+            --border-color: #ddd;
+            --error-color: #D8000C;
+            --success-color: #4F8A10;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centered for the logo */
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            padding-left: 0;
+        }
+        .logo-and-title-wrapper {
+            display: flex;
+            justify-content: center; /* Center logo */
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .logo {
+            max-width: 250px; /* Adjusted for bigger logo */
+            height: auto;
+            border-radius: 5px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 640px) {
+            .logo {
+                max-width: 180px;
+            }
+        }
+        .logo-and-title-wrapper h1 {
+            display: none;
+        }
+        .instructions {
+            background-color: #e7f3fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            text-align: left;
+            margin-top: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .question-block h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        .answer-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .answer-option select {
+            width: 70px;
+            padding: 8px;
+            margin-right: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            text-align: center;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        .answer-option label {
+            flex: 1;
+        }
+        .error-message {
+            color: var(--error-color);
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+        #form-error {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #FFD2D2;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #004170;
+        }
+        .hidden {
+            display: none;
+        }
+        #results-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        #results-text {
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+        #email-status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .email-success {
+            background-color: #DFF2BF;
+            color: var(--success-color);
+        }
+        .email-error {
+            background-color: #FFBABA;
+            color: var(--error-color);
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your Public Key
+        (function(){
+            emailjs.init({
+                publicKey: "rES387Z_beB0IEiRm", // Replace with your actual EmailJS Public Key
+            });
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-and-title-wrapper">
+                <img src="https://i.imgur.com/Zx34Iky.png" alt="PulseMap Logo" class="logo" onerror="this.onerror=null;this.src='https://placehold.co/250x100/cccccc/000000?text=PulseMap';">
+                <h1>Functioning Style Personality Analysis</h1>
+            </div>
+            <p class="instructions">
+                For each question below, rank the four statements from **1 to 4**.
+                <br>**1** = Describes me best; **4** = Describes me least.
+                <br>Each number (1, 2, 3, 4) may only be used **once per question**.
+            </p>
+        </header>
+        <form id="disc-form">
+            <div class="form-group">
+                <label for="userName">Full Name:</label>
+                <input type="text" id="userName" name="userName" required>
+            </div>
+            <div id="questions-container">
+                </div>
+            <div id="form-error" class="error-message"></div>
+            <button type="submit" id="submit-btn">Submit and See Results</button>
+        </form>
+        <div id="results-container" class="hidden">
+            <h2>Your Results</h2>
+            <div id="results-text"></div>
+            <div id="email-status"></div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const questions = [
+                {
+                    questionText: "One could describe the way I behave in my relationships with other people as:",
+                    options: [
+                        { text: "Gentle, kind-hearted", value: "S" },
+                        { text: "Discerning, cautious", value: "C" },
+                        { text: "Decisive, assertive", value: "D" },
+                        { text: "Original, full of plans", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "When life brings things my way, I am usually:",
+                    options: [
+                        { text: "Enterprising, seizing opportunities", value: "D" },
+                        { text: "Sober, playing it safe", value: "C" },
+                        { text: "Carefree, cheerful", value: "I" },
+                        { text: "Even-tempered, patient", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "In my cooperation with other people, I will normally act as follows:",
+                    options: [
+                        { text: "Negotiating, diplomatic", value: "I" },
+                        { text: "Competitive, rivalrous", value: "D" },
+                        { text: "Considerate, sensitive to others", value: "S" },
+                        { text: "Stimulating, activating", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "When I think about my life, I experience myself as:",
+                    options: [
+                        { text: "Content, satisfied", value: "S" },
+                        { text: "On the way to clear goals", value: "D" },
+                        { text: "Creative, full of new ideas", value: "I" },
+                        { text: "Thorough, organized", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "I would describe myself as:",
+                    options: [
+                        { text: "Purposeful, determined", value: "D" },
+                        { text: "Accurate, precise", value: "C" },
+                        { text: "Calm, peace-loving", value: "S" },
+                        { text: "Full of zest for life, fun", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "In my social interactions with other people, I will:",
+                    options: [
+                        { text: "Involve others and let them participate", value: "I" },
+                        { text: "Be confrontational, argue", value: "D" },
+                        { text: "Be accommodating, submissive", value: "S" },
+                        { text: "Be reserved, controlled", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "The style of being human that I radiate can be described as:",
+                    options: [
+                        { text: "Good-natured, pleasant", value: "S" },
+                        { text: "Exuberant, cheerful", value: "I" },
+                        { text: "Energetic, enthusiastic", value: "I" },
+                        { text: "Disciplined, structured", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "In my communication with other people, I am:",
+                    options: [
+                        { text: "Outspoken/state my own point of view clearly", value: "D" },
+                        { text: "Enthusiastic, positive", value: "I" },
+                        { text: "Open to persuasion, tentative", value: "S" },
+                        { text: "Logical, reasoned", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "When it comes to decision-making, I would describe myself as:",
+                    options: [
+                        { text: "Controlled, thoughtful", value: "C" },
+                        { text: "Decisive, firm", value: "D" },
+                        { text: "Impulsive, spontaneous", value: "I" },
+                        { text: "Accommodating, adaptable", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "I see and experience myself as a person who is:",
+                    options: [
+                        { text: "Enterprising, seeking challenges", value: "D" },
+                        { text: "Discerning (can distinguish)", value: "C" },
+                        { text: "Outgoing, reaching out to others", value: "I" },
+                        { text: "Moderate, avoiding extremes", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "I think of myself as a person who is:",
+                    options: [
+                        { text: "Expressive, honest about my feelings", value: "I" },
+                        { text: "Sincere, doing what is right", value: "C" },
+                        { text: "Leading, in control", value: "D" },
+                        { text: "Participatory, cooperative", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "I am:",
+                    options: [
+                        { text: "Outgoing, focused on others", value: "I" },
+                        { text: "Conscientious, keeping appointments", value: "C" },
+                        { text: "Team player, cooperative", value: "S" },
+                        { text: "Goal-oriented, knowing what I want", value: "D" }
+                    ]
+                },
+                {
+                    questionText: "I usually do things:",
+                    options: [
+                        { text: "Planned, tactical", value: "C" },
+                        { text: "Resigned, easily giving in", value: "S" },
+                        { text: "Cheerful, joyful", value: "I" },
+                        { text: "Firm and with conviction", value: "D" }
+                    ]
+                },
+                {
+                    questionText: "I would describe my nature as:",
+                    options: [
+                        { text: "Engaging (attracting others)", value: "I" },
+                        { text: "Self-examining, introspective", value: "C" },
+                        { text: "Self-confident, influential", "value": "D" },
+                        { text: "Steadfast, predictable", value: "S" }
+                    ]
+                },
+                {
+                    questionText: "My approach to life can be described with:",
+                    options: [
+                        { text: "Responsible, dutiful", value: "C" },
+                        { text: "Enterprising, creative", value: "D" },
+                        { text: "Optimistic, positive", value: "I" },
+                        { text: "Thorough, organized", value: "C" }
+                    ]
+                },
+                {
+                    questionText: "When I think about myself in relation to others, I see myself as:",
+                    options: [
+                        { text: "Independent, self-reliant", value: "D" },
+                        { text: "Appreciative, respectful", value: "S" },
+                        { text: "Helpful, supportive", value: "S" },
+                        { text: "Inspiring, motivating", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "One of my qualities that I feel good about is the fact that I am:",
+                    options: [
+                        { text: "Persistent, not easily giving up", value: "D" },
+                        { text: "Loyal/dedicated to others", value: "S" },
+                        { text: "Cheerful, enjoying good things", value: "I" },
+                        { text: "Conscientious, dutiful", "value": "C" }
+                    ]
+                },
+                {
+                    questionText: "One trait of mine that is not always received so positively by others is the fact that I am sometimes:",
+                    options: [
+                        { text: "Picky, fastidious", value: "C" },
+                        { text: "Direct/straightforward", "value": "D" },
+                        { text: "Too accommodating/yielding", value: "S" },
+                        { text: "Influencing people with my enthusiasm", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "In my handling of people, I am:",
+                    options: [
+                        { text: "Impartial, unbiased", value: "C" },
+                        { text: "Sympathetic, compassionate", value: "S" },
+                        { text: "Authoritative, strong", value: "D" },
+                        { text: "Jovial, hearty", value: "I" }
+                    ]
+                },
+                {
+                    questionText: "One of my qualities that people can rely on is the fact that I am:",
+                    options: [
+                        { text: "Can convince/excite others", value: "I" },
+                        { text: "Careful, precise", value: "C" },
+                        { text: "Even-tempered and calm", value: "S" },
+                        { text: "Persistent, tenacious", value: "D" }
+                    ]
+                }
+            ];
+            const questionsContainer = document.getElementById('questions-container');
+            const form = document.getElementById('disc-form');
+            const formError = document.getElementById('form-error');
+            const resultsText = document.getElementById('results-text');
+            const scoring = { 1: 4, 2: 3, 3: 2, 4: 1 }; // Scoring: 1st choice gets 4 points, 4th choice gets 1 point
+            // Function to generate dropdown options for 1-4
+            function generateDropdownOptions() {
+                let optionsHtml = '<option value="">Select</option>'; // Default empty option
+                for (let i = 1; i <= 4; i++) {
+                    optionsHtml += `<option value="${i}">${i}</option>`;
+                }
+                return optionsHtml;
+            }
+            // Function to validate a single question block
+            function validateQuestion(questionIndex) {
+                const inputs = Array.from(document.getElementsByName(`q${questionIndex}`));
+                const values = inputs.map(input => input.value).filter(v => v !== ''); // Filter out empty strings
+                const valueSet = new Set(values);
+                const errorEl = document.getElementById(`q-error-${questionIndex}`);
+                errorEl.style.display = 'none'; // Hide previous error for this question
+                if (values.length !== 4) {
+                    errorEl.textContent = "All options for this question must be filled (1-4).";
+                    errorEl.style.display = 'block';
+                    return false;
+                } else if (valueSet.size !== 4) {
+                    errorEl.textContent = "Each number (1, 2, 3, 4) may only be used once per question.";
+                    errorEl.style.display = 'block';
+                    return false;
+                }
+                return true; // Question is valid
+            }
+            function generateQuestions() {
+                questions.forEach((q, index) => {
+                    const questionBlock = document.createElement('div');
+                    questionBlock.className = 'question-block';
+                    questionBlock.id = `question-${index}`;
+                    let optionsHTML = q.options.map((opt, optIndex) => `
+                        <div class="answer-option">
+                            <select id="q${index}_opt${optIndex}" name="q${index}" data-disc="${opt.value}" required>
+                                ${generateDropdownOptions()}
+                            </select>
+                            <label for="q${index}_opt${optIndex}">${opt.text}</label>
+                        </div>
+                    `).join('');
+                    questionBlock.innerHTML = `
+                        <h3>Question ${index + 1}: ${q.questionText}</h3>
+                        ${optionsHTML}
+                        <div id="q-error-${index}" class="error-message"></div>
+                    `;
+                    questionsContainer.appendChild(questionBlock);
+                    // Add change event listeners to each dropdown in this question block
+                    const selectElements = questionBlock.querySelectorAll('select');
+                    selectElements.forEach(select => {
+                        select.addEventListener('change', () => {
+                            // Get all choices for the current question block
+                            const currentQuestionInputs = Array.from(questionBlock.querySelectorAll('select'));
+                            const allSelected = currentQuestionInputs.every(input => input.value !== '');
+                            if (allSelected) {
+                                // If all 4 options are selected, then validate this specific question
+                                validateQuestion(index);
+                            } else {
+                                // If not all are selected, ensure the error message for this question is hidden
+                                document.getElementById(`q-error-${index}`).style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            }
+            function calculateAndShowResults(event) {
+                event.preventDefault();
+                formError.style.display = 'none';
+                // Clear all individual question errors before re-validating for submission
+                document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+                let overallFormIsValid = true;
+                const scores = { D: 0, I: 0, S: 0, C: 0 };
+                // Validate each question and collect scores
+                for (let i = 0; i < questions.length; i++) {
+                    const questionIsValid = validateQuestion(i); // Perform final validation for each question
+                    if (!questionIsValid) {
+                        overallFormIsValid = false;
+                    } else {
+                        // If valid, calculate scores for this question
+                        const inputs = Array.from(document.getElementsByName(`q${i}`));
+                        inputs.forEach(input => {
+                            const rank = parseInt(input.value, 10);
+                            const discType = input.dataset.disc;
+                            if (scoring[rank] && scores.hasOwnProperty(discType)) {
+                                scores[discType] += scoring[rank];
+                            }
+                        });
+                    }
+                }
+                // Validate username
+                if (!document.getElementById('userName').value.trim()) {
+                    formError.textContent = "Please enter your full name.";
+                    formError.style.display = 'block';
+                    overallFormIsValid = false;
+                }
+                if (!overallFormIsValid) {
+                    // Display a general form error if any specific question errors or name error exist
+                    formError.textContent = "There are errors in your answers. Please ensure your name is entered and all questions are answered correctly.";
+                    formError.style.display = 'block';
+                    window.scrollTo(0, 0); // Scroll to top to show general error if any
+                    return;
+                }
+                // If all validations pass, display results and send email
+                displayResults(scores);
+                sendEmailWithResults(scores);
+            }
+            function displayResults(scores) {
+                const resultsContainer = document.getElementById('results-container');
+                resultsContainer.classList.remove('hidden');
+                resultsText.innerHTML = `
+                    <p>**Dominance (D):** ${scores.D}</p>
+                    <p>**Influence (I):** ${scores.I}</p>
+                    <p>**Steadiness (S):** ${scores.S}</p>
+                    <p>**Conscientiousness (C):** ${scores.C}</p>
+                `;
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+            function sendEmailWithResults(scores) {
+                const emailStatus = document.getElementById('email-status');
+                emailStatus.textContent = "Sending results via email...";
+                emailStatus.className = ''; // Clear previous status classes
+                const templateParams = {
+                    name: document.getElementById('userName').value,
+                    d_score: scores.D,
+                    i_score: scores.I,
+                    s_score: scores.S,
+                    c_score: scores.C
+                };
+                emailjs.send('service_cv71ym3', 'template_j1u5nyo', templateParams)
+                    .then(function(response) {
+                       console.log('SUCCESS!', response.status, response.text);
+                       emailStatus.textContent = 'Success! The results have been sent via email.';
+                       emailStatus.classList.add('email-success');
+                    }, function(error) {
+                       console.log('FAILED...', error);
+                       emailStatus.textContent = 'Error: Could not send the email. Please check the EmailJS configuration and try again.';
+                       emailStatus.classList.add('email-error');
+                    });
+            }
+            // Initialize questions and form listener
+            generateQuestions();
+            form.addEventListener('submit', calculateAndShowResults);
+        });
+    </script>
+</body>
+</html>
